@@ -19,9 +19,9 @@ function mkRect() {
     rect.setAttribute("rx", "5");
     let animate = document.createElementNS(ns, "animate");
     animate.setAttribute("attributeName", "x");
-    animate.setAttribute("values", "20;40;20");
+    animate.setAttribute("values", "20;80");
     animate.setAttribute("dur", "5s");
-    animate.setAttribute("repeatCount", "indefinite");
+    animate.setAttribute("repeatCount", "1");
     rect.appendChild(animate);
     return rect;
 }
