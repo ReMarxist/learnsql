@@ -3,6 +3,7 @@ document.body.appendChild(svg);
 
 let rect = mkRect();
 svg.appendChild(rect);
+addAnimation(rect);
 
 /**
  * Create svg rect
@@ -16,13 +17,6 @@ function mkRect() {
     rect.setAttribute("fill", "white");
     rect.setAttribute("stroke", "#1a73e8");
     rect.setAttribute("rx", "5");
-    let animate = document.createElementNS(ns, "animate");
-    animate.setAttribute("attributeName", "x");
-    animate.setAttribute("values", "20;80");
-    animate.setAttribute("dur", "3s");
-    animate.setAttribute("repeatCount", "1");
-    rect.setAttribute("x", "80");
-    rect.appendChild(animate);
     return rect;
 }
 
@@ -36,4 +30,18 @@ function mkSvg() {
     svg.style.borderStyle = "solid";
     svg.style.borderWidth = "1px";
     return svg;
+}
+
+/**
+ * Add animation to `rect`
+ * @param {SVGRect} rect 
+ */
+function addAnimation(rect) {
+    let animate = document.createElementNS(ns, "animate");
+    animate.setAttribute("attributeName", "x");
+    animate.setAttribute("values", "20;80");
+    animate.setAttribute("dur", "3s");
+    animate.setAttribute("repeatCount", "1");
+    rect.setAttribute("x", "80");
+    rect.appendChild(animate);
 }
