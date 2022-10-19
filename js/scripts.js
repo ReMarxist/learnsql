@@ -37,6 +37,7 @@ function mkSvg() {
  * @param {SVGRect} rect 
  */
 function addAnimation(rect) {
+    const ns = "http://www.w3.org/2000/svg";
     let animate = document.createElementNS(ns, "animate");
     animate.setAttribute("attributeName", "x");
     animate.setAttribute("values", "20;80");
