@@ -9,14 +9,20 @@ svg.appendChild(rect);
  */
 function mkRect() {
     const ns = "http://www.w3.org/2000/svg";
-    var rect = document.createElementNS(ns, "rect");
-    rect.setAttribute("x", "20");
+    let rect = document.createElementNS(ns, "rect");
+    // rect.setAttribute("x", "20");
     rect.setAttribute("y", "20");
     rect.setAttribute("height", "50");
     rect.setAttribute("width", "50");
     rect.setAttribute("fill", "white");
     rect.setAttribute("stroke", "#1a73e8");
     rect.setAttribute("rx", "5");
+    let animate = document.createElementNS(ns, "animate");
+    animate.setAttribute("attributeName", "x");
+    animate.setAttribute("values", "20;40;20");
+    animate.setAttribute("dur", "5s");
+    animate.setAttribute("repeatCount", "indefinite");
+    rect.appendChild(animate);
     return rect;
 }
 
