@@ -15,6 +15,7 @@ function mkRect() {
     rect.setAttribute("height", "50");
     rect.setAttribute("width", "50");
     rect.setAttribute("fill", "blue");
+    rect.setAttribute("stroke", "green");
     rect.setAttribute("rx", "5");
     return rect;
 }
