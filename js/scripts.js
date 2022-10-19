@@ -26,5 +26,8 @@ function mkRect() {
 function mkSvg() {
     const ns = "http://www.w3.org/2000/svg";
     let svg = document.createElementNS(ns, "svg");
+    svg.style.borderColor = "#1a73e8";
+    svg.style.borderStyle = "solid";
+    svg.style.borderWidth = "1px";
     return svg;
 }
