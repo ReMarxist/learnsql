@@ -1,4 +1,38 @@
 /**
+ * Create, append and return svg
+ */
+function addSvg() {
+    let svg = mkSvg();
+    document.body.appendChild(svg);
+    return svg;
+}
+
+/**
+ * Create, append and return rect
+ * @param {SVGSVGElement} svg 
+ */
+function addRect(svg) {
+    let rect = mkRect();
+    svg.appendChild(rect);
+    return rect;
+}
+
+/**
+ * Add animation to `rect`
+ * @param {SVGRect} rect 
+ */
+ function addAnimation(rect) {
+    const ns = "http://www.w3.org/2000/svg";
+    let animate = document.createElementNS(ns, "animate");
+    animate.setAttribute("attributeName", "x");
+    animate.setAttribute("values", "20;80");
+    animate.setAttribute("dur", "3s");
+    animate.setAttribute("repeatCount", "1");
+    rect.setAttribute("x", "80");
+    rect.appendChild(animate);
+}
+
+/**
  * Create svg
  */
  function mkSvg() {
@@ -23,19 +57,4 @@
     rect.setAttribute("stroke", "#1a73e8");
     rect.setAttribute("rx", "5");
     return rect;
-}
-
-/**
- * Add animation to `rect`
- * @param {SVGRect} rect 
- */
-function addAnimation(rect) {
-    const ns = "http://www.w3.org/2000/svg";
-    let animate = document.createElementNS(ns, "animate");
-    animate.setAttribute("attributeName", "x");
-    animate.setAttribute("values", "20;80");
-    animate.setAttribute("dur", "3s");
-    animate.setAttribute("repeatCount", "1");
-    rect.setAttribute("x", "80");
-    rect.appendChild(animate);
 }

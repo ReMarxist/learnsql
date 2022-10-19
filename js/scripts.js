@@ -1,6 +1,3 @@
-let svg = mkSvg();
-document.body.appendChild(svg);
-
-let rect = mkRect();
-svg.appendChild(rect);
+let svg = addSvg();
+let rect = addRect(svg);
 addAnimation(rect);
