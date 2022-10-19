@@ -10,8 +10,8 @@ svg.appendChild(rect);
  */
 function mkRect() {
     var rect = document.createElementNS(svgns, 'rect');
-    rect.setAttribute('x', '150');
-    rect.setAttribute('y', '150');
+    rect.setAttribute('x', '20');
+    rect.setAttribute('y', '20');
     rect.setAttribute('height', '50');
     rect.setAttribute('width', '50');
     rect.setAttribute('fill', 'blue');
