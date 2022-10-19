@@ -5,7 +5,7 @@ let rect = mkRect();
 svg.appendChild(rect);
 
 /**
- * Create new svg rect
+ * Create svg rect
  */
 function mkRect() {
     const ns = "http://www.w3.org/2000/svg";
@@ -15,9 +15,13 @@ function mkRect() {
     rect.setAttribute("height", "50");
     rect.setAttribute("width", "50");
     rect.setAttribute("fill", "blue");
+    rect.setAttribute("rx", "5");
     return rect;
 }
 
+/**
+ * Create svg
+ */
 function mkSvg() {
     const ns = "http://www.w3.org/2000/svg";
     let svg = document.createElementNS(ns, "svg");
