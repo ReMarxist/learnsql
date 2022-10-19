@@ -9,10 +9,13 @@ function addSvg() {
 
 /**
  * Create, append and return rect
- * @param {SVGSVGElement} svg 
+ * @param {SVGSVGElement} svg
+ * @param {Object} params
+ * @param {number} params.x
+ * @param {number} params.y
  */
-function addRect(svg) {
-    let rect = mkRect();
+function addRect(svg, params) {
+    let rect = mkRect(params);
     svg.appendChild(rect);
     return rect;
 }
@@ -46,11 +49,15 @@ function addRect(svg) {
 
 /**
  * Create svg rect
+ * @param {Object} params
+ * @param {number} params.x
+ * @param {number} params.y
  */
- function mkRect() {
+ function mkRect(params) {
     const ns = "http://www.w3.org/2000/svg";
     let rect = document.createElementNS(ns, "rect");
-    rect.setAttribute("y", "20");
+    rect.setAttribute("x", params.x);
+    rect.setAttribute("y", params.y);
     rect.setAttribute("height", "50");
     rect.setAttribute("width", "50");
     rect.setAttribute("fill", "white");
