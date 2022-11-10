@@ -32,6 +32,7 @@ function addAnimation(rect) {
     animate.setAttribute("dur", "3s");
     animate.setAttribute("repeatCount", "1");
     animate.setAttribute("begin", "controlButton.click");
+    rect.setAttribute("x", "80");
     rect.appendChild(animate);
     return animate;
 }
