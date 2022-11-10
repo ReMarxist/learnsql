@@ -6,7 +6,7 @@ button.id = "controlButton";
 
 let rect = addRect(svg, { x: 10, y: 50 });
 let animate = addAnimation(rect);
-animate.begin = "controlButton.click";
+animate.setAttribute("begin", "controlButton.click");
 
 /* document.addEventListener("click", () => {
     addAnimation(rect);
