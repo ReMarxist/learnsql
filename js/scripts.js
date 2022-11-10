@@ -4,5 +4,5 @@ addAnimation(rect);
 let button = addRect(svg, { x: 100, y: 100 });
 button.style.cursor = "pointer";
 document.addEventListener("click", () => {
-    console.log("ok");
+    addAnimation(rect);
 });

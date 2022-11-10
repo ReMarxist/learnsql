@@ -24,7 +24,7 @@ function addRect(svg, params) {
  * Add animation to `rect`
  * @param {SVGRect} rect 
  */
- function addAnimation(rect) {
+function addAnimation(rect) {
     const ns = "http://www.w3.org/2000/svg";
     let animate = document.createElementNS(ns, "animate");
     animate.setAttribute("attributeName", "x");
@@ -38,7 +38,7 @@ function addRect(svg, params) {
 /**
  * Create svg
  */
- function mkSvg() {
+function mkSvg() {
     const ns = "http://www.w3.org/2000/svg";
     let svg = document.createElementNS(ns, "svg");
     svg.style.borderColor = "#1a73e8";
@@ -53,7 +53,7 @@ function addRect(svg, params) {
  * @param {number} params.x
  * @param {number} params.y
  */
- function mkRect(params) {
+function mkRect(params) {
     const ns = "http://www.w3.org/2000/svg";
     let rect = document.createElementNS(ns, "rect");
     rect.setAttribute("x", params.x);
