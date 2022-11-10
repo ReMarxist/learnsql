@@ -21,7 +21,7 @@ function addRect(svg, params) {
 }
 
 /**
- * Add animation to `rect`
+ * Create, append and return animation to `rect`
  * @param {SVGRect} rect 
  */
 function addAnimation(rect) {
@@ -33,6 +33,7 @@ function addAnimation(rect) {
     animate.setAttribute("repeatCount", "1");
     rect.setAttribute("x", "80");
     rect.appendChild(animate);
+    return animate;
 }
 
 /**
