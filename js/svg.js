@@ -85,11 +85,10 @@ function animate(rect, target) {
     animate.setAttribute("to", target.x);
     animate.setAttribute("dur", "1s");
     animate.setAttribute("repeatCount", "1");
-    animate.setAttribute("end", "controlButton.click");
+    // animate.setAttribute("end", "controlButton.click");
     animate.setAttribute("fill", "freeze");
     rect.appendChild(animate);
     animate.beginElement();
-    // rect.setAttribute("x", target.x);
 }
 
 /**
