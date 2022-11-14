@@ -80,11 +80,12 @@ function animate(rect, target) {
     const ns = "http://www.w3.org/2000/svg";
     let animate = document.createElementNS(ns, "animate");
     animate.setAttribute("attributeName", "x");
-    let currentX = rect.getBoundingClientRect().x + 10;
+    let currentX = rect.getBoundingClientRect().x - 9;
     animate.setAttribute("from", currentX);
     animate.setAttribute("to", target.x);
     animate.setAttribute("dur", "1s");
     animate.setAttribute("repeatCount", "1");
+    animate.setAttribute("end", "controlButton.click");
     animate.setAttribute("fill", "freeze");
     rect.appendChild(animate);
     animate.beginElement();
