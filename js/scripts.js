@@ -1,5 +1,4 @@
-let div = document.createElement("div");
-document.body.appendChild(div);
+let div = addDiv();
 let svg = addSvg(div);
 
 let button = addRect(svg, { x: 100, y: 100 });

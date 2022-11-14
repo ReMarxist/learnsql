@@ -10,3 +10,13 @@ function toggle(object) {
         object.val = 0;
     }
 }
+
+/**
+ * Create, append and return div
+ */
+function addDiv() {
+    let div = document.createElement("div");
+    div.style.textAlign = "center";
+    document.body.appendChild(div);
+    return div;
+}

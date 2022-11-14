@@ -1,5 +1,5 @@
 /**
- * Create, append and return svg
+ * Create, append to container and return svg
  */
 function addSvg(container) {
     let svg = createSvg();
