@@ -80,7 +80,7 @@ function animate(rect, target) {
     const ns = "http://www.w3.org/2000/svg";
     let animate = document.createElementNS(ns, "animate");
     animate.setAttribute("attributeName", "x");
-    let parentX = rect.parentElement().getBoundingClientRect().x;
+    let parentX = rect.parentElement.getBoundingClientRect().x;
     let currentX = rect.getBoundingClientRect().x - parentX;
     animate.setAttribute("from", currentX);
     animate.setAttribute("to", target.x);
