@@ -2,7 +2,7 @@
  * Create, append and return svg
  */
 function addSvg() {
-    let svg = mkSvg();
+    let svg = createSvg();
     document.body.appendChild(svg);
     return svg;
 }
@@ -15,7 +15,7 @@ function addSvg() {
  * @param {number} params.y
  */
 function addRect(svg, params) {
-    let rect = mkRect(params);
+    let rect = createRect(params);
     svg.appendChild(rect);
     return rect;
 }
@@ -40,7 +40,7 @@ function addAnimation(rect) {
 /**
  * Create svg
  */
-function mkSvg() {
+function createSvg() {
     const ns = "http://www.w3.org/2000/svg";
     let svg = document.createElementNS(ns, "svg");
     svg.style.borderColor = "#1a73e8";
@@ -55,7 +55,7 @@ function mkSvg() {
  * @param {number} params.x
  * @param {number} params.y
  */
-function mkRect(params) {
+function createRect(params) {
     const ns = "http://www.w3.org/2000/svg";
     let rect = document.createElementNS(ns, "rect");
     rect.setAttribute("x", params.x);
@@ -85,7 +85,6 @@ function animate(rect, target) {
     animate.setAttribute("to", target.x);
     animate.setAttribute("dur", "1s");
     animate.setAttribute("repeatCount", "1");
-    // animate.setAttribute("end", "controlButton.click");
     animate.setAttribute("fill", "freeze");
     rect.appendChild(animate);
     animate.beginElement();

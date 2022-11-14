@@ -5,7 +5,6 @@ button.style.cursor = "pointer";
 button.id = "controlButton";
 
 let rect = addRect(svg, { x: 10, y: 50 });
-// let animate = addAnimation(rect);
 
 let logicalX = { val: 0 };
 button.addEventListener("click", () => {
