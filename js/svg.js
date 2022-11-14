@@ -92,5 +92,5 @@ function animate(rect, target) {
  * @param {SVGRectElement} rect 
  */
 function removeAnimate(rect) {
-    rect.querySelector(".animate").remove();
+    rect.querySelectorAll(".animate").forEach(el => el.remove());
 }
