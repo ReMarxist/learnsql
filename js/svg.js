@@ -1,9 +1,9 @@
 /**
  * Create, append and return svg
  */
-function addSvg() {
+function addSvg(container) {
     let svg = createSvg();
-    document.body.appendChild(svg);
+    container.appendChild(svg);
     return svg;
 }
 

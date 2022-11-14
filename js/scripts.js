@@ -1,4 +1,6 @@
-let svg = addSvg();
+let div = document.createElement("div");
+document.body.appendChild(div);
+let svg = addSvg(div);
 
 let button = addRect(svg, { x: 100, y: 100 });
 button.style.cursor = "pointer";
