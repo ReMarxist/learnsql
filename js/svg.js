@@ -67,3 +67,30 @@ function mkRect(params) {
     rect.setAttribute("rx", "5");
     return rect;
 }
+
+/**
+ * Animate `rect` to move it to `target`
+ * @param {SVGRectElement} rect 
+ * @param {Object} target 
+ */
+function animate(rect, target) {
+    removeAnimate(rect);
+    const ns = "http://www.w3.org/2000/svg";
+    let animate = document.createElementNS(ns, "animate");
+    animate.setAttribute("attributeName", "x");
+    animate.setAttribute("values", "20;80");
+    animate.setAttribute("dur", "1s");
+    animate.setAttribute("repeatCount", "1");
+    rect.appendChild(animate);
+    animate.beginElement();
+    //animate.setAttribute("begin", "controlButton.click");
+    rect.setAttribute("x", "80");
+}
+
+/**
+ * Remove `<animate>` from rect
+ * @param {SVGRectElement} rect 
+ */
+function removeAnimate(rect) {
+    rect.querySelector(".animate").remove();
+}
