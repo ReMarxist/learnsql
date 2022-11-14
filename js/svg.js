@@ -80,7 +80,8 @@ function animate(rect, target) {
     const ns = "http://www.w3.org/2000/svg";
     let animate = document.createElementNS(ns, "animate");
     animate.setAttribute("attributeName", "x");
-    animate.setAttribute("from", animate.getAttribute("x"));
+    let currentX = rect.getBoundingClientRect().x;
+    animate.setAttribute("from", currentX);
     animate.setAttribute("to", target.x);
     animate.setAttribute("dur", "1s");
     animate.setAttribute("repeatCount", "1");
