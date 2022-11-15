@@ -4,6 +4,8 @@ let svg = addSvg(div);
 addTableScenario();
 
 function addTableScenario() {
+    let header = null;
+    let dataRows = null;
     addTable(svg, "FortuneGlobal", { x: 50, y: 50 }, header, dataRows);
 }
 
