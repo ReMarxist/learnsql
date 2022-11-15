@@ -134,9 +134,26 @@ function removeAnimate(rect) {
  * @param {SVGSVGElement} svg
  * @param {string} name Table name
  * @param {Object} position Position of table
- * @param {string} header Headers of table (names of columns)
+ * @param {string[]} headers Headers of table (names of columns)
  * @param {string[][]} dataRows Data that fills the table
  */
-function addTable(svg, name, position, header, dataRows) {
+function addTable(svg, name, position, headers, dataRows) {
     addText(svg, "Таблица " + name, position);
+    let texts = createTableTexts(headers, dataRows);
+    texts.forEach(text => {
+        text.setAttribute("x", 50);
+        text.setAttribute("y", 50);
+        svg.appendChild(text);
+    })
+}
+
+/**
+ * Creates `<text>` tags for table
+ * @param {string[]} headers 
+ * @param {string[][]} dataRows 
+ */
+function createTableTexts(headers, dataRows) {
+    let text1 = createText("hello");
+    let text2 = createText("world");
+    return [text1, text2];
 }
