@@ -162,12 +162,14 @@ function createTableTexts(headers, dataRows) {
  * @param {number} nColumns Number of columns in table
  */
 function addTableTexts(svg, texts, basePosition, nColumns) {
+    texts.forEach((text, i) => {
+        svg.appendChild(text);
+    });
     let columnWidths = getColumnWidths(texts, nColumns);
     let columnOffsets = getColumnOffsets(columnWidths);
     texts.forEach((text, i) => {
         text.setAttribute("x", columnOffsets[i % nColumns]);
         text.setAttribute("y", 50);
-        svg.appendChild(text);
     });
 }
 
