@@ -179,9 +179,17 @@ function addTableTexts(svg, texts, basePosition, nColumns) {
 function getColumnWidths(texts, nColumns) {
     let widths = [];
     for (let i = 0; i < nColumns; i++) {
-        widths.push(30);
+        widths.push(getWidth(texts[i]));
     }
     return widths;
+}
+
+/**
+ * Get width of `<text>`
+ * @param {SVGTextElement} text 
+ */
+function getWidth(text) {
+    return text.getBoundingClientRect().width;
 }
 
 /**
