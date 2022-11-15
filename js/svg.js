@@ -8,6 +8,24 @@ function addSvg(container) {
 }
 
 /**
+ * Create, append to `svg` and return `<text>` tag
+ * @param {SVGSVGElement} svg 
+ * @param {string} text 
+ * @param {Object} position Position of text
+ * @param {number} position.x
+ * @param {number} position.y
+ */
+function addText(svg, text, position) {
+    const ns = "http://www.w3.org/2000/svg";
+    let textEl = document.createElementNS(ns, "text");
+    textEl.textContent = text;
+    textEl.setAttributeNS("x", position.x);
+    textEl.setAttributeNS("y", position.y);
+    svg.appendChild(textEl);
+    return textEl;
+}
+
+/**
  * Create, append and return rect
  * @param {SVGSVGElement} svg
  * @param {Object} params
@@ -47,7 +65,7 @@ function createSvg() {
     svg.style.borderStyle = "solid";
     svg.style.borderWidth = "1px";
     svg.style.width = "800px";
-    svg.style.height = "1200px";
+    svg.style.height = "600px";
     return svg;
 }
 

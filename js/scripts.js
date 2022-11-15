@@ -4,7 +4,7 @@ let svg = addSvg(div);
 addTableScenario();
 
 function addTableScenario() {
-    console.log("ok");
+    addText(svg, "Таблица FortuneGlobal", { x: 50, y: 50 });
 }
 
 function addControlButtonScenario() {
