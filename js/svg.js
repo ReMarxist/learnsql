@@ -21,6 +21,7 @@ function addText(svg, text, position) {
     textEl.textContent = text;
     textEl.setAttribute("x", position.x);
     textEl.setAttribute("y", position.y);
+    textEl.style.font = "14px sans-serif";
     svg.appendChild(textEl);
     return textEl;
 }
