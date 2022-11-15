@@ -154,7 +154,7 @@ function addTable(svg, name, position, headers, dataRows) {
  */
 function createTableTexts(headers, dataRows) {
     let headerSvgs = headers.map(createText);
-    let dataSvgs = dataRows.map(createText)
+    let dataSvgs = dataRows.flatMap(row => row.map(createText));
     return headerSvgs.concat(dataSvgs);
 }
 
