@@ -153,9 +153,9 @@ function addTable(svg, name, position, headers, dataRows) {
  * @param {string[][]} dataRows 
  */
 function createTableTexts(headers, dataRows) {
-    let text1 = createText("hello");
-    let text2 = createText("world");
-    return [text1, text2];
+    let headerSvgs = headers.map(createText);
+    let dataSvgs = dataRows.map(createText)
+    return headerSvgs.concat(dataSvgs);
 }
 
 /**
