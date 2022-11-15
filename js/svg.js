@@ -185,8 +185,7 @@ function getColumnWidths(texts, nColumns) {
     }
     for (let i = nColumns; i < texts.length; i++) {
         let width = getWidth(texts[i]);
-        console.log(width);
-        widths[i % nColumns] = Math.max(widths[i], width);
+        widths[i % nColumns] = Math.max(widths[i % nColumns], width);
     }
     return widths;
 }
