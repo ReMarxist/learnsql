@@ -183,6 +183,10 @@ function getColumnWidths(texts, nColumns) {
     for (let i = 0; i < nColumns; i++) {
         widths.push(getWidth(texts[i]));
     }
+    for (let i = nColumns; i < texts.length; i++) {
+        width = getWidth(texts[i]);
+        widths[i % nColumns] = Math.max(widths[i], width);
+    }
     return widths;
 }
 
