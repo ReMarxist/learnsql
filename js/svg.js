@@ -138,17 +138,17 @@ function removeAnimate(rect) {
  * @param {string[][]} dataRows Data that fills the table
  */
 function addTable(svg, name, position, headers, dataRows) {
-    addText(svg, "Таблица " + name, position);
     let texts = createTableTexts(headers, dataRows);
     texts.forEach(text => {
         text.setAttribute("x", 50);
         text.setAttribute("y", 50);
         svg.appendChild(text);
     })
+    addTableLabel(svg, name, position);
 }
 
 /**
- * Creates `<text>` tags for table
+ * Create `<text>` tags for table
  * @param {string[]} headers 
  * @param {string[][]} dataRows 
  */
@@ -156,4 +156,14 @@ function createTableTexts(headers, dataRows) {
     let text1 = createText("hello");
     let text2 = createText("world");
     return [text1, text2];
+}
+
+/**
+ * Add label for whole table
+ * @param {SVGSVGElement} svg 
+ * @param {string} name 
+ * @param {Object} position 
+ */
+function addTableLabel(svg, name, position) {
+    addText(svg, "Таблица " + name, position);
 }
