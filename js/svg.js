@@ -139,11 +139,7 @@ function removeAnimate(rect) {
  */
 function addTable(svg, name, position, headers, dataRows) {
     let texts = createTableTexts(headers, dataRows);
-    texts.forEach(text => {
-        text.setAttribute("x", 50);
-        text.setAttribute("y", 50);
-        svg.appendChild(text);
-    })
+    addTableTexts(svg, texts, position);
     addTableLabel(svg, name, position);
 }
 
@@ -156,6 +152,20 @@ function createTableTexts(headers, dataRows) {
     let headerSvgs = headers.map(createText);
     let dataSvgs = dataRows.flatMap(row => row.map(createText));
     return headerSvgs.concat(dataSvgs);
+}
+
+/**
+ * Calculate positions and add `<text>` to `svg`
+ * @param {SVGSVGElement} svg
+ * @param {SVGTextElement[]} texts 
+ * @param {Object} basePosition 
+ */
+function addTableTexts(svg, texts, basePosition) {
+    texts.forEach(text => {
+        text.setAttribute("x", 50);
+        text.setAttribute("y", 50);
+        svg.appendChild(text);
+    });
 }
 
 /**
