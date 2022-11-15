@@ -139,7 +139,7 @@ function removeAnimate(rect) {
  */
 function addTable(svg, name, position, headers, dataRows) {
     let texts = createTableTexts(headers, dataRows);
-    addTableTexts(svg, texts, position);
+    addTableTexts(svg, texts, position, headers.length);
     addTableLabel(svg, name, position);
 }
 
@@ -159,13 +159,43 @@ function createTableTexts(headers, dataRows) {
  * @param {SVGSVGElement} svg
  * @param {SVGTextElement[]} texts 
  * @param {Object} basePosition 
+ * @param {number} nColumns Number of columns in table
  */
-function addTableTexts(svg, texts, basePosition) {
-    texts.forEach(text => {
-        text.setAttribute("x", 50);
+function addTableTexts(svg, texts, basePosition, nColumns) {
+    let columnWidths = getColumnWidths(texts, nColumns);
+    let columnOffsets = getColumnOffsets(columnWidths);
+    texts.forEach((text, i) => {
+        text.setAttribute("x", columnOffsets[i % nColumns]);
         text.setAttribute("y", 50);
         svg.appendChild(text);
     });
+}
+
+/**
+ * Calculate column widths
+ * @param {SVGTextElement} texts 
+ * @param {number} nColumns 
+ */
+function getColumnWidths(texts, nColumns) {
+    let widths = [];
+    for (let i = 0; i < nColumns; i++) {
+        widths.push(30);
+    }
+    return widths;
+}
+
+/**
+ * Get offset of columns
+ * @param {number[]} columnWidths 
+ */
+function getColumnOffsets(columnWidths) {
+    let offsets = [];
+    let offset = 0;
+    for (let i = 0; i < columnWidths.length; i++) {
+        offsets.push(offset);
+        offset += columnWidths[i];
+    }
+    return offsets;
 }
 
 /**
