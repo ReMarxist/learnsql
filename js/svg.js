@@ -16,12 +16,9 @@ function addSvg(container) {
  * @param {number} position.y
  */
 function addText(svg, text, position) {
-    const ns = "http://www.w3.org/2000/svg";
-    let textEl = document.createElementNS(ns, "text");
-    textEl.textContent = text;
+    let textEl = createText(text);
     textEl.setAttribute("x", position.x);
     textEl.setAttribute("y", position.y);
-    textEl.style.font = "14px sans-serif";
     svg.appendChild(textEl);
     return textEl;
 }
@@ -68,6 +65,18 @@ function createSvg() {
     svg.style.width = "800px";
     svg.style.height = "600px";
     return svg;
+}
+
+/**
+ * Create `<text>` tag with `text` content and basic font
+ * @param {string} text 
+ */
+function createText(text) {
+    const ns = "http://www.w3.org/2000/svg";
+    let textEl = document.createElementNS(ns, "text");
+    textEl.textContent = text;
+    textEl.style.font = "14px sans-serif";
+    return textEl;
 }
 
 /**
