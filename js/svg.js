@@ -119,3 +119,15 @@ function animate(rect, target) {
 function removeAnimate(rect) {
     rect.querySelectorAll(".animate").forEach(el => el.remove());
 }
+
+/**
+ * Create svg table
+ * @param {SVGSVGElement} svg
+ * @param {string} name Table name
+ * @param {Object} position Position of table
+ * @param {string} header Headers of table (names of columns)
+ * @param {string[][]} dataRows Data that fills the table
+ */
+function addTable(svg, name, position, header, dataRows) {
+    addText(svg, "Таблица " + name, position);
+}
