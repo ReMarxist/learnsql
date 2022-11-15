@@ -46,6 +46,8 @@ function createSvg() {
     svg.style.borderColor = "#1a73e8";
     svg.style.borderStyle = "solid";
     svg.style.borderWidth = "1px";
+    svg.style.width = "800px";
+    svg.style.height = "1200px";
     return svg;
 }
 
