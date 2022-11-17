@@ -172,7 +172,8 @@ function addTableTexts(svg, texts, basePosition, nColumns) {
     let columnWidths = getColumnWidths(texts, nColumns);
     let columnOffsets = getColumnOffsets(columnWidths);
     texts.forEach((text, i) => {
-        text.setAttribute("x", basePosition.x + columnOffsets[i % nColumns]);
+        const labelHeight = 50;
+        text.setAttribute("x", basePosition.x + labelHeight + columnOffsets[i % nColumns]);
         text.setAttribute("y", basePosition.y + Math.floor(i / nColumns) * 50);
     });
     return sum(columnWidths);
