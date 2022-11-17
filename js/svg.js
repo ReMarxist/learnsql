@@ -218,8 +218,8 @@ function getColumnOffsets(columnWidths) {
  * Add label for whole table
  * @param {SVGSVGElement} svg 
  * @param {string} name 
- * @param {Object} position 
+ * @param {Object} tablePosition 
  */
-function addTableLabel(svg, name, position) {
-    addText(svg, "Таблица " + name, position);
+function addTableLabel(svg, name, tablePosition) {
+    addText(svg, "Table " + name, tablePosition);
 }
