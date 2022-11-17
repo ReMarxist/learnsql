@@ -158,7 +158,9 @@ function createTableTexts(headers, dataRows) {
  * Calculate positions and add `<text>` to `svg`
  * @param {SVGSVGElement} svg
  * @param {SVGTextElement[]} texts 
- * @param {Object} basePosition 
+ * @param {Object} basePosition Top-left dot of table
+ * @param {number} basePosition.x
+ * @param {number} basePosition.y
  * @param {number} nColumns Number of columns in table
  */
 function addTableTexts(svg, texts, basePosition, nColumns) {
@@ -168,8 +170,8 @@ function addTableTexts(svg, texts, basePosition, nColumns) {
     let columnWidths = getColumnWidths(texts, nColumns);
     let columnOffsets = getColumnOffsets(columnWidths);
     texts.forEach((text, i) => {
-        text.setAttribute("x", columnOffsets[i % nColumns]);
-        text.setAttribute("y", 50);
+        text.setAttribute("x", basePosition.x + columnOffsets[i % nColumns]);
+        text.setAttribute("y", basePosition.y + Math.floor(i / nColumns) * 50);
     });
 }
 
