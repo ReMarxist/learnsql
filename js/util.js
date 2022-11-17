@@ -20,3 +20,26 @@ function addDiv() {
     document.body.appendChild(div);
     return div;
 }
+
+/**
+ * Get sum of `arr` elements
+ * @param {number[]} arr 
+ */
+function sum(arr) {
+    return columnWidths.reduce((a, b) => a + b);
+}
+
+/**
+ * Returns new dot, moved horizontally by `x`
+ * @param {number} dot.x
+ * @param {number} dot.y
+ * @param {number} dot
+ * @param {number} x
+ */
+function movedHorizontally(dot, x) {
+    let newDot = {
+        x: dot.x + x,
+        y: dot.y
+    };
+    return newDot;
+}

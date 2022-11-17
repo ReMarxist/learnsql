@@ -139,8 +139,8 @@ function removeAnimate(rect) {
  */
 function addTable(svg, name, position, headers, dataRows) {
     let texts = createTableTexts(headers, dataRows);
-    addTableTexts(svg, texts, position, headers.length);
-    addTableLabel(svg, name, position);
+    let tableWidth = addTableTexts(svg, texts, position, headers.length);
+    addTableLabel(svg, name, position, tableWidth);
 }
 
 /**
@@ -162,9 +162,11 @@ function createTableTexts(headers, dataRows) {
  * @param {number} basePosition.x
  * @param {number} basePosition.y
  * @param {number} nColumns Number of columns in table
+ * @returns {number} Table width
  */
 function addTableTexts(svg, texts, basePosition, nColumns) {
     texts.forEach((text, i) => {
+        // Append texts to svg before calculating their sizes
         svg.appendChild(text);
     });
     let columnWidths = getColumnWidths(texts, nColumns);
@@ -173,6 +175,7 @@ function addTableTexts(svg, texts, basePosition, nColumns) {
         text.setAttribute("x", basePosition.x + columnOffsets[i % nColumns]);
         text.setAttribute("y", basePosition.y + Math.floor(i / nColumns) * 50);
     });
+    return sum(columnWidths);
 }
 
 /**
@@ -218,8 +221,12 @@ function getColumnOffsets(columnWidths) {
  * Add label for whole table
  * @param {SVGSVGElement} svg 
  * @param {string} name 
- * @param {Object} tablePosition 
+ * @param {Object} tablePosition Top-left dot of table
+ * @param {number} tablePosition.x
+ * @param {number} tablePosition.y
+ * @param {number} tableWidth
  */
-function addTableLabel(svg, name, tablePosition) {
-    addText(svg, "Table " + name, tablePosition);
+function addTableLabel(svg, name, tablePosition, tableWidth) {
+    let position = movedHorizontally(tablePosition, tableWidth / 2);
+    addText(svg, "Table " + name, position);
 }
