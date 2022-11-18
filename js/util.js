@@ -30,6 +30,14 @@ function sum(arr) {
 }
 
 /**
+ * Get maximum of `arr` elements
+ * @param {number[]} arr 
+ */
+function max(arr) {
+    return arr.reduce(Math.max);
+}
+
+/**
  * Returns new dot, moved horizontally by `x`
  * @param {number} dot.x
  * @param {number} dot.y

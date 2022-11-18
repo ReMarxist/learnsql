@@ -165,19 +165,22 @@ function createTableTexts(headers, dataRows) {
  * @returns {number} Table width
  */
 function addTableTexts(svg, texts, basePosition, nColumns) {
-    texts.forEach((text, i) => {
+    texts.forEach(text => {
         // Append texts to svg before calculating their sizes
         svg.appendChild(text);
     });
     let columnWidths = getColumnWidths(texts, nColumns);
     let columnOffsets = getColumnOffsets(columnWidths);
+    let rowHeight = getMaxHeight(texts);
     texts.forEach((text, i) => {
-        const labelHeight = 50;
         const columnWidth = columnWidths[i % nColumns];
         const columnOffset = columnOffsets[i % nColumns];
         const x = basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset;
         text.setAttribute("x", x);
-        text.setAttribute("y", basePosition.y + labelHeight + Math.floor(i / nColumns) * 50);
+
+        const labelHeight = 50;
+        const y = basePosition.y + labelHeight + Math.floor(i / nColumns) * rowHeight;
+        text.setAttribute("y", y);
     });
     return sum(columnWidths);
 }
@@ -233,4 +236,21 @@ function getColumnOffsets(columnWidths) {
 function addTableLabel(svg, name, tablePosition, tableWidth) {
     let position = movedHorizontally(tablePosition, tableWidth / 2);
     addText(svg, "Table " + name, position);
+}
+
+/**
+ * Get max height of `<text>`
+ * @param {SVGTextElement[]} texts 
+ */
+function getMaxHeight(texts) {
+    let heights = texts.map(getHeight);
+    return max(heights);
+}
+
+/**
+ * Get height of `<text>` element
+ * @param {SVGTextElement} text 
+ */
+function getHeight(text) {
+    return text.getBoundingClientRect().height;
 }
