@@ -244,6 +244,7 @@ function addTableLabel(svg, name, tablePosition, tableWidth) {
  */
 function getMaxHeight(texts) {
     let heights = texts.map(getHeight);
+    console.log(heights);
     return max(heights);
 }
 
