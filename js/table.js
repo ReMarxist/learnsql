@@ -8,8 +8,9 @@
  */
  function addTable(svg, name, position, headers, dataRows) {
     let texts = createTableTexts(headers, dataRows);
-    let tableWidth = addTableTexts(svg, texts, position, headers.length);
     let label = addTableLabel(svg, name, position, tableWidth);
+    let textsPosition = movedVertically(position, getHeight(label));
+    let tableWidth = addTableTexts(svg, texts, position, headers.length);
     positionTableLabel(label, position, tableWidth);
 }
 

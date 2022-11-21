@@ -40,15 +40,31 @@ function max(arr) {
 
 /**
  * Returns new dot, moved horizontally by `x`
+ * @param {Object} dot
  * @param {number} dot.x
  * @param {number} dot.y
- * @param {number} dot
- * @param {number} x
+ * @param {number} offset
  */
-function movedHorizontally(dot, x) {
+function movedHorizontally(dot, offset) {
     let newDot = {
-        x: dot.x + x,
+        x: dot.x + offset,
         y: dot.y
+    };
+    return newDot;
+}
+
+
+/**
+ * Returns new dot, moved horizontally by `x`
+ * @param {Object} dot
+ * @param {number} dot.x
+ * @param {number} dot.y
+ * @param {number} offset
+ */
+ function movedVertically(dot, offset) {
+    let newDot = {
+        x: dot.x,
+        y: dot.y + offset
     };
     return newDot;
 }
