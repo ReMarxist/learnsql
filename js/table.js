@@ -159,6 +159,7 @@ function addTableLines(table, tablePosition) {
             "x2": x,
             "y1": tablePosition.y,
             "y2": tablePosition.y + table.height,
+            "stroke": "black",
         });
         table.svg.appendChild(line);
     }
