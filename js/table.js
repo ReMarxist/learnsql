@@ -81,8 +81,8 @@ function addTableLabel(svg, name, tablePosition, tableWidth) {
  * @param {number} tableWidth
  */
 function positionTableLabel(label, tablePosition, tableWidth) {
-    text.setAttribute("x", tablePosition.x + (tableWidth - getWidth(text)) / 2);
-    text.setAttribute("y", tablePosition.y);
+    label.setAttribute("x", tablePosition.x + (tableWidth - getWidth(label)) / 2);
+    label.setAttribute("y", tablePosition.y);
 }
 
 /**
