@@ -64,6 +64,7 @@ function createSvg() {
     svg.style.borderWidth = "1px";
     svg.style.width = "800px";
     svg.style.height = "600px";
+    svg.style.font = "14px sans-serif";
     return svg;
 }
 
@@ -75,7 +76,6 @@ function createText(text) {
     const ns = "http://www.w3.org/2000/svg";
     let textEl = document.createElementNS(ns, "text");
     textEl.textContent = text;
-    textEl.style.font = "14px sans-serif";
     return textEl;
 }
 
