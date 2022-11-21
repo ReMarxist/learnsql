@@ -8,7 +8,7 @@
  */
  function addTable(svg, name, position, headers, dataRows) {
     let texts = createTableTexts(headers, dataRows);
-    let label = addTableLabel(svg, name, position, tableWidth);
+    let label = addTableLabel(svg, name);
     let textsPosition = movedVertically(position, getHeight(label));
     let tableWidth = addTableTexts(svg, texts, position, headers.length);
     positionTableLabel(label, position, tableWidth);
@@ -62,12 +62,8 @@ function addTableTexts(svg, texts, basePosition, nColumns) {
  * Add label for whole table
  * @param {SVGSVGElement} svg 
  * @param {string} name 
- * @param {Object} tablePosition Top-left dot of table
- * @param {number} tablePosition.x
- * @param {number} tablePosition.y
- * @param {number} tableWidth
  */
-function addTableLabel(svg, name, tablePosition, tableWidth) {
+function addTableLabel(svg, name) {
     let label = createText("Table " + name);
     svg.appendChild(label);
     return label;
