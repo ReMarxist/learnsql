@@ -8,7 +8,7 @@ class Table {
         /** @type {number[]} */
         this.columnWidths = null;
         /** @type {number} */
-        this.tableHeight = null;
+        this.height = null;
     }
 }
 
@@ -72,7 +72,7 @@ function addTableTexts(table, texts, basePosition, nColumns) {
         text.setAttribute("y", y);
     });
     table.columnWidths = columnWidths;
-    table.tableHeight = texts.length / nColumns * rowHeight;
+    table.height = texts.length / nColumns * rowHeight;
 }
 
 /**
@@ -156,7 +156,7 @@ function addTableLines(table, tablePosition) {
         line.setAttribute("x1", x);
         line.setAttribute("x2", x);
         line.setAttribute("y1", tablePosition.y);
-        line.setAttribute("y2", tablePosition.y + table.tableHeight);
+        line.setAttribute("y2", tablePosition.y + table.height);
         table.svg.appendChild(line);
     }
 }
