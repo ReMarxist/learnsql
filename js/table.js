@@ -10,7 +10,7 @@
     let texts = createTableTexts(headers, dataRows);
     let label = addTableLabel(svg, name);
     let textsPosition = movedVertically(position, getHeight(label));
-    let tableWidth = addTableTexts(svg, texts, position, headers.length);
+    let tableWidth = addTableTexts(svg, texts, textsPosition, headers.length);
     positionTableLabel(label, position, tableWidth);
 }
 
