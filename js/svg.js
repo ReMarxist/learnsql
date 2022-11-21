@@ -25,7 +25,7 @@ function addRect(svg, params) {
  */
 function createSvg() {
     let svg = createSvgElement("svg");
-    svg.style.borderColor = "#1a73e8";
+    svg.style.borderColor = "black";
     svg.style.borderStyle = "solid";
     svg.style.borderWidth = "1px";
     svg.style.width = "800px";
