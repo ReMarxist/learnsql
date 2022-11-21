@@ -9,7 +9,8 @@
  function addTable(svg, name, position, headers, dataRows) {
     let texts = createTableTexts(headers, dataRows);
     let tableWidth = addTableTexts(svg, texts, position, headers.length);
-    addTableLabel(svg, name, position, tableWidth);
+    let label = addTableLabel(svg, name, position, tableWidth);
+    positionTableLabel(label, position, tableWidth);
 }
 
 /**
@@ -50,8 +51,7 @@ function addTableTexts(svg, texts, basePosition, nColumns) {
         const x = basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset;
         text.setAttribute("x", x);
 
-        const labelHeight = 50;
-        const y = basePosition.y + labelHeight + Math.floor(i / nColumns) * rowHeight;
+        const y = basePosition.y + Math.floor(i / nColumns) * rowHeight;
         text.setAttribute("y", y);
     });
     return sum(columnWidths);
@@ -67,8 +67,20 @@ function addTableTexts(svg, texts, basePosition, nColumns) {
  * @param {number} tableWidth
  */
 function addTableLabel(svg, name, tablePosition, tableWidth) {
-    let text = createText("Table " + name);
-    svg.appendChild(text);
+    let label = createText("Table " + name);
+    svg.appendChild(label);
+    return label;
+}
+
+/**
+ * Position label for whole table
+ * @param {SVGTextElement} label 
+ * @param {Object} tablePosition Top-left dot of table
+ * @param {number} tablePosition.x
+ * @param {number} tablePosition.y
+ * @param {number} tableWidth
+ */
+function positionTableLabel(label, tablePosition, tableWidth) {
     text.setAttribute("x", tablePosition.x + (tableWidth - getWidth(text)) / 2);
     text.setAttribute("y", tablePosition.y);
 }
