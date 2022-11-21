@@ -91,11 +91,13 @@ function animate(rect, target) {
     animate.setAttribute("attributeName", "x");
     let parentX = rect.parentElement.getBoundingClientRect().x;
     let currentX = rect.getBoundingClientRect().x - parentX;
-    animate.setAttribute("from", currentX);
-    animate.setAttribute("to", target.x);
-    animate.setAttribute("dur", "1s");
-    animate.setAttribute("repeatCount", "1");
-    animate.setAttribute("fill", "freeze");
+    setAttributes(animate, {
+        "from": currentX,
+        "to": target.x,
+        "dur": "1s",
+        "repeatCount": "1",
+        "fill": "freeze",
+    })
     rect.appendChild(animate);
     animate.beginElement();
 }
@@ -130,4 +132,16 @@ function getWidth(text) {
 function createSvgElement(type) {
     const ns = "http://www.w3.org/2000/svg";
     return document.createElementNS(ns, type);
+}
+
+/**
+ * Set attributes of svg `element` using `setAttribute(...)`
+ * @param {SVGElement} element 
+ * @param {Object.<string, string>} attributes Dictionary with 
+ * attribute names and values
+ */
+function setAttributes(element, attributes) {
+    for (let key of Object.keys(attributes)) {
+        element.setAttribute(key, attributes[key]);
+    }
 }
