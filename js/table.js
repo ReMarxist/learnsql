@@ -27,7 +27,7 @@ class Table {
     let textsPosition = movedVertically(position, getHeight(label));
     addTableTexts(table, texts, textsPosition, headers.length);
     addTableLines(table, position);
-    positionTableLabel(label, position, columnWidths);
+    positionTableLabel(table, label, position);
 }
 
 /**
@@ -88,14 +88,15 @@ function addTableLabel(svg, name) {
 
 /**
  * Position label for whole table
+ * @param {Table} table 
  * @param {SVGTextElement} label 
  * @param {Object} tablePosition Top-left dot of table
  * @param {number} tablePosition.x
  * @param {number} tablePosition.y
  * @param {number[]} columnWidths
  */
-function positionTableLabel(label, tablePosition, columnWidths) {
-    let tableWidth = sum(columnWidths);
+function positionTableLabel(table, label, tablePosition, columnWidths) {
+    let tableWidth = sum(table.columnWidths);
     label.setAttribute("x", tablePosition.x + (tableWidth - getWidth(label)) / 2);
     label.setAttribute("y", tablePosition.y);
 }
