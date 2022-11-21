@@ -65,11 +65,10 @@ function addTableTexts(table, texts, basePosition, nColumns) {
     texts.forEach((text, i) => {
         const columnWidth = columnWidths[i % nColumns];
         const columnOffset = columnOffsets[i % nColumns];
-        const x = basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset;
-        text.setAttribute("x", x);
-
-        const y = basePosition.y + Math.floor(i / nColumns) * rowHeight;
-        text.setAttribute("y", y);
+        setAttributes(text, {
+            "x": basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset,
+            "y": basePosition.y + Math.floor(i / nColumns) * rowHeight,
+        });
     });
     table.columnWidths = columnWidths;
     table.height = texts.length / nColumns * rowHeight;
@@ -97,8 +96,10 @@ function addTableLabel(svg, name) {
  */
 function positionTableLabel(table, label, tablePosition, columnWidths) {
     let tableWidth = sum(table.columnWidths);
-    label.setAttribute("x", tablePosition.x + (tableWidth - getWidth(label)) / 2);
-    label.setAttribute("y", tablePosition.y);
+    setAttributes(label, {
+        "x": tablePosition.x + (tableWidth - getWidth(label)) / 2,
+        "y": tablePosition.y,
+    });
 }
 
 /**
@@ -153,10 +154,12 @@ function addTableLines(table, tablePosition) {
     for (let i = 0; i < table.columnWidths.length - 1; i++) {
         let line = createSvgElement("line");
         let x = tablePosition.x + columnOffsets[i];
-        line.setAttribute("x1", x);
-        line.setAttribute("x2", x);
-        line.setAttribute("y1", tablePosition.y);
-        line.setAttribute("y2", tablePosition.y + table.height);
+        setAttributes(line, {
+            "x1": x,
+            "x2": x,
+            "y1": tablePosition.y,
+            "y2": tablePosition.y + table.height,
+        });
         table.svg.appendChild(line);
     }
 }

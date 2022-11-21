@@ -1,7 +1,7 @@
 let div = addDiv();
 let svg = addSvg(div);
 
-addControlButtonScenario();
+addTableScenario();
 
 function addTableScenario() {
     let headers = ["Rank", "Company", "Country", "Industry", "Revenue"];

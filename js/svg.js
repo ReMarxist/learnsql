@@ -21,22 +21,6 @@ function addRect(svg, params) {
 }
 
 /**
- * Create, append and return animation to `rect`
- * @param {SVGRect} rect 
- */
-function addAnimation(rect) {
-    let animate = createSvgElement("animate");
-    animate.setAttribute("attributeName", "x");
-    animate.setAttribute("values", "20;80");
-    animate.setAttribute("dur", "3s");
-    animate.setAttribute("repeatCount", "1");
-    animate.setAttribute("begin", "controlButton.click");
-    rect.setAttribute("x", "80");
-    rect.appendChild(animate);
-    return animate;
-}
-
-/**
  * Create svg
  */
 function createSvg() {
@@ -68,13 +52,15 @@ function createText(text) {
  */
 function createRect(params) {
     let rect = createSvgElement("rect");
-    rect.setAttribute("x", params.x);
-    rect.setAttribute("y", params.y);
-    rect.setAttribute("height", "50");
-    rect.setAttribute("width", "50");
-    rect.setAttribute("fill", "white");
-    rect.setAttribute("stroke", "#1a73e8");
-    rect.setAttribute("rx", "5");
+    setAttributes(rect, {
+        "x": params.x,
+        "y": params.y,
+        "height": "50",
+        "width": "50",
+        "fill": "white",
+        "stroke": "#1a73e8",
+        "rx": "5",
+    });
     return rect;
 }
 
