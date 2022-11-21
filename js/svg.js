@@ -8,22 +8,6 @@ function addSvg(container) {
 }
 
 /**
- * Create, append to `svg` and return `<text>` tag
- * @param {SVGSVGElement} svg 
- * @param {string} text 
- * @param {Object} position Position of text
- * @param {number} position.x
- * @param {number} position.y
- */
-function addText(svg, text, position) {
-    let textEl = createText(text);
-    textEl.setAttribute("x", position.x);
-    textEl.setAttribute("y", position.y);
-    svg.appendChild(textEl);
-    return textEl;
-}
-
-/**
  * Create, append and return rect
  * @param {SVGSVGElement} svg
  * @param {Object} params

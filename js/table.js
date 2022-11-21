@@ -67,8 +67,10 @@ function addTableTexts(svg, texts, basePosition, nColumns) {
  * @param {number} tableWidth
  */
 function addTableLabel(svg, name, tablePosition, tableWidth) {
-    let position = movedHorizontally(tablePosition, tableWidth / 2);
-    addText(svg, "Table " + name, position);
+    let text = createText("Table " + name);
+    svg.appendChild(text);
+    text.setAttribute("x", tablePosition.x + (tableWidth - getWidth(text)) / 2);
+    text.setAttribute("y", tablePosition.y);
 }
 
 /**
