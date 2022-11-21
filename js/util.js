@@ -34,6 +34,7 @@ function sum(arr) {
  * @param {number[]} arr 
  */
 function max(arr) {
+    console.log(arr);
     return arr.reduce(Math.max);
 }
 

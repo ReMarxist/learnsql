@@ -172,7 +172,6 @@ function addTableTexts(svg, texts, basePosition, nColumns) {
     let columnWidths = getColumnWidths(texts, nColumns);
     let columnOffsets = getColumnOffsets(columnWidths);
     let rowHeight = getMaxHeight(texts);
-    console.log(rowHeight);
     texts.forEach((text, i) => {
         const columnWidth = columnWidths[i % nColumns];
         const columnOffset = columnOffsets[i % nColumns];
