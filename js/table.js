@@ -151,7 +151,7 @@ function getMaxHeight(texts) {
  */
 function addTableLines(table, tablePosition) {
     let columnOffsets = getColumnOffsets(table.columnWidths);
-    for (let i = 0; i < table.columnWidths.length - 1; i++) {
+    for (let i = 1; i < table.columnWidths.length; i++) {
         let line = createSvgElement("line");
         let x = tablePosition.x + columnOffsets[i];
         setAttributes(line, {
