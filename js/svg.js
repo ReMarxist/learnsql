@@ -25,8 +25,7 @@ function addRect(svg, params) {
  * @param {SVGRect} rect 
  */
 function addAnimation(rect) {
-    const ns = "http://www.w3.org/2000/svg";
-    let animate = document.createElementNS(ns, "animate");
+    let animate = createSvgElement("animate");
     animate.setAttribute("attributeName", "x");
     animate.setAttribute("values", "20;80");
     animate.setAttribute("dur", "3s");
@@ -41,8 +40,7 @@ function addAnimation(rect) {
  * Create svg
  */
 function createSvg() {
-    const ns = "http://www.w3.org/2000/svg";
-    let svg = document.createElementNS(ns, "svg");
+    let svg = createSvgElement("svg");
     svg.style.borderColor = "#1a73e8";
     svg.style.borderStyle = "solid";
     svg.style.borderWidth = "1px";
@@ -57,8 +55,7 @@ function createSvg() {
  * @param {string} text 
  */
 function createText(text) {
-    const ns = "http://www.w3.org/2000/svg";
-    let textEl = document.createElementNS(ns, "text");
+    let textEl = createSvgElement("text");
     textEl.textContent = text;
     return textEl;
 }
@@ -70,8 +67,7 @@ function createText(text) {
  * @param {number} params.y
  */
 function createRect(params) {
-    const ns = "http://www.w3.org/2000/svg";
-    let rect = document.createElementNS(ns, "rect");
+    let rect = createSvgElement("rect");
     rect.setAttribute("x", params.x);
     rect.setAttribute("y", params.y);
     rect.setAttribute("height", "50");
@@ -91,8 +87,7 @@ function createRect(params) {
  */
 function animate(rect, target) {
     removeAnimate(rect);
-    const ns = "http://www.w3.org/2000/svg";
-    let animate = document.createElementNS(ns, "animate");
+    let animate = createSvgElement("animate");
     animate.setAttribute("attributeName", "x");
     let parentX = rect.parentElement.getBoundingClientRect().x;
     let currentX = rect.getBoundingClientRect().x - parentX;
@@ -127,4 +122,12 @@ function getHeight(text) {
  */
 function getWidth(text) {
     return text.getBoundingClientRect().width;
+}
+
+/**
+ * @type {<K extends keyof SVGElementTagNameMap>(qualifiedName: K) => SVGElementTagNameMap[K]}
+ */
+function createSvgElement(type) {
+    const ns = "http://www.w3.org/2000/svg";
+    return document.createElementNS(ns, type);
 }
