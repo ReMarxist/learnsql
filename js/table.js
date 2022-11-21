@@ -19,6 +19,9 @@
  */
 function createTableTexts(headers, dataRows) {
     let headerSvgs = headers.map(createText);
+    headerSvgs.forEach(el => {
+        el.style.fontWeight = "bold";
+    });
     let dataSvgs = dataRows.flatMap(row => row.map(createText));
     return headerSvgs.concat(dataSvgs);
 }
@@ -38,9 +41,6 @@ function addTableTexts(svg, texts, basePosition, nColumns) {
         // Append texts to svg before calculating their sizes
         svg.appendChild(text);
     });
-    for (let i = 0; i < nColumns; ++i) {
-        texts[i].style.fontWeight = "bold";
-    }
     let columnWidths = getColumnWidths(texts, nColumns);
     let columnOffsets = getColumnOffsets(columnWidths);
     let rowHeight = getMaxHeight(texts);
