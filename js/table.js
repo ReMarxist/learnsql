@@ -26,7 +26,7 @@ class Table {
     let label = addTableLabel(svg, name);
     let textsPosition = movedVertically(position, getHeight(label));
     addTableTexts(table, texts, textsPosition, headers.length);
-    addTableLines(table, position, columnWidths, tableHeight);
+    addTableLines(table, position);
     positionTableLabel(label, position, columnWidths);
 }
 
@@ -146,11 +146,10 @@ function getMaxHeight(texts) {
  * @param {Object} tablePosition
  * @param {number} tablePosition.x
  * @param {number} tablePosition.y
- * @param {number[]} columnWidths Widths of table columns
  */
-function addTableLines(table, tablePosition, columnWidths, tableHeight) {
-    let columnOffsets = getColumnOffsets(columnWidths);
-    for (let i = 0; i < columnWidths.length - 1; i++) {
+function addTableLines(table, tablePosition) {
+    let columnOffsets = getColumnOffsets(table.columnWidths);
+    for (let i = 0; i < table.columnWidths.length - 1; i++) {
         let line = createSvgElement("line");
         let x = tablePosition.x + columnOffsets[i];
         line.setAttribute("x1", x);
