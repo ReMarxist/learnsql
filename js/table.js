@@ -9,7 +9,27 @@ class Table {
         this.columnWidths = null;
         /** @type {number} */
         this.height = null;
+        /** @type {SVGTextElement[]} */
+        this.texts = null;
     }
+
+    /**
+     * Create `<text>` tags and append them to svg
+     * @param {string[]} headers 
+     * @param {string[][]} dataRows 
+     */
+    addTexts(headers, dataRows) {
+        let headerSvgs = headers.map(createText);
+        headerSvgs.forEach(el => {
+            el.style.fontWeight = "bold";
+        });
+        let dataSvgs = dataRows.flatMap(row => row.map(createText));
+        this.texts = headerSvgs.concat(dataSvgs);
+        this.texts.forEach(text => {
+            // Append texts to svg before calculating their sizes
+            this.svg.appendChild(text);
+        });
+    } 
 }
 
 /**
@@ -22,10 +42,10 @@ class Table {
  */
  function addTable(svg, name, position, headers, dataRows) {
     let table = new Table(svg);
-    let texts = createTableTexts(headers, dataRows);
+    table.createTexts(headers, dataRows);
     let label = addTableLabel(svg, name);
     let textsPosition = movedVertically(position, getHeight(label));
-    addTableTexts(table, texts, textsPosition, headers.length);
+    placeTableTexts(table, textsPosition, headers.length);
     addTableLines(table, position);
     positionTableLabel(table, label, position);
 }
@@ -45,7 +65,7 @@ function createTableTexts(headers, dataRows) {
 }
 
 /**
- * Calculate positions and add `<text>` to `svg`
+ * Calculate positions and place `<text>`s on `<svg>`
  * @param {Table} table
  * @param {SVGTextElement[]} texts 
  * @param {Object} basePosition Top-left dot of table
@@ -54,11 +74,7 @@ function createTableTexts(headers, dataRows) {
  * @param {number} nColumns Number of columns in table
  * @returns {number} Table width
  */
-function addTableTexts(table, texts, basePosition, nColumns) {
-    texts.forEach(text => {
-        // Append texts to svg before calculating their sizes
-        table.svg.appendChild(text);
-    });
+function placeTableTexts(table, texts, basePosition, nColumns) {
     let columnWidths = getColumnWidths(texts, nColumns);
     let columnOffsets = getColumnOffsets(columnWidths);
     let rowHeight = getMaxHeight(texts);
