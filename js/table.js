@@ -100,8 +100,8 @@ class Table {
             });
         });
         this.nColumns = headers.length;
-        this.nRows = this.texts.length / this.nColumns;
         this.texts = headerSvgs.concat(dataSvgs);
+        this.nRows = this.texts.length / this.nColumns;
         this.texts.forEach(text => {
             // Append texts to svg before calculating their sizes
             this.svg.appendChild(text);
