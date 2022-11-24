@@ -56,11 +56,7 @@ function createRect(params) {
         "y": params.y,
         "height": "50",
         "width": "50",
-        "fill": "white",
-        "stroke": "white",
-        "rx": "5",
     });
-    rect.style.filter = "drop-shadow( 3px 3px 2px rgba(200, 200, 200, .7))";
     return rect;
 }
 

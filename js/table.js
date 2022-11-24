@@ -33,6 +33,12 @@ class Table {
 
     addCard() {
         this.card = addRect(this.svg, this.position);
+        setAttributes(rect, {
+            "fill": "white",
+            "stroke": "white",
+            "rx": "5",
+        });
+        rect.style.filter = "drop-shadow(3px 3px 2px rgba(200, 200, 200, .7))";
     }
 
     addLabelRect() {
@@ -167,7 +173,7 @@ function placeTableTexts(table) {
     });
     table.width = sum(table.columnWidths);
     table.height = table.lidHeight
-        + table.labelHeight 
+        + table.labelHeight
         + table.texts.length / table.nColumns * table.rowHeight;
 }
 
