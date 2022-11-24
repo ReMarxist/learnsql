@@ -130,6 +130,8 @@ function getColumnWidths(texts, nColumns) {
         let width = getWidth(texts[i]);
         widths[i % nColumns] = Math.max(widths[i % nColumns], width);
     }
+    const columnMargin = 10;
+    widths = widths.map(w => w + columnMargin);
     return widths;
 }
 
