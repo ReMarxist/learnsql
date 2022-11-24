@@ -11,6 +11,8 @@ class Table {
         this.height = null;
         /** @type {SVGTextElement[]} */
         this.texts = null;
+        /** @type {SVGTextElement} */
+        this.label = null;
     }
 
     /**
@@ -29,7 +31,16 @@ class Table {
             // Append texts to svg before calculating their sizes
             this.svg.appendChild(text);
         });
-    } 
+    }
+
+    /**
+     * Add label for whole table
+     * @param {string} name Table name
+     */
+    addLabel(name) {
+        this.label = createText(name);
+        this.svg.appendChild(label);
+    }
 }
 
 /**
@@ -43,10 +54,10 @@ class Table {
  function addTable(svg, name, position, headers, dataRows) {
     let table = new Table(svg);
     table.addTexts(headers, dataRows);
-    let label = addTableLabel(svg, name);
-    let textsPosition = movedVertically(position, getHeight(label));
+    table.addLabel(name);
+    let textsPosition = movedVertically(position, getHeight(table.label));
     placeTableTexts(table, textsPosition, headers.length);
-    positionTableLabel(table, label, position);
+    positionTableLabel(table, table.label, position);
 }
 
 /**
@@ -87,17 +98,6 @@ function placeTableTexts(table, basePosition, nColumns) {
     });
     table.columnWidths = columnWidths;
     table.height = table.texts.length / nColumns * rowHeight;
-}
-
-/**
- * Add label for whole table
- * @param {SVGSVGElement} svg 
- * @param {string} name 
- */
-function addTableLabel(svg, name) {
-    let label = createText("Table " + name);
-    svg.appendChild(label);
-    return label;
 }
 
 /**
