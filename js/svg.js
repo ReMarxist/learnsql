@@ -25,9 +25,6 @@ function addRect(svg, params) {
  */
 function createSvg() {
     let svg = createSvgElement("svg");
-    svg.style.borderColor = "black";
-    svg.style.borderStyle = "solid";
-    svg.style.borderWidth = "1px";
     svg.style.width = "800px";
     svg.style.height = "600px";
     svg.style.font = "14px system-ui";
@@ -60,9 +57,10 @@ function createRect(params) {
         "height": "50",
         "width": "50",
         "fill": "white",
-        "stroke": "#1a73e8",
+        "stroke": "white",
         "rx": "5",
     });
+    rect.style.filter = "drop-shadow( 3px 3px 2px rgba(200, 200, 200, .7))";
     return rect;
 }
 
