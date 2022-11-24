@@ -41,6 +41,7 @@ function createSvg() {
 function createText(text) {
     let textEl = createSvgElement("text");
     textEl.textContent = text;
+    textEl.style.alignmentBaseline = "hanging";
     return textEl;
 }
 
