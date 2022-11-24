@@ -11,6 +11,8 @@ class Table {
         /** @type {number[]} */
         this.columnWidths = null;
         /** @type {number} */
+        this.rowHeight = null;
+        /** @type {number} */
         this.height = null;
         /** @type {number} */
         this.width = null;
@@ -78,8 +80,7 @@ class Table {
     table.addCard();
     table.addTexts(headers, dataRows);
     table.addLabel(name);
-    let textsPosition = movedVertically(position, getHeight(table.label));
-    placeTableTexts(table, textsPosition, headers.length);
+    placeTableTexts(table, headers.length);
     placeTableLabel(table, table.label, position);
     table.resizeCard();
 }
@@ -106,21 +107,23 @@ function createTableTexts(headers, dataRows) {
  * @param {number} nColumns Number of columns in table
  * @returns {number} Table width
  */
-function placeTableTexts(table, basePosition, nColumns) {
+function placeTableTexts(table, nColumns) {
+    let labelHeight = getHeight(table.label);
+    let textsPosition = movedVertically(table.position, labelHeight);
     let columnWidths = getColumnWidths(table.texts, nColumns);
     let columnOffsets = getColumnOffsets(columnWidths);
-    let rowHeight = getMaxHeight(table.texts);
+    table.rowHeight = getMaxHeight(table.texts);
     table.texts.forEach((text, i) => {
         const columnWidth = columnWidths[i % nColumns];
         const columnOffset = columnOffsets[i % nColumns];
         setAttributes(text, {
             "x": basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset,
-            "y": basePosition.y + Math.floor(i / nColumns) * rowHeight,
+            "y": basePosition.y + Math.floor(i / nColumns) * table.rowHeight,
         });
     });
     table.columnWidths = columnWidths;
     table.width = sum(table.columnWidths);
-    table.height = table.texts.length / nColumns * rowHeight;
+    table.height = labelHeight + table.texts.length / nColumns * table.rowHeight;
 }
 
 /**
