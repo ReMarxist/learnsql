@@ -164,7 +164,7 @@ class Table {
 
     transformRowsHighlight() {
         this.rowsHighlight.forEach((highlight, i) => {
-            setAttributes(this.labelRect, {
+            setAttributes(highlight, {
                 "x": this.textsPosition.x,
                 "y": this.textsPosition.y + (i * 2 + 1) * this.rowHeight,
                 "width": this.width,
