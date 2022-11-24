@@ -97,6 +97,7 @@ class Table {
         this.label = createText(name);
         this.label.style.fontWeight = "lighter";
         this.label.style.fontSize = "17px";
+        this.label.style.alignmentBaseline = "central";
         this.svg.appendChild(this.label);
     }
 
@@ -162,7 +163,7 @@ class Table {
     placeLabel() {
         let y = this.position.y
             + this.lidHeight
-            + (this.labelHeight - getHeight(this.label)) / 2;
+            + this.labelHeight / 2;
         setAttributes(this.label, {
             "x": this.position.x + (this.width - getWidth(this.label)) / 2,
             "y": y,
