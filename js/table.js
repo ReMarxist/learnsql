@@ -47,6 +47,11 @@ class Table {
 
     addLid() {
         this.lid = addRect(this.svg, this.position);
+        setAttributes(this.lid, {
+            "fill": "#3491dc",
+            "stroke": "#3491dc",
+            "rx": "5",
+        });
     }
 
     addLabelRect() {
@@ -116,7 +121,6 @@ class Table {
         setAttributes(this.lid, {
             "width": this.width,
             "height": this.lidHeight * 2,
-            "rx": "5",
         });
     }
 
