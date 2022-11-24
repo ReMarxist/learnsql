@@ -24,6 +24,8 @@ class Table {
         this.card = null;
         /** @type {number} */
         this.nColumns = null;
+        /** @type {number} */
+        this.labelHeight = null;
     }
 
     addCard() {
@@ -59,6 +61,11 @@ class Table {
         this.svg.appendChild(this.label);
     }
 
+    calculateSizes() {
+        const labelMargin = 15;
+        this.labelHeight = getHeight(this.label) + labelMargin;
+    }
+
     /**
      * Resize rect that contains table
      */
@@ -83,6 +90,7 @@ class Table {
     table.addCard();
     table.addTexts(headers, dataRows);
     table.addLabel(name);
+    table.calculateSizes();
     placeTableTexts(table);
     placeTableLabel(table, table.label, position);
     table.resizeCard();
@@ -110,8 +118,7 @@ function createTableTexts(headers, dataRows) {
  * @returns {number} Table width
  */
 function placeTableTexts(table) {
-    let labelHeight = getHeight(table.label);
-    let basePosition = movedVertically(table.position, labelHeight);
+    let basePosition = movedVertically(table.position, table.labelHeight);
     table.columnWidths = getColumnWidths(table.texts, table.nColumns);
     let columnOffsets = getColumnOffsets(table.columnWidths);
     table.rowHeight = getMaxHeight(table.texts);
@@ -124,7 +131,7 @@ function placeTableTexts(table) {
         });
     });
     table.width = sum(table.columnWidths);
-    table.height = labelHeight + table.texts.length / table.nColumns * table.rowHeight;
+    table.height = table.labelHeight + table.texts.length / table.nColumns * table.rowHeight;
 }
 
 /**
