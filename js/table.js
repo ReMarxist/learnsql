@@ -97,7 +97,7 @@ class Table {
         this.label = createText(name);
         this.label.style.fontWeight = "lighter";
         this.label.style.fontSize = "17px";
-        this.label.style.alignmentBaseline = "central";
+        this.label.style.alignmentBaseline = "middle";
         this.svg.appendChild(this.label);
     }
 
