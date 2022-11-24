@@ -68,7 +68,7 @@ class Table {
      */
     calculateSizes() {
         const labelMargin = 15;
-        this.labelHeight = getHeight(this.label) + labelMargin + lidHeight;
+        this.labelHeight = getHeight(this.label) + labelMargin + this.lidHeight;
     }
 
     /**
