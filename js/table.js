@@ -10,6 +10,8 @@ class Table {
         this.position = position;
         /** @type {number[]} */
         this.columnWidths = null;
+        /** @type {number[]} */
+        this.columnOffsets = null;
         /** @type {number} */
         this.rowHeight = null;
         /** @type {number} */
@@ -85,6 +87,13 @@ class Table {
     calculateSizes() {
         const labelMargin = 15;
         this.labelHeight = getHeight(this.label) + labelMargin;
+        this.columnWidths = getColumnWidths(this.texts, this.nColumns);
+        this.columnOffsets = getColumnOffsets(this.columnWidths);
+        this.rowHeight = getMaxHeight(this.texts);
+        this.width = sum(this.columnWidths);
+        this.height = this.lidHeight
+            + this.labelHeight
+            + this.texts.length / this.nColumns * this.rowHeight;
     }
 
     /**
@@ -111,21 +120,14 @@ class Table {
      */
     placeTexts() {
         let basePosition = movedVertically(this.position, this.lidHeight + this.labelHeight);
-        this.columnWidths = getColumnWidths(this.texts, this.nColumns);
-        let columnOffsets = getColumnOffsets(this.columnWidths);
-        this.rowHeight = getMaxHeight(this.texts);
         this.texts.forEach((text, i) => {
             const columnWidth = this.columnWidths[i % this.nColumns];
-            const columnOffset = columnOffsets[i % this.nColumns];
+            const columnOffset = this.columnOffsets[i % this.nColumns];
             setAttributes(text, {
                 "x": basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset,
                 "y": basePosition.y + Math.floor(i / this.nColumns) * this.rowHeight,
             });
         });
-        this.width = sum(this.columnWidths);
-        this.height = this.lidHeight
-            + this.labelHeight
-            + this.texts.length / this.nColumns * this.rowHeight;
     }
 
     /**
