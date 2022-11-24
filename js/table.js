@@ -121,7 +121,6 @@ function placeTableTexts(table, nColumns) {
             "y": basePosition.y + Math.floor(i / nColumns) * table.rowHeight,
         });
     });
-    table.columnWidths = columnWidths;
     table.width = sum(table.columnWidths);
     table.height = labelHeight + table.texts.length / nColumns * table.rowHeight;
 }
