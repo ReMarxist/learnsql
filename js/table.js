@@ -74,7 +74,7 @@ class Table {
      */
     calculateSizes() {
         const labelMargin = 15;
-        this.labelHeight = getHeight(this.label) + labelMargin + this.lidHeight;
+        this.labelHeight = getHeight(this.label) + labelMargin;
     }
 
     /**
@@ -87,9 +87,12 @@ class Table {
         });
     }
 
-    placeLabelRect() {
+    transformLabelRect() {
         setAttributes(this.labelRect, {
+            "x": this.position.x,
             "y": this.position.y + this.lidHeight,
+            "widht": this.width,
+            "height": this.height,
         });
     }
 
@@ -123,7 +126,7 @@ function addTable(svg, name, position, headers, dataRows) {
     table.addLabel(name);
     table.calculateSizes();
     placeTableTexts(table);
-    table.placeLabelRect();
+    table.transformLabelRect();
     table.placeLabel();
     table.resizeCard();
 }
@@ -150,7 +153,7 @@ function createTableTexts(headers, dataRows) {
  * @returns {number} Table width
  */
 function placeTableTexts(table) {
-    let basePosition = movedVertically(table.position, table.labelHeight);
+    let basePosition = movedVertically(table.position, table.lidHeight + table.labelHeight);
     table.columnWidths = getColumnWidths(table.texts, table.nColumns);
     let columnOffsets = getColumnOffsets(table.columnWidths);
     table.rowHeight = getMaxHeight(table.texts);
@@ -163,7 +166,9 @@ function placeTableTexts(table) {
         });
     });
     table.width = sum(table.columnWidths);
-    table.height = table.labelHeight + table.texts.length / table.nColumns * table.rowHeight;
+    table.height = table.lidHeight
+        + table.labelHeight 
+        + table.texts.length / table.nColumns * table.rowHeight;
 }
 
 /**
