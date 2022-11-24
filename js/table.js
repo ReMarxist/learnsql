@@ -85,7 +85,7 @@ class Table {
     placeLabel() {
         setAttributes(this.label, {
             "x": this.position.x + (this.width - getWidth(this.label)) / 2,
-            "y": this.position.y,
+            "y": this.position.y + (this.labelHeight - getHeight(this.label)) / 2,
         });
     }
 }
