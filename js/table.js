@@ -43,6 +43,10 @@ class Table {
 
     addLabelRect() {
         this.labelRect = addRect(this.svg, this.position);
+        setAttributes(this.labelRect, {
+            "fill": "#f1f6f8",
+            "stroke": "#e2e8f0",
+        });
     }
 
     /**
