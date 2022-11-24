@@ -74,11 +74,11 @@ function createTableTexts(headers, dataRows) {
  * @param {number} nColumns Number of columns in table
  * @returns {number} Table width
  */
-function placeTableTexts(table, texts, basePosition, nColumns) {
-    let columnWidths = getColumnWidths(texts, nColumns);
+function placeTableTexts(table, basePosition, nColumns) {
+    let columnWidths = getColumnWidths(table.texts, nColumns);
     let columnOffsets = getColumnOffsets(columnWidths);
-    let rowHeight = getMaxHeight(texts);
-    texts.forEach((text, i) => {
+    let rowHeight = getMaxHeight(table.texts);
+    table.texts.forEach((text, i) => {
         const columnWidth = columnWidths[i % nColumns];
         const columnOffset = columnOffsets[i % nColumns];
         setAttributes(text, {
@@ -87,7 +87,7 @@ function placeTableTexts(table, texts, basePosition, nColumns) {
         });
     });
     table.columnWidths = columnWidths;
-    table.height = texts.length / nColumns * rowHeight;
+    table.height = table.texts.length / nColumns * rowHeight;
 }
 
 /**
