@@ -73,7 +73,6 @@ class Table {
             el.style.fontWeight = "bold";
             setAttributes(el, {
                 "fill": "#334155",
-                "stroke": "#334155",
             });
         });
         let dataSvgs = dataRows.flatMap(row => row.map(createText));
