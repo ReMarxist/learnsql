@@ -30,7 +30,7 @@ function createSvg() {
     svg.style.borderWidth = "1px";
     svg.style.width = "800px";
     svg.style.height = "600px";
-    svg.style.font = "14px sans-serif";
+    svg.style.font = "14px system-ui";
     return svg;
 }
 

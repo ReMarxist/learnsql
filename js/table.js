@@ -46,7 +46,6 @@ class Table {
     let label = addTableLabel(svg, name);
     let textsPosition = movedVertically(position, getHeight(label));
     placeTableTexts(table, textsPosition, headers.length);
-    addTableLines(table, position);
     positionTableLabel(table, label, position);
 }
 
