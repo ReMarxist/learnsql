@@ -31,6 +31,7 @@ function createSvg() {
     svg.style.width = "800px";
     svg.style.height = "600px";
     svg.style.font = "14px system-ui";
+    svg.style.backgroundColor = "#f1f6f8";
     return svg;
 }
 
