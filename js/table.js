@@ -33,6 +33,7 @@ class Table {
         /** @type {number} */
         this.labelHeight = null;
         this.lidHeight = 10;
+        this.dataRowsTopMargin = 10;
     }
 
     addCard() {
@@ -113,6 +114,7 @@ class Table {
         this.width = sum(this.columnWidths);
         this.height = this.lidHeight
             + this.labelHeight
+            + this.dataRowsTopMargin
             + this.texts.length / this.nColumns * this.rowHeight;
     }
 
@@ -146,7 +148,8 @@ class Table {
      * Calculate positions and place `<text>`s on `<svg>`
      */
     placeTexts() {
-        let basePosition = movedVertically(this.position, this.lidHeight + this.labelHeight);
+        let yOffset = this.dataRowsTopMargin + this.lidHeight + this.labelHeight;
+        let basePosition = movedVertically(this.position, yOffset);
         this.texts.forEach((text, i) => {
             const columnWidth = this.columnWidths[i % this.nColumns];
             const columnOffset = this.columnOffsets[i % this.nColumns];
