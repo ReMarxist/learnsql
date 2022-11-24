@@ -71,6 +71,10 @@ class Table {
         let headerSvgs = headers.map(createText);
         headerSvgs.forEach(el => {
             el.style.fontWeight = "bold";
+            setAttributes(el, {
+                "fill": "#334155",
+                "stroke": "#334155",
+            });
         });
         let dataSvgs = dataRows.flatMap(row => row.map(createText));
         this.nColumns = headers.length;
@@ -96,7 +100,7 @@ class Table {
      * Calculate sizes of table elements after their appending to svg
      */
     calculateSizes() {
-        const labelMargin = 15;
+        const labelMargin = 10;
         this.labelHeight = getHeight(this.label) + labelMargin;
         this.columnWidths = getColumnWidths(this.texts, this.nColumns);
         this.columnOffsets = getColumnOffsets(this.columnWidths);
