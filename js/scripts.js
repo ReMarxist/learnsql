@@ -1,3 +1,4 @@
+document.body.style.margin = 0;
 let div = addDiv();
 let svg = addSvg(div);
 
