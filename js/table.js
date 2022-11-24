@@ -25,6 +25,8 @@ class Table {
         /** @type {SVGRectElement} */
         this.card = null;
         /** @type {SVGRectElement} */
+        this.lid = null;
+        /** @type {SVGRectElement} */
         this.labelRect = null;
         /** @type {number} */
         this.nColumns = null;
@@ -41,6 +43,10 @@ class Table {
             "rx": "5",
         });
         this.card.style.filter = "drop-shadow(3px 3px 2px rgba(200, 200, 200, .7))";
+    }
+
+    addLid() {
+        this.lid = addRect(this.svg, this.position);
     }
 
     addLabelRect() {
@@ -106,6 +112,14 @@ class Table {
         });
     }
 
+    resizeLid() {
+        setAttributes(this.lid, {
+            "width": this.width,
+            "height": this.lidHeight * 2,
+            "rx": "5",
+        });
+    }
+
     transformLabelRect() {
         setAttributes(this.labelRect, {
             "x": this.position.x,
@@ -155,10 +169,12 @@ class Table {
 function addTable(svg, name, position, headers, dataRows) {
     let table = new Table(svg, position);
     table.addCard();
+    table.addLid();
     table.addLabelRect();
     table.addTexts(headers, dataRows);
     table.addLabel(name);
     table.calculateSizes();
+    table.resizeLid();
     table.placeTexts();
     table.transformLabelRect();
     table.placeLabel();
