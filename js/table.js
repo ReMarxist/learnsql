@@ -42,7 +42,7 @@ class Table {
  */
  function addTable(svg, name, position, headers, dataRows) {
     let table = new Table(svg);
-    table.createTexts(headers, dataRows);
+    table.addTexts(headers, dataRows);
     let label = addTableLabel(svg, name);
     let textsPosition = movedVertically(position, getHeight(label));
     placeTableTexts(table, textsPosition, headers.length);
