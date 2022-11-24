@@ -76,6 +76,11 @@ class Table {
             });
         });
         let dataSvgs = dataRows.flatMap(row => row.map(createText));
+        dataSvgs.forEach(el => {
+            setAttributes(el, {
+                "fill": "#616f7b",
+            });
+        });
         this.nColumns = headers.length;
         this.texts = headerSvgs.concat(dataSvgs);
         this.texts.forEach(text => {
