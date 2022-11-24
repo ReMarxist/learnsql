@@ -91,8 +91,8 @@ class Table {
         setAttributes(this.labelRect, {
             "x": this.position.x,
             "y": this.position.y + this.lidHeight,
-            "widht": this.width,
-            "height": this.height,
+            "width": this.width,
+            "height": this.labelHeight,
         });
     }
 
