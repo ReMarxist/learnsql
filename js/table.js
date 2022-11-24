@@ -110,7 +110,7 @@ class Table {
      * Calculate positions and place `<text>`s on `<svg>`
      */
     placeTexts() {
-        let basePosition = movedVertically(this.position, this.lidHeight + table.labelHeight);
+        let basePosition = movedVertically(this.position, this.lidHeight + this.labelHeight);
         this.columnWidths = getColumnWidths(this.texts, this.nColumns);
         let columnOffsets = getColumnOffsets(this.columnWidths);
         this.rowHeight = getMaxHeight(this.texts);
