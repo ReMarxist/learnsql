@@ -2,12 +2,20 @@ class Table {
     /**
      * @param {SVGSVGElement} svg Container of Table
      * @param {{x: number, y: number}} position Top-left dot of table
+     * @param {string[]} data Headers and data
+     * @param {number} nColumns Number of columns
      */
-    constructor(svg, position) {
+    constructor(svg, position, data, nColumns) {
         /** @type {SVGSVGElement} */
         this.svg = svg;
         /** @type {{x: number, y: number}} */
         this.position = position;
+        /** @type {string[]} */
+        this.data = data;
+        /** @type {number} */
+        this.nColumns = nColumns;
+        /** @type {number} */
+        this.nRows = data.length / nColumns;
         /** @type {number[]} */
         this.columnWidths = null;
         /** @type {number[]} */
@@ -30,10 +38,6 @@ class Table {
         this.labelRect = null;
         /** @type {SVGRectElement[]} */
         this.rowsHighlight = null;
-        /** @type {number} */
-        this.nColumns = null;
-        /** @type {number} */
-        this.nRows = null;
         /** @type {number} */
         this.labelHeight = null;
         this.lidHeight = 10;
@@ -82,30 +86,24 @@ class Table {
 
     /**
      * Create `<text>` tags and append them to svg
-     * @param {string[]} headers 
-     * @param {string[][]} dataRows 
      */
-    addTexts(headers, dataRows) {
-        let headerSvgs = headers.map(createText);
-        headerSvgs.forEach(el => {
-            el.style.fontWeight = "bold";
-            setAttributes(el, {
+    addTexts() {
+        this.texts = this.data.map(createText);
+        for (let i = 0; i < this.nColumns; i++) {
+            let header = this.texts[i];
+            header.style.fontWeight = "bold";
+            setAttributes(header, {
                 "fill": "#334155",
             });
-        });
-        let dataSvgs = dataRows.flatMap(row => row.map(createText));
-        dataSvgs.forEach(el => {
-            setAttributes(el, {
+        }
+        for (let i = this.nColumns; i < this.texts.length; i++) {
+            let text = this.texts[i];
+            setAttributes(text, {
                 "fill": "#616f7b",
             });
-        });
-        this.nColumns = headers.length;
-        this.texts = headerSvgs.concat(dataSvgs);
-        this.nRows = this.texts.length / this.nColumns;
-        this.texts.forEach(text => {
             // Append texts to svg before calculating their sizes
             this.svg.appendChild(text);
-        });
+        }
     }
 
     /**
@@ -217,16 +215,16 @@ class Table {
  * @param {SVGSVGElement} svg
  * @param {string} name Table name
  * @param {{x: number, y: number}} position Position of table
- * @param {string[]} headers Headers of table (names of columns)
- * @param {string[][]} dataRows Data that fills the table
+ * @param {string[]} data Headers and data
+ * @param {number} nColumns Number of columns
  */
 function addTable(svg, name, position, headers, dataRows) {
-    let table = new Table(svg, position);
+    let table = new Table(svg, position, data, nColumns);
     table.addCard();
     table.addLid();
     table.addLabelRect();
-    table.addTexts(headers, dataRows);
     table.addRowsHighlight();
+    table.addTexts();
     table.addLabel(name);
     table.calculateSizes();
     table.resizeLid();
