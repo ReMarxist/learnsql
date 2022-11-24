@@ -61,6 +61,9 @@ class Table {
         this.svg.appendChild(this.label);
     }
 
+    /**
+     * Calculate sizes of table elements after their appending to svg
+     */
     calculateSizes() {
         const labelMargin = 15;
         this.labelHeight = getHeight(this.label) + labelMargin;
@@ -73,6 +76,16 @@ class Table {
         setAttributes(this.card, {
             "width": "" + this.width,
             "height": "" + this.height,
+        });
+    }
+
+    /**
+     * Position label for whole table
+     */
+    placeLabel() {
+        setAttributes(this.label, {
+            "x": this.position.x + (this.width - getWidth(this.label)) / 2,
+            "y": this.position.y,
         });
     }
 }
@@ -92,7 +105,7 @@ class Table {
     table.addLabel(name);
     table.calculateSizes();
     placeTableTexts(table);
-    placeTableLabel(table, table.label, position);
+    table.placeLabel();
     table.resizeCard();
 }
 
@@ -132,20 +145,6 @@ function placeTableTexts(table) {
     });
     table.width = sum(table.columnWidths);
     table.height = table.labelHeight + table.texts.length / table.nColumns * table.rowHeight;
-}
-
-/**
- * Position label for whole table
- * @param {Table} table 
- * @param {SVGTextElement} label 
- * @param {{x: number, y: number}} tablePosition Top-left dot of table
- * @param {number[]} columnWidths
- */
-function placeTableLabel(table, label, tablePosition, columnWidths) {
-    setAttributes(label, {
-        "x": tablePosition.x + (table.width - getWidth(label)) / 2,
-        "y": tablePosition.y,
-    });
 }
 
 /**
