@@ -22,6 +22,8 @@ class Table {
         this.label = null;
         /** @type {SVGRectElement} */
         this.card = null;
+        /** @type {SVGRectElement} */
+        this.labelRect = null;
         /** @type {number} */
         this.nColumns = null;
         /** @type {number} */
@@ -31,6 +33,10 @@ class Table {
 
     addCard() {
         this.card = addRect(this.svg, this.position);
+    }
+
+    addLabelRect() {
+        this.labelRect = addRect(this.svg, this.position);
     }
 
     /**
@@ -81,6 +87,12 @@ class Table {
         });
     }
 
+    placeLabelRect() {
+        setAttributes(this.labelRect, {
+            "y": this.position.y + this.lidHeight,
+        });
+    }
+
     /**
      * Position label for whole table
      */
@@ -106,10 +118,12 @@ class Table {
 function addTable(svg, name, position, headers, dataRows) {
     let table = new Table(svg, position);
     table.addCard();
+    table.addLabelRect();
     table.addTexts(headers, dataRows);
     table.addLabel(name);
     table.calculateSizes();
     placeTableTexts(table);
+    table.placeLabelRect();
     table.placeLabel();
     table.resizeCard();
 }
