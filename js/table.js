@@ -218,7 +218,7 @@ class Table {
  * @param {string[]} data Headers and data
  * @param {number} nColumns Number of columns
  */
-function addTable(svg, name, position, headers, dataRows) {
+function addTable(svg, name, position, data, nColumns) {
     let table = new Table(svg, position, data, nColumns);
     table.addCard();
     table.addLid();
