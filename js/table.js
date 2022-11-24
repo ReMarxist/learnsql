@@ -12,10 +12,18 @@ class Table {
         this.columnWidths = null;
         /** @type {number} */
         this.height = null;
+        /** @type {number} */
+        this.width = null;
         /** @type {SVGTextElement[]} */
         this.texts = null;
         /** @type {SVGTextElement} */
         this.label = null;
+        /** @type {SVGRectElement} */
+        this.card = null;
+    }
+
+    addCard() {
+        this.card = addRect(this.svg, this.position);
     }
 
     /**
@@ -45,6 +53,16 @@ class Table {
         this.label.style.fontWeight = "bold";
         this.svg.appendChild(this.label);
     }
+
+    /**
+     * Resize rect that contains table
+     */
+    resizeCard() {
+        setAttributes(this.card, {
+            "width": "" + this.width,
+            "height": "" + this.height,
+        });
+    }
 }
 
 /**
@@ -57,8 +75,10 @@ class Table {
  */
  function addTable(svg, name, position, headers, dataRows) {
     let table = new Table(svg, position);
+    table.addCard();
     table.addTexts(headers, dataRows);
     table.addLabel(name);
+    table.resizeCard();
     let textsPosition = movedVertically(position, getHeight(table.label));
     placeTableTexts(table, textsPosition, headers.length);
     placeTableLabel(table, table.label, position);
@@ -99,6 +119,7 @@ function placeTableTexts(table, basePosition, nColumns) {
         });
     });
     table.columnWidths = columnWidths;
+    table.width = sum(table.columnWidths);
     table.height = table.texts.length / nColumns * rowHeight;
 }
 
@@ -110,9 +131,8 @@ function placeTableTexts(table, basePosition, nColumns) {
  * @param {number[]} columnWidths
  */
 function placeTableLabel(table, label, tablePosition, columnWidths) {
-    let tableWidth = sum(table.columnWidths);
     setAttributes(label, {
-        "x": tablePosition.x + (tableWidth - getWidth(label)) / 2,
+        "x": tablePosition.x + (table.width - getWidth(label)) / 2,
         "y": tablePosition.y,
     });
 }
