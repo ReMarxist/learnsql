@@ -39,7 +39,7 @@ class Table {
      */
     addLabel(name) {
         this.label = createText(name);
-        this.svg.appendChild(label);
+        this.svg.appendChild(this.label);
     }
 }
 
