@@ -1,10 +1,13 @@
 class Table {
     /**
      * @param {SVGSVGElement} svg Container of Table
+     * @param {{x: number, y: number}} position Top-left dot of table
      */
-    constructor(svg) {
+    constructor(svg, position) {
         /** @type {SVGSVGElement} */
         this.svg = svg;
+        /** @type {{x: number, y: number}} */
+        this.position = position;
         /** @type {number[]} */
         this.columnWidths = null;
         /** @type {number} */
@@ -47,17 +50,17 @@ class Table {
  * Create svg table
  * @param {SVGSVGElement} svg
  * @param {string} name Table name
- * @param {Object} position Position of table
+ * @param {{x: number, y: number}} position Position of table
  * @param {string[]} headers Headers of table (names of columns)
  * @param {string[][]} dataRows Data that fills the table
  */
  function addTable(svg, name, position, headers, dataRows) {
-    let table = new Table(svg);
+    let table = new Table(svg, position);
     table.addTexts(headers, dataRows);
     table.addLabel(name);
     let textsPosition = movedVertically(position, getHeight(table.label));
     placeTableTexts(table, textsPosition, headers.length);
-    positionTableLabel(table, table.label, position);
+    placeTableLabel(table, table.label, position);
 }
 
 /**
@@ -78,9 +81,7 @@ function createTableTexts(headers, dataRows) {
  * Calculate positions and place `<text>`s on `<svg>`
  * @param {Table} table
  * @param {SVGTextElement[]} texts 
- * @param {Object} basePosition Top-left dot of table
- * @param {number} basePosition.x
- * @param {number} basePosition.y
+ * @param {{x: number, y: number}} basePosition Top-left dot of table
  * @param {number} nColumns Number of columns in table
  * @returns {number} Table width
  */
@@ -104,12 +105,10 @@ function placeTableTexts(table, basePosition, nColumns) {
  * Position label for whole table
  * @param {Table} table 
  * @param {SVGTextElement} label 
- * @param {Object} tablePosition Top-left dot of table
- * @param {number} tablePosition.x
- * @param {number} tablePosition.y
+ * @param {{x: number, y: number}} tablePosition Top-left dot of table
  * @param {number[]} columnWidths
  */
-function positionTableLabel(table, label, tablePosition, columnWidths) {
+function placeTableLabel(table, label, tablePosition, columnWidths) {
     let tableWidth = sum(table.columnWidths);
     setAttributes(label, {
         "x": tablePosition.x + (tableWidth - getWidth(label)) / 2,
@@ -160,9 +159,7 @@ function getMaxHeight(texts) {
 /**
  * Add table lines
  * @param {Table} table 
- * @param {Object} tablePosition
- * @param {number} tablePosition.x
- * @param {number} tablePosition.y
+ * @param {{x: number, y: number}} tablePosition
  */
 function addTableLines(table, tablePosition) {
     let columnOffsets = getColumnOffsets(table.columnWidths);
