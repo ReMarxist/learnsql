@@ -61,10 +61,22 @@ function movedHorizontally(dot, offset) {
  * @param {number} dot.y
  * @param {number} offset
  */
- function movedVertically(dot, offset) {
+function movedVertically(dot, offset) {
     let newDot = {
         x: dot.x,
         y: dot.y + offset
     };
     return newDot;
+}
+
+/**
+ * Return array 0, 1, ..., (n - 1)
+ * @param {number} n 
+ */
+function increasing(n) {
+    let result = [];
+    for (let i = 0; i < n; i++) {
+        result.push(i);
+    }
+    return result;
 }

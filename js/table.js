@@ -28,12 +28,16 @@ class Table {
         this.lid = null;
         /** @type {SVGRectElement} */
         this.labelRect = null;
+        /** @type {SVGRectElement[]} */
+        this.rowsHighlight = null;
         /** @type {number} */
         this.nColumns = null;
         /** @type {number} */
+        this.nRows = null;
+        /** @type {number} */
         this.labelHeight = null;
         this.lidHeight = 10;
-        this.dataRowsTopMargin = 10;
+        this.dataRowsTopMargin = 5;
     }
 
     addCard() {
@@ -63,6 +67,19 @@ class Table {
         });
     }
 
+    addRowsHighlight() {
+        let nHighlights = Math.floor(this.nRows / 2);
+        this.rowsHighlight = increasing(nHighlights)
+            .map(_ => {
+                let rect = addRect(this.svg, this.position);
+                setAttributes(rect, {
+                    "fill": "#f1f6f8",
+                    "stroke": "#e2e8f0",
+                });
+                return rect;
+            });
+    }
+
     /**
      * Create `<text>` tags and append them to svg
      * @param {string[]} headers 
@@ -83,6 +100,7 @@ class Table {
             });
         });
         this.nColumns = headers.length;
+        this.nRows = this.texts.length / this.nColumns;
         this.texts = headerSvgs.concat(dataSvgs);
         this.texts.forEach(text => {
             // Append texts to svg before calculating their sizes
@@ -115,7 +133,7 @@ class Table {
         this.height = this.lidHeight
             + this.labelHeight
             + this.dataRowsTopMargin
-            + this.texts.length / this.nColumns * this.rowHeight;
+            + this.nRows * this.rowHeight;
     }
 
     /**
@@ -144,18 +162,31 @@ class Table {
         });
     }
 
+    transformRowsHighlight() {
+        this.rowsHighlight((highlight, i) => {
+            setAttributes(this.labelRect, {
+                "x": this.textsPosition.x,
+                "y": this.textsPosition.y + (i * 2 + 1) * this.rowHeight,
+                "width": this.width,
+                "height": this.rowHeight,
+            });
+        });
+    }
+
     /**
      * Calculate positions and place `<text>`s on `<svg>`
      */
     placeTexts() {
-        let yOffset = this.dataRowsTopMargin + this.lidHeight + this.labelHeight;
-        let basePosition = movedVertically(this.position, yOffset);
         this.texts.forEach((text, i) => {
             const columnWidth = this.columnWidths[i % this.nColumns];
             const columnOffset = this.columnOffsets[i % this.nColumns];
+            const rowI = Math.floor(i / this.nColumns);
             setAttributes(text, {
-                "x": basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset,
-                "y": basePosition.y + Math.floor(i / this.nColumns) * this.rowHeight,
+                "x": this.textsPosition.x
+                    + (columnWidth - getWidth(text)) / 2
+                    + columnOffset,
+                "y": this.textsPosition.y
+                    + rowI * this.rowHeight,
             });
         });
     }
@@ -171,6 +202,13 @@ class Table {
             "x": this.position.x + (this.width - getWidth(this.label)) / 2,
             "y": y,
         });
+    }
+
+    get textsPosition() {
+        let yOffset = this.dataRowsTopMargin
+            + this.lidHeight
+            + this.labelHeight;
+        return movedVertically(this.position, yOffset);
     }
 }
 
@@ -188,9 +226,11 @@ function addTable(svg, name, position, headers, dataRows) {
     table.addLid();
     table.addLabelRect();
     table.addTexts(headers, dataRows);
+    table.addRowsHighlight();
     table.addLabel(name);
     table.calculateSizes();
     table.resizeLid();
+    table.transformRowsHighlight();
     table.placeTexts();
     table.transformLabelRect();
     table.placeLabel();
