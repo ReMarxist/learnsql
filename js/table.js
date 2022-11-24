@@ -22,6 +22,8 @@ class Table {
         this.label = null;
         /** @type {SVGRectElement} */
         this.card = null;
+        /** @type {number} */
+        this.nColumns = null;
     }
 
     addCard() {
@@ -39,6 +41,7 @@ class Table {
             el.style.fontWeight = "bold";
         });
         let dataSvgs = dataRows.flatMap(row => row.map(createText));
+        this.nColumns = headers.length;
         this.texts = headerSvgs.concat(dataSvgs);
         this.texts.forEach(text => {
             // Append texts to svg before calculating their sizes
@@ -80,7 +83,7 @@ class Table {
     table.addCard();
     table.addTexts(headers, dataRows);
     table.addLabel(name);
-    placeTableTexts(table, headers.length);
+    placeTableTexts(table);
     placeTableLabel(table, table.label, position);
     table.resizeCard();
 }
@@ -104,25 +107,24 @@ function createTableTexts(headers, dataRows) {
  * @param {Table} table
  * @param {SVGTextElement[]} texts 
  * @param {{x: number, y: number}} basePosition Top-left dot of table
- * @param {number} nColumns Number of columns in table
  * @returns {number} Table width
  */
-function placeTableTexts(table, nColumns) {
+function placeTableTexts(table) {
     let labelHeight = getHeight(table.label);
     let basePosition = movedVertically(table.position, labelHeight);
-    table.columnWidths = getColumnWidths(table.texts, nColumns);
+    table.columnWidths = getColumnWidths(table.texts, table.nColumns);
     let columnOffsets = getColumnOffsets(table.columnWidths);
     table.rowHeight = getMaxHeight(table.texts);
     table.texts.forEach((text, i) => {
-        const columnWidth = table.columnWidths[i % nColumns];
-        const columnOffset = columnOffsets[i % nColumns];
+        const columnWidth = table.columnWidths[i % table.nColumns];
+        const columnOffset = columnOffsets[i % table.nColumns];
         setAttributes(text, {
             "x": basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset,
-            "y": basePosition.y + Math.floor(i / nColumns) * table.rowHeight,
+            "y": basePosition.y + Math.floor(i / table.nColumns) * table.rowHeight,
         });
     });
     table.width = sum(table.columnWidths);
-    table.height = labelHeight + table.texts.length / nColumns * table.rowHeight;
+    table.height = labelHeight + table.texts.length / table.nColumns * table.rowHeight;
 }
 
 /**
@@ -153,7 +155,7 @@ function getColumnWidths(texts, nColumns) {
         let width = getWidth(texts[i]);
         widths[i % nColumns] = Math.max(widths[i % nColumns], width);
     }
-    const columnMargin = 10;
+    const columnMargin = 15;
     widths = widths.map(w => w + columnMargin);
     return widths;
 }
