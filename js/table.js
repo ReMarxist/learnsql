@@ -42,7 +42,7 @@ class Table {
      */
     addLabel(name) {
         this.label = createText(name);
-        label.style.fontWeight = "bold";
+        this.label.style.fontWeight = "bold";
         this.svg.appendChild(this.label);
     }
 }
