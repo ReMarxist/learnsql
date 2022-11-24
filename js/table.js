@@ -107,6 +107,28 @@ class Table {
     }
 
     /**
+     * Calculate positions and place `<text>`s on `<svg>`
+     */
+    placeTexts() {
+        let basePosition = movedVertically(this.position, this.lidHeight + table.labelHeight);
+        this.columnWidths = getColumnWidths(this.texts, this.nColumns);
+        let columnOffsets = getColumnOffsets(this.columnWidths);
+        this.rowHeight = getMaxHeight(this.texts);
+        this.texts.forEach((text, i) => {
+            const columnWidth = this.columnWidths[i % this.nColumns];
+            const columnOffset = columnOffsets[i % this.nColumns];
+            setAttributes(text, {
+                "x": basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset,
+                "y": basePosition.y + Math.floor(i / this.nColumns) * this.rowHeight,
+            });
+        });
+        this.width = sum(this.columnWidths);
+        this.height = this.lidHeight
+            + this.labelHeight
+            + this.texts.length / this.nColumns * this.rowHeight;
+    }
+
+    /**
      * Position label for whole table
      */
     placeLabel() {
@@ -135,7 +157,7 @@ function addTable(svg, name, position, headers, dataRows) {
     table.addTexts(headers, dataRows);
     table.addLabel(name);
     table.calculateSizes();
-    placeTableTexts(table);
+    table.placeTexts();
     table.transformLabelRect();
     table.placeLabel();
     table.resizeCard();
@@ -153,32 +175,6 @@ function createTableTexts(headers, dataRows) {
     });
     let dataSvgs = dataRows.flatMap(row => row.map(createText));
     return headerSvgs.concat(dataSvgs);
-}
-
-/**
- * Calculate positions and place `<text>`s on `<svg>`
- * @param {Table} table
- * @param {SVGTextElement[]} texts 
- * @param {{x: number, y: number}} basePosition Top-left dot of table
- * @returns {number} Table width
- */
-function placeTableTexts(table) {
-    let basePosition = movedVertically(table.position, table.lidHeight + table.labelHeight);
-    table.columnWidths = getColumnWidths(table.texts, table.nColumns);
-    let columnOffsets = getColumnOffsets(table.columnWidths);
-    table.rowHeight = getMaxHeight(table.texts);
-    table.texts.forEach((text, i) => {
-        const columnWidth = table.columnWidths[i % table.nColumns];
-        const columnOffset = columnOffsets[i % table.nColumns];
-        setAttributes(text, {
-            "x": basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset,
-            "y": basePosition.y + Math.floor(i / table.nColumns) * table.rowHeight,
-        });
-    });
-    table.width = sum(table.columnWidths);
-    table.height = table.lidHeight
-        + table.labelHeight
-        + table.texts.length / table.nColumns * table.rowHeight;
 }
 
 /**
