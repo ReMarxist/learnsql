@@ -78,10 +78,10 @@ class Table {
     table.addCard();
     table.addTexts(headers, dataRows);
     table.addLabel(name);
-    table.resizeCard();
     let textsPosition = movedVertically(position, getHeight(table.label));
     placeTableTexts(table, textsPosition, headers.length);
     placeTableLabel(table, table.label, position);
+    table.resizeCard();
 }
 
 /**
