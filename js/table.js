@@ -101,9 +101,9 @@ class Table {
             setAttributes(text, {
                 "fill": "#616f7b",
             });
-            // Append texts to svg before calculating their sizes
-            this.svg.appendChild(text);
         }
+        // Append texts to svg before calculating their sizes
+        this.texts.forEach(this.svg.appendChild)
     }
 
     /**
