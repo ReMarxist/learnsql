@@ -26,6 +26,7 @@ class Table {
         this.nColumns = null;
         /** @type {number} */
         this.labelHeight = null;
+        this.lidHeight = 10;
     }
 
     addCard() {
@@ -67,7 +68,7 @@ class Table {
      */
     calculateSizes() {
         const labelMargin = 15;
-        this.labelHeight = getHeight(this.label) + labelMargin;
+        this.labelHeight = getHeight(this.label) + labelMargin + lidHeight;
     }
 
     /**
@@ -84,9 +85,12 @@ class Table {
      * Position label for whole table
      */
     placeLabel() {
+        let y = this.position.y
+            + this.lidHeight
+            + (this.labelHeight - getHeight(this.label)) / 2;
         setAttributes(this.label, {
             "x": this.position.x + (this.width - getWidth(this.label)) / 2,
-            "y": this.position.y + (this.labelHeight - getHeight(this.label)) / 2,
+            "y": y,
         });
     }
 }
@@ -99,7 +103,7 @@ class Table {
  * @param {string[]} headers Headers of table (names of columns)
  * @param {string[][]} dataRows Data that fills the table
  */
- function addTable(svg, name, position, headers, dataRows) {
+function addTable(svg, name, position, headers, dataRows) {
     let table = new Table(svg, position);
     table.addCard();
     table.addTexts(headers, dataRows);
