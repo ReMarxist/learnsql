@@ -109,12 +109,12 @@ function createTableTexts(headers, dataRows) {
  */
 function placeTableTexts(table, nColumns) {
     let labelHeight = getHeight(table.label);
-    let textsPosition = movedVertically(table.position, labelHeight);
-    let columnWidths = getColumnWidths(table.texts, nColumns);
-    let columnOffsets = getColumnOffsets(columnWidths);
+    let basePosition = movedVertically(table.position, labelHeight);
+    table.columnWidths = getColumnWidths(table.texts, nColumns);
+    let columnOffsets = getColumnOffsets(table.columnWidths);
     table.rowHeight = getMaxHeight(table.texts);
     table.texts.forEach((text, i) => {
-        const columnWidth = columnWidths[i % nColumns];
+        const columnWidth = table.columnWidths[i % nColumns];
         const columnOffset = columnOffsets[i % nColumns];
         setAttributes(text, {
             "x": basePosition.x + (columnWidth - getWidth(text)) / 2 + columnOffset,
