@@ -103,7 +103,7 @@ class Table {
             });
         }
         // Append texts to svg before calculating their sizes
-        this.texts.forEach(this.svg.appendChild)
+        this.texts.forEach(text => this.svg.appendChild(text));
     }
 
     /**
