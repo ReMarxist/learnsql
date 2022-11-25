@@ -134,7 +134,7 @@ function setAttributes(element, attributes) {
  * @param {{x: number, y: number}} position 
  */
 function place(element, position) {
-    setAttributes(elements, {
+    setAttributes(element, {
         "x": "" + position.x,
         "y": "" + position.y,
     });
