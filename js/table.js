@@ -132,6 +132,11 @@ class TableCard {
             "cursor": "pointer",
         });
         this.tableBackground = createRect();
+        setAttributes(this.tableBackground, {
+            "stroke": "white",
+            "fill": "white",
+            "rx": "5",
+        });
         this.tableG.appendChild(this.tableBackground);
         this.svg.appendChild(this.tableG);
         this.addRowsHighlight();
@@ -186,7 +191,7 @@ class TableCard {
     }
 
     transformTable() {
-        place(this.tableBackground, this.textsPosition);
+        place(this.tableBackground, {x: 0, y: 0});
         setAttributes(this.tableBackground, {
             "width": this.width,
             "height": this.rowsHeight,
