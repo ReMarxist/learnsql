@@ -127,6 +127,7 @@ class TableCard {
             "x": this.textsPosition.x,
             "y": this.textsPosition.y,
         });
+        this.svg.appendChild(this.tableG);
         this.addRowsHighlight();
         this.addTexts();
     }
