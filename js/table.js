@@ -53,12 +53,6 @@ class Table {
             "rx": "5",
         });
         this.card.style.filter = "drop-shadow(3px 3px 2px rgba(200, 200, 200, .7))";
-        this.svg.addEventListener("mousemove", () => {
-            console.log("svg move");
-        });
-        this.card.addEventListener("mousemove", () => {
-            console.log("move");
-        });
     }
 
     addLid() {
@@ -147,6 +141,17 @@ class Table {
         setAttributes(this.card, {
             "width": "" + this.width,
             "height": "" + this.height,
+        });
+    }
+
+    setOnMouseMove() {
+        this.svg.addEventListener("mousemove", ev => {
+            if (ev.clientX >= this.textsPosition.x
+                && ev.clientY >= this.textsPosition.y
+                && ev.clientX <= this.textsPosition.x + this.width
+                && ev.clientY <= this.textsPosition.y + this.height) {
+                console.log("rows move");
+            }
         });
     }
 
@@ -271,6 +276,7 @@ function addTable(svg, name, position, data, nColumns) {
     table.addTexts();
     table.addLabel(name);
     table.calculateSizes();
+    table.setOnMouseMove();
     table.resizeLid();
     table.transformRowsHighlight();
     table.placeTexts();
