@@ -16,6 +16,8 @@ class TableCard {
         this.nColumns = nColumns;
         /** @type {number} */
         this.nRows = data.length / nColumns;
+        /** @type {SVGGElement} */
+        this.tableG = null;
         /** @type {number[]} */
         this.columnWidths = null;
         /** @type {number[]} */
@@ -117,6 +119,11 @@ class TableCard {
         this.label.style.fontSize = "17px";
         this.label.style.alignmentBaseline = "middle";
         this.svg.appendChild(this.label);
+    }
+
+    addTable() {
+        this.addRowsHighlight();
+        this.addTexts();
     }
 
     /**
@@ -277,9 +284,8 @@ function addTableCard(svg, name, position, data, nColumns) {
     tableCard.addCard();
     tableCard.addLid();
     tableCard.addLabelRect();
-    tableCard.addRowsHighlight();
-    tableCard.addTexts();
     tableCard.addLabel(name);
+    tableCard.addTable();
     tableCard.calculateSizes();
     tableCard.setOnMouseMove();
     tableCard.resizeLid();
