@@ -61,6 +61,14 @@ function createRect(params) {
 }
 
 /**
+ * Create `<g>`
+ */
+function createG() {
+    let g = createSvgElement("g");
+    return g;
+}
+
+/**
  * Animate `rect` to move it to `target`
  * @param {SVGRectElement} rect 
  * @param {Object} target Coordinates of rect final state

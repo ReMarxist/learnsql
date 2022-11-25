@@ -78,7 +78,7 @@ class TableCard {
         let nHighlights = Math.floor(this.nRows / 2);
         this.rowsHighlight = increasing(nHighlights)
             .map(_ => {
-                let rect = addRect(this.svg, this.position);
+                let rect = addRect(this.tableG, {x: 0, y: 0});
                 setAttributes(rect, {
                     "fill": "#f1f6f8",
                     "stroke": "#e2e8f0",
@@ -106,7 +106,7 @@ class TableCard {
             });
         }
         // Append texts to svg before calculating their sizes
-        this.texts.forEach(text => this.svg.appendChild(text));
+        this.texts.forEach(text => this.tableG.appendChild(text));
     }
 
     /**
@@ -122,6 +122,11 @@ class TableCard {
     }
 
     addTable() {
+        this.tableG = createG();
+        setAttributes(this.tableG, {
+            "x": this.textsPosition.x,
+            "y": this.textsPosition.y,
+        });
         this.addRowsHighlight();
         this.addTexts();
     }
@@ -181,8 +186,8 @@ class TableCard {
     transformRowsHighlight() {
         this.rowsHighlight.forEach((highlight, i) => {
             setAttributes(highlight, {
-                "x": this.textsPosition.x,
-                "y": this.textsPosition.y + (i * 2 + 1) * this.rowHeight,
+                "x": 0,
+                "y": (i * 2 + 1) * this.rowHeight,
                 "width": this.width,
                 "height": this.rowHeight,
             });
