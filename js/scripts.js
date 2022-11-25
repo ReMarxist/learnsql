@@ -23,8 +23,10 @@ function addTableScenario() {
 }
 
 function addControlButtonScenario() {
-    let rect = addRect(svg, { x: 10, y: 50 });
-    let button = addRect(svg, { x: 100, y: 100 });
+    let rect = addRect(svg);
+    place(rect, { x: 10, y: 50 });
+    let button = addRect(svg);
+    place(button, { x: 100, y: 100 })
     button.style.cursor = "pointer";
     button.id = "controlButton";
 

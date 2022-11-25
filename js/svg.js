@@ -10,12 +10,9 @@ function addSvg(container) {
 /**
  * Create, append and return rect
  * @param {SVGSVGElement} svg
- * @param {Object} params
- * @param {number} params.x
- * @param {number} params.y
  */
-function addRect(svg, params) {
-    let rect = createRect(params);
+function addRect(svg) {
+    let rect = createRect();
     svg.appendChild(rect);
     return rect;
 }
@@ -134,4 +131,16 @@ function setAttributes(element, attributes) {
     for (let key of Object.keys(attributes)) {
         element.setAttribute(key, attributes[key]);
     }
+}
+
+/**
+ * Place svg element
+ * @param {SVGElement} element 
+ * @param {{x: number, y: number}} position 
+ */
+function place(element, position) {
+    setAttributes(elements, {
+        "x": "" + position.x,
+        "y": "" + position.y,
+    });
 }

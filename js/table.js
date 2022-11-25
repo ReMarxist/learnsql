@@ -18,6 +18,8 @@ class TableCard {
         this.nRows = data.length / nColumns;
         /** @type {SVGGElement} */
         this.tableG = null;
+        /** @type {SVGGElement} */
+        this.tableBackground = null;
         /** @type {number[]} */
         this.columnWidths = null;
         /** @type {number[]} */
@@ -48,7 +50,8 @@ class TableCard {
     }
 
     addCard() {
-        this.card = addRect(this.svg, this.position);
+        this.card = addRect(this.svg);
+        place(this.card, this.position);
         setAttributes(this.card, {
             "fill": "white",
             "stroke": "white",
@@ -58,7 +61,8 @@ class TableCard {
     }
 
     addLid() {
-        this.lid = addRect(this.svg, this.position);
+        this.lid = addRect(this.svg);
+        place(this.lid, this.position);
         setAttributes(this.lid, {
             "fill": "#3491dc",
             "stroke": "#3491dc",
@@ -67,7 +71,8 @@ class TableCard {
     }
 
     addLabelRect() {
-        this.labelRect = addRect(this.svg, this.position);
+        this.labelRect = addRect(this.svg);
+        place(this.labelRect, this.position);
         setAttributes(this.labelRect, {
             "fill": "#f1f6f8",
             "stroke": "#e2e8f0",
@@ -78,7 +83,7 @@ class TableCard {
         let nHighlights = Math.floor(this.nRows / 2);
         this.rowsHighlight = increasing(nHighlights)
             .map(_ => {
-                let rect = addRect(this.tableG, {x: 0, y: 0});
+                let rect = addRect(this.tableG);
                 setAttributes(rect, {
                     "fill": "#f1f6f8",
                     "stroke": "#e2e8f0",
@@ -123,6 +128,10 @@ class TableCard {
 
     addTable() {
         this.tableG = createG();
+        setAttributes(this.tableG, {
+            "cursor": "pointer",
+        });
+        this.tableBackground = createRect({x: 0, y: 0});
         this.svg.appendChild(this.tableG);
         this.addRowsHighlight();
         this.addTexts();
@@ -154,14 +163,6 @@ class TableCard {
     }
 
     setOnMouseMove() {
-        this.svg.addEventListener("mousemove", ev => {
-            if (ev.offsetX >= this.textsPosition.x
-                && ev.offsetY >= this.textsPosition.y
-                && ev.offsetX <= this.textsPosition.x + this.width
-                && ev.offsetY <= this.textsPosition.y + this.rowsHeight) {
-                console.log("rows move");
-            }
-        });
         this.tableG.addEventListener("mousemove", () => {
             console.log("g move");
         });
