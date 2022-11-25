@@ -206,6 +206,7 @@ class TableCard {
      * @param {MouseEvent} mouseEvent 
      */
     getColumnI(mouseEvent) {
+        console.log(mouseEvent.offsetX);
         for (let i = 0; i < this.nColumns; i++) {
             let border = this.columnOffsets[i] + this.columnWidths[i];
             if (mouseEvent.offsetX <= border) {
