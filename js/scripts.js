@@ -12,10 +12,10 @@ function addTableScenario() {
         "3", "State Grid", "China", "Energy", "461",
         "4", "China Petroleum", "China", "Petroleum", "412",
         "5", "Sinopec Group", "China", "Petroleum", "401",
-        "6", "Saudi Aramco", "Saudi Arabia", "Energy",	"400",
+        "6", "Saudi Aramco", "Saudi Arabia", "Energy", "400",
         "7", "Apple", "United States", "Technology", "366",
         "8", "Volkswagen", "Germany", "Automobiles", "296",
-        "9", "China Construction", "China", "Engineering",	"294",
+        "9", "China Construction", "China", "Engineering", "294",
         "10", "CVS Health", "United States", "Health care", "292",
     ];
 

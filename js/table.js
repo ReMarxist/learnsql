@@ -208,7 +208,7 @@ class Table {
             + this.labelHeight;
         return movedVertically(this.position, yOffset);
     }
-    
+
     /**
      * Calculate column widths
      */
@@ -224,7 +224,7 @@ class Table {
         const columnMargin = 15;
         this.columnWidths = widths.map(w => w + columnMargin);
     }
-    
+
     /**
      * Get offset of columns
      */
@@ -237,11 +237,11 @@ class Table {
         }
         this.columnOffsets = offsets;
     }
-    
+
     /**
      * Get max height of table `<text>`s
      */
-     calculateRowHeight() {
+    calculateRowHeight() {
         const verticalMargin = 2;
         let heights = this.texts.map(getHeight);
         this.rowHeight = verticalMargin + max(heights);
