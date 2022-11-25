@@ -162,6 +162,9 @@ class TableCard {
                 console.log("rows move");
             }
         });
+        this.tableG.addEventListener("mousemove", () => {
+            console.log("g move");
+        });
     }
 
     resizeLid() {
