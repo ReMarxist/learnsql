@@ -149,7 +149,7 @@ class Table {
             if (ev.offsetX >= this.textsPosition.x
                 && ev.offsetY >= this.textsPosition.y
                 && ev.offsetX <= this.textsPosition.x + this.width
-                && ev.offsetY <= this.textsPosition.y + this.height) {
+                && ev.offsetY <= this.textsPosition.y + this.rowsHeight) {
                 console.log("rows move");
             }
         });
@@ -218,6 +218,11 @@ class Table {
             + this.lidHeight
             + this.labelHeight;
         return movedVertically(this.position, yOffset);
+    }
+
+    /** Get height of all rows as a whole */
+    get rowsHeight() {
+        return this.nRows * this.rowHeight;
     }
 
     /**
