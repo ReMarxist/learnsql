@@ -204,11 +204,9 @@ class TableCard {
             const columnOffset = this.columnOffsets[i % this.nColumns];
             const rowI = Math.floor(i / this.nColumns);
             setAttributes(text, {
-                "x": this.textsPosition.x
-                    + (columnWidth - getWidth(text)) / 2
+                "x": (columnWidth - getWidth(text)) / 2
                     + columnOffset,
-                "y": this.textsPosition.y
-                    + (rowI + 0.5) * this.rowHeight,
+                "y": (rowI + 0.5) * this.rowHeight,
             });
         });
     }
