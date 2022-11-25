@@ -185,8 +185,8 @@ class TableCard {
             "transform": 
                 `translate(${this.textsPosition.x}, ${this.textsPosition.y})`,
         });
-        tableCard.transformRowsHighlight();
-        tableCard.placeTexts();
+        this.transformRowsHighlight();
+        this.placeTexts();
     }
 
     transformRowsHighlight() {
