@@ -124,8 +124,8 @@ class TableCard {
     addTable() {
         this.tableG = createG();
         setAttributes(this.tableG, {
-            "x": this.textsPosition.x,
-            "y": this.textsPosition.y,
+            "transform": 
+                `translate: (${this.textsPosition.x}, ${this.textsPosition.y})`,
         });
         this.svg.appendChild(this.tableG);
         this.addRowsHighlight();
