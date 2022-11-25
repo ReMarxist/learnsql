@@ -307,9 +307,9 @@ function addTableCard(svg, name, position, data, nColumns) {
     let tableCard = new TableCard(svg, position, data, nColumns);
     tableCard.addCard();
     tableCard.addLid();
+    tableCard.addTable();
     tableCard.addLabelRect();
     tableCard.addLabel(name);
-    tableCard.addTable();
     tableCard.calculateSizes();
     tableCard.setOnMouseMove();
     tableCard.resizeLid();
