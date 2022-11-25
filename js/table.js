@@ -42,6 +42,8 @@ class TableCard {
         this.labelRect = null;
         /** @type {SVGRectElement[]} */
         this.rowsHighlight = null;
+        /** @type {SVGRectElement} */
+        this.columnFraming = null;
         /** @type {number} */
         this.labelHeight = null;
         this.lidHeight = 8;
@@ -178,7 +180,13 @@ class TableCard {
 
     setOnMouseMove() {
         this.tableG.addEventListener("mousemove", () => {
-            console.log("g move");
+            if (this.columnFraming === null) {
+                this.columnFraming = addRect(this.svg);
+                setAttributes(this.columnFraming, {
+                    "stroke": "#3491dc",
+                    "fill-opacity": "0",
+                });
+            }
         });
     }
 
