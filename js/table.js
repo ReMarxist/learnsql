@@ -146,10 +146,10 @@ class Table {
 
     setOnMouseMove() {
         this.svg.addEventListener("mousemove", ev => {
-            if (ev.clientX >= this.textsPosition.x
-                && ev.clientY >= this.textsPosition.y
-                && ev.clientX <= this.textsPosition.x + this.width
-                && ev.clientY <= this.textsPosition.y + this.height) {
+            if (ev.offsetX >= this.textsPosition.x
+                && ev.offsetY >= this.textsPosition.y
+                && ev.offsetX <= this.textsPosition.x + this.width
+                && ev.offsetY <= this.textsPosition.y + this.height) {
                 console.log("rows move");
             }
         });
