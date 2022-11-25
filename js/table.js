@@ -206,9 +206,10 @@ class TableCard {
      * @param {MouseEvent} mouseEvent 
      */
     getColumnI(mouseEvent) {
-        console.log(mouseEvent.offsetX);
         for (let i = 0; i < this.nColumns; i++) {
-            let border = this.columnOffsets[i] + this.columnWidths[i];
+            let border = this.position.x
+                + this.columnOffsets[i]
+                + this.columnWidths[i];
             if (mouseEvent.offsetX <= border) {
                 return i;
             }
@@ -233,13 +234,13 @@ class TableCard {
     }
 
     transformTable() {
-        place(this.tableBackground, {x: 0, y: 0});
+        place(this.tableBackground, { x: 0, y: 0 });
         setAttributes(this.tableBackground, {
             "width": this.width,
             "height": this.rowsHeight,
         });
         setAttributes(this.tableG, {
-            "transform": 
+            "transform":
                 `translate(${this.textsPosition.x}, ${this.textsPosition.y})`,
         });
         this.transformRowsHighlight();
