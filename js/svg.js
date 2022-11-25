@@ -42,15 +42,10 @@ function createText(text) {
 
 /**
  * Create svg rect
- * @param {Object} params
- * @param {number} params.x
- * @param {number} params.y
  */
-function createRect(params) {
+function createRect() {
     let rect = createSvgElement("rect");
     setAttributes(rect, {
-        "x": params.x,
-        "y": params.y,
         "height": "50",
         "width": "50",
     });
