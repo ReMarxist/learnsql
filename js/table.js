@@ -123,10 +123,6 @@ class TableCard {
 
     addTable() {
         this.tableG = createG();
-        setAttributes(this.tableG, {
-            "transform": 
-                `translate(${this.textsPosition.x}, ${this.textsPosition.y})`,
-        });
         this.svg.appendChild(this.tableG);
         this.addRowsHighlight();
         this.addTexts();
@@ -182,6 +178,15 @@ class TableCard {
             "width": this.width,
             "height": this.labelHeight,
         });
+    }
+
+    transformTable() {
+        setAttributes(this.tableG, {
+            "transform": 
+                `translate(${this.textsPosition.x}, ${this.textsPosition.y})`,
+        });
+        tableCard.transformRowsHighlight();
+        tableCard.placeTexts();
     }
 
     transformRowsHighlight() {
@@ -293,8 +298,7 @@ function addTableCard(svg, name, position, data, nColumns) {
     tableCard.calculateSizes();
     tableCard.setOnMouseMove();
     tableCard.resizeLid();
-    tableCard.transformRowsHighlight();
-    tableCard.placeTexts();
+    tableCard.transformTable();
     tableCard.transformLabelRect();
     tableCard.placeLabel();
     tableCard.resizeCard();
