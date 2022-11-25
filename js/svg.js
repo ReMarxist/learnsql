@@ -139,3 +139,15 @@ function place(element, position) {
         "y": "" + position.y,
     });
 }
+
+/**
+ * Place svg element
+ * @param {SVGElement} element 
+ * @param {{width: number, height: number}} dimensions 
+ */
+function resize(element, dimensions) {
+    setAttributes(element, {
+        "width": "" + dimensions.width,
+        "height": "" + dimensions.height,
+    });
+}

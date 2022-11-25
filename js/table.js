@@ -181,10 +181,20 @@ class TableCard {
     setOnMouseMove() {
         this.tableG.addEventListener("mousemove", () => {
             if (this.columnFraming === null) {
-                this.columnFraming = addRect(this.svg);
+                this.columnFraming = addRect(this.tableG);
                 setAttributes(this.columnFraming, {
                     "stroke": "#3491dc",
                     "fill-opacity": "0",
+                    "rx": "5",
+                });
+                let rowI = 2;
+                place(this.columnFraming, {
+                    x: this.columnOffsets[rowI],
+                    y: 0,
+                });
+                resize(this.columnFraming, {
+                    width: this.columnWidths[rowI],
+                    height: this.rowsHeight,
                 });
             }
         });
