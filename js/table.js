@@ -41,7 +41,7 @@ class Table {
         /** @type {number} */
         this.labelHeight = null;
         this.lidHeight = 10;
-        this.dataRowsTopMargin = 5;
+        this.dataRowsTopMargin = 3;
     }
 
     addCard() {
@@ -126,7 +126,7 @@ class Table {
         this.labelHeight = getHeight(this.label) + labelMargin;
         this.columnWidths = getColumnWidths(this.texts, this.nColumns);
         this.columnOffsets = getColumnOffsets(this.columnWidths);
-        this.rowHeight = getMaxHeight(this.texts);
+        this.rowHeight = getMaxHeight(this.texts) + 2;
         this.width = sum(this.columnWidths);
         this.height = this.lidHeight
             + this.labelHeight
