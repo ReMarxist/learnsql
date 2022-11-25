@@ -79,6 +79,20 @@ class TableCard {
         });
     }
 
+    /**
+     * Add table background rect to make cursor: pointer style
+     * work on whole table
+     */
+    addTableBackground() {
+        this.tableBackground = createRect();
+        setAttributes(this.tableBackground, {
+            "stroke": "white",
+            "fill": "white",
+            "rx": "5",
+        });
+        this.tableG.appendChild(this.tableBackground);
+    }
+
     addRowsHighlight() {
         let nHighlights = Math.floor(this.nRows / 2);
         this.rowsHighlight = increasing(nHighlights)
@@ -131,13 +145,7 @@ class TableCard {
         setAttributes(this.tableG, {
             "cursor": "pointer",
         });
-        this.tableBackground = createRect();
-        setAttributes(this.tableBackground, {
-            "stroke": "white",
-            "fill": "white",
-            "rx": "5",
-        });
-        this.tableG.appendChild(this.tableBackground);
+        this.addTableBackground();
         this.svg.appendChild(this.tableG);
         this.addRowsHighlight();
         this.addTexts();
