@@ -184,7 +184,7 @@ class Table {
                     + (columnWidth - getWidth(text)) / 2
                     + columnOffset,
                 "y": this.textsPosition.y
-                    + rowI * this.rowHeight,
+                    + (rowI + 0.5) * this.rowHeight,
             });
         });
     }
