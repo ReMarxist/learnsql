@@ -201,6 +201,15 @@ class TableCard {
         });
     }
 
+    setOnMouseLeave() {
+        this.tableG.addEventListener("mouseleave", mouseEvent => {
+            if (this.columnFraming !== null) {
+                this.columnFraming.remove();
+                this.columnFraming = null;
+            }
+        });
+    }
+
     /**
      * Get index of column that should be highlighted
      * @param {MouseEvent} mouseEvent 
@@ -355,6 +364,7 @@ function addTableCard(svg, name, position, data, nColumns) {
     tableCard.addLabel(name);
     tableCard.calculateSizes();
     tableCard.setOnMouseMove();
+    tableCard.setOnMouseLeave();
     tableCard.resizeLid();
     tableCard.transformTable();
     tableCard.transformLabelRect();
