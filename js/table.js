@@ -179,7 +179,7 @@ class TableCard {
     }
 
     setOnMouseMove() {
-        this.tableG.addEventListener("mousemove", () => {
+        this.tableG.addEventListener("mousemove", mouseEvent => {
             if (this.columnFraming === null) {
                 this.columnFraming = addRect(this.tableG);
                 setAttributes(this.columnFraming, {
@@ -187,18 +187,32 @@ class TableCard {
                     "fill-opacity": "0",
                     "rx": "5",
                 });
-                let rowI = 2;
+                let columnI = this.getColumnI(mouseEvent);
                 const yOffset = 2;
                 place(this.columnFraming, {
-                    x: this.columnOffsets[rowI],
+                    x: this.columnOffsets[columnI],
                     y: yOffset,
                 });
                 resize(this.columnFraming, {
-                    width: this.columnWidths[rowI],
+                    width: this.columnWidths[columnI],
                     height: this.rowsHeight - yOffset,
                 });
             }
         });
+    }
+
+    /**
+     * Get index of column that should be highlighted
+     * @param {MouseEvent} mouseEvent 
+     */
+    getColumnI(mouseEvent) {
+        for (let i = 0; i < this.nColumns; i++) {
+            let border = this.columnOffsets[i] + this.columnWidths[i];
+            if (mouseEvent.offsetX <= border) {
+                return i;
+            }
+        }
+        return this.nColumns - 1;
     }
 
     resizeLid() {
