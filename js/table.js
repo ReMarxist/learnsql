@@ -131,7 +131,8 @@ class TableCard {
         setAttributes(this.tableG, {
             "cursor": "pointer",
         });
-        this.tableBackground = createRect({x: 0, y: 0});
+        this.tableBackground = createRect();
+        this.tableG.appendChild(this.tableBackground);
         this.svg.appendChild(this.tableG);
         this.addRowsHighlight();
         this.addTexts();
@@ -185,6 +186,11 @@ class TableCard {
     }
 
     transformTable() {
+        place(this.tableBackground, this.textsPosition);
+        setAttributes(this.tableBackground, {
+            "width": this.width,
+            "height": this.rowsHeight,
+        });
         setAttributes(this.tableG, {
             "transform": 
                 `translate(${this.textsPosition.x}, ${this.textsPosition.y})`,
