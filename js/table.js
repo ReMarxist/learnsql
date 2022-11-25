@@ -1,7 +1,7 @@
-class Table {
+class TableCard {
     /**
-     * @param {SVGSVGElement} svg Container of Table
-     * @param {{x: number, y: number}} position Top-left dot of table
+     * @param {SVGSVGElement} svg Container of table card
+     * @param {{x: number, y: number}} position Top-left dot of table card
      * @param {string[]} data Headers and data
      * @param {number} nColumns Number of columns
      */
@@ -108,7 +108,7 @@ class Table {
     }
 
     /**
-     * Add label for whole table
+     * Add label for table
      * @param {string} name Table name
      */
     addLabel(name) {
@@ -120,7 +120,7 @@ class Table {
     }
 
     /**
-     * Calculate sizes of table elements after their appending to svg
+     * Calculate sizes of table card elements after their appending to svg
      */
     calculateSizes() {
         this.labelHeight = getHeight(this.label) + this.labelMargin;
@@ -135,7 +135,7 @@ class Table {
     }
 
     /**
-     * Resize rect that contains table
+     * Resize rect of table card
      */
     resizeCard() {
         setAttributes(this.card, {
@@ -201,7 +201,7 @@ class Table {
     }
 
     /**
-     * Position label for whole table
+     * Position table label
      */
     placeLabel() {
         let y = this.position.y
@@ -265,27 +265,27 @@ class Table {
 }
 
 /**
- * Create svg table
+ * Create svg table card
  * @param {SVGSVGElement} svg
  * @param {string} name Table name
- * @param {{x: number, y: number}} position Position of table
+ * @param {{x: number, y: number}} position Position of table card
  * @param {string[]} data Headers and data
  * @param {number} nColumns Number of columns
  */
-function addTable(svg, name, position, data, nColumns) {
-    let table = new Table(svg, position, data, nColumns);
-    table.addCard();
-    table.addLid();
-    table.addLabelRect();
-    table.addRowsHighlight();
-    table.addTexts();
-    table.addLabel(name);
-    table.calculateSizes();
-    table.setOnMouseMove();
-    table.resizeLid();
-    table.transformRowsHighlight();
-    table.placeTexts();
-    table.transformLabelRect();
-    table.placeLabel();
-    table.resizeCard();
+function addTableCard(svg, name, position, data, nColumns) {
+    let tableCard = new TableCard(svg, position, data, nColumns);
+    tableCard.addCard();
+    tableCard.addLid();
+    tableCard.addLabelRect();
+    tableCard.addRowsHighlight();
+    tableCard.addTexts();
+    tableCard.addLabel(name);
+    tableCard.calculateSizes();
+    tableCard.setOnMouseMove();
+    tableCard.resizeLid();
+    tableCard.transformRowsHighlight();
+    tableCard.placeTexts();
+    tableCard.transformLabelRect();
+    tableCard.placeLabel();
+    tableCard.resizeCard();
 }
