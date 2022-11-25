@@ -41,7 +41,7 @@ class Table {
         /** @type {number} */
         this.labelHeight = null;
         this.lidHeight = 10;
-        this.dataRowsTopMargin = 3;
+        this.dataRowsTopMargin = 0;
     }
 
     addCard() {
@@ -124,9 +124,9 @@ class Table {
     calculateSizes() {
         const labelMargin = 10;
         this.labelHeight = getHeight(this.label) + labelMargin;
-        this.columnWidths = getColumnWidths(this.texts, this.nColumns);
-        this.columnOffsets = getColumnOffsets(this.columnWidths);
-        this.rowHeight = getMaxHeight(this.texts) + 2;
+        this.calculateColumnWidths();
+        this.calculateColumnOffsets();
+        this.calculateRowHeight();
         this.width = sum(this.columnWidths);
         this.height = this.lidHeight
             + this.labelHeight
@@ -208,6 +208,44 @@ class Table {
             + this.labelHeight;
         return movedVertically(this.position, yOffset);
     }
+    
+    /**
+     * Calculate column widths
+     */
+    calculateColumnWidths() {
+        let widths = [];
+        for (let i = 0; i < this.nColumns; i++) {
+            widths.push(getWidth(this.texts[i]));
+        }
+        for (let i = this.nColumns; i < this.texts.length; i++) {
+            let width = getWidth(this.texts[i]);
+            widths[i % this.nColumns] = Math.max(widths[i % this.nColumns], width);
+        }
+        const columnMargin = 15;
+        this.columnWidths = widths.map(w => w + columnMargin);
+    }
+    
+    /**
+     * Get offset of columns
+     */
+    calculateColumnOffsets() {
+        let offsets = [];
+        let offset = 0;
+        for (let i = 0; i < this.columnWidths.length; i++) {
+            offsets.push(offset);
+            offset += this.columnWidths[i];
+        }
+        this.columnOffsets = offsets;
+    }
+    
+    /**
+     * Get max height of table `<text>`s
+     */
+     calculateRowHeight() {
+        const verticalMargin = 2;
+        let heights = this.texts.map(getHeight);
+        this.rowHeight = verticalMargin + max(heights);
+    }
 }
 
 /**
@@ -233,81 +271,4 @@ function addTable(svg, name, position, data, nColumns) {
     table.transformLabelRect();
     table.placeLabel();
     table.resizeCard();
-}
-
-/**
- * Create `<text>` tags for table
- * @param {string[]} headers 
- * @param {string[][]} dataRows 
- */
-function createTableTexts(headers, dataRows) {
-    let headerSvgs = headers.map(createText);
-    headerSvgs.forEach(el => {
-        el.style.fontWeight = "bold";
-    });
-    let dataSvgs = dataRows.flatMap(row => row.map(createText));
-    return headerSvgs.concat(dataSvgs);
-}
-
-/**
- * Calculate column widths
- * @param {SVGTextElement} texts 
- * @param {number} nColumns 
- */
-function getColumnWidths(texts, nColumns) {
-    let widths = [];
-    for (let i = 0; i < nColumns; i++) {
-        widths.push(getWidth(texts[i]));
-    }
-    for (let i = nColumns; i < texts.length; i++) {
-        let width = getWidth(texts[i]);
-        widths[i % nColumns] = Math.max(widths[i % nColumns], width);
-    }
-    const columnMargin = 15;
-    widths = widths.map(w => w + columnMargin);
-    return widths;
-}
-
-/**
- * Get offset of columns
- * @param {number[]} columnWidths 
- */
-function getColumnOffsets(columnWidths) {
-    let offsets = [];
-    let offset = 0;
-    for (let i = 0; i < columnWidths.length; i++) {
-        offsets.push(offset);
-        offset += columnWidths[i];
-    }
-    return offsets;
-}
-
-/**
- * Get max height of `<text>`
- * @param {SVGTextElement[]} texts 
- */
-function getMaxHeight(texts) {
-    let heights = texts.map(getHeight);
-    return max(heights);
-}
-
-/**
- * Add table lines
- * @param {Table} table 
- * @param {{x: number, y: number}} tablePosition
- */
-function addTableLines(table, tablePosition) {
-    let columnOffsets = getColumnOffsets(table.columnWidths);
-    for (let i = 1; i < table.columnWidths.length; i++) {
-        let line = createSvgElement("line");
-        let x = tablePosition.x + columnOffsets[i];
-        setAttributes(line, {
-            "x1": x,
-            "x2": x,
-            "y1": tablePosition.y,
-            "y2": tablePosition.y + table.height,
-            "stroke": "black",
-        });
-        table.svg.appendChild(line);
-    }
 }
