@@ -40,8 +40,9 @@ class Table {
         this.rowsHighlight = null;
         /** @type {number} */
         this.labelHeight = null;
-        this.lidHeight = 10;
+        this.lidHeight = 8;
         this.dataRowsTopMargin = 0;
+        this.labelMargin = 8;
     }
 
     addCard() {
@@ -122,8 +123,7 @@ class Table {
      * Calculate sizes of table elements after their appending to svg
      */
     calculateSizes() {
-        const labelMargin = 10;
-        this.labelHeight = getHeight(this.label) + labelMargin;
+        this.labelHeight = getHeight(this.label) + this.labelMargin;
         this.calculateColumnWidths();
         this.calculateColumnOffsets();
         this.calculateRowHeight();
