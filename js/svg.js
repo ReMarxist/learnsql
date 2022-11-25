@@ -39,7 +39,7 @@ function createSvg() {
 function createText(text) {
     let textEl = createSvgElement("text");
     textEl.textContent = text;
-    textEl.style.alignmentBaseline = "middle";
+    textEl.style.alignmentBaseline = "central";
     return textEl;
 }
 
