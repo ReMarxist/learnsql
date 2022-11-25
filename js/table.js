@@ -188,13 +188,14 @@ class TableCard {
                     "rx": "5",
                 });
                 let rowI = 2;
+                const yOffset = 2;
                 place(this.columnFraming, {
                     x: this.columnOffsets[rowI],
-                    y: 0,
+                    y: yOffset,
                 });
                 resize(this.columnFraming, {
                     width: this.columnWidths[rowI],
-                    height: this.rowsHeight,
+                    height: this.rowsHeight - yOffset,
                 });
             }
         });
