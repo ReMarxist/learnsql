@@ -26,7 +26,7 @@ function addRect(svg, params) {
 function createSvg() {
     let svg = createSvgElement("svg");
     svg.style.width = "100%";
-    svg.style.height = "600px";
+    svg.style.height = "400px";
     svg.style.font = "14px system-ui";
     svg.style.backgroundColor = "#f1f6f8";
     return svg;

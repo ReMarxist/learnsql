@@ -53,6 +53,9 @@ class Table {
             "rx": "5",
         });
         this.card.style.filter = "drop-shadow(3px 3px 2px rgba(200, 200, 200, .7))";
+        this.card.addEventListener("mousemove", () => {
+            console.log("move");
+        });
     }
 
     addLid() {
