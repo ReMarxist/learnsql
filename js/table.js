@@ -181,21 +181,29 @@ class TableCard {
     setOnMouseMove() {
         this.tableG.addEventListener("mousemove", mouseEvent => {
             if (this.columnFraming === null) {
-                this.columnFraming = addRect(this.tableG);
-                setAttributes(this.columnFraming, {
-                    "stroke": "#3491dc",
-                    "fill-opacity": "0",
-                    "rx": "5",
-                });
+                this.addColumnFraming();
                 let columnI = this.getColumnI(mouseEvent);
-                const yOffset = 2;
-                transform(this.columnFraming, {
-                    x: this.columnOffsets[columnI],
-                    y: yOffset,
-                    width: this.columnWidths[columnI],
-                    height: this.rowsHeight - yOffset,
-                });
+                this.transformColumnFraming(columnI);
             }
+        });
+    }
+
+    addColumnFraming() {
+        this.columnFraming = addRect(this.tableG);
+        setAttributes(this.columnFraming, {
+            "stroke": "#3491dc",
+            "fill-opacity": "0",
+            "rx": "5",
+        });
+    }
+
+    transformColumnFraming(columnI) {
+        const yOffset = 2;
+        transform(this.columnFraming, {
+            x: this.columnOffsets[columnI],
+            y: yOffset,
+            width: this.columnWidths[columnI],
+            height: this.rowsHeight - yOffset,
         });
     }
 
