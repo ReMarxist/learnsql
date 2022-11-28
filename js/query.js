@@ -1,3 +1,4 @@
 function addQueryInput() {
-    console.log("input ")
+    let svg = createSvgElement("svg");
+    document.body.appendChild(svg);
 }

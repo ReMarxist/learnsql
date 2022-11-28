@@ -1,5 +1,6 @@
 /**
  * Create, append to container and return svg
+ * @param {HTMLElement}
  */
 function addSvg(container) {
     let svg = createSvg();
