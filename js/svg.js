@@ -1,5 +1,5 @@
 /**
- * Create, append to container and return svg
+ * Create, append to `container` and return svg
  * @param {HTMLElement}
  */
 function addSvg(container) {
@@ -9,13 +9,23 @@ function addSvg(container) {
 }
 
 /**
- * Create, append and return rect
- * @param {SVGSVGElement} svg
+ * Create, append to `container` and return rect
+ * @param {SVGElement} container
  */
-function addRect(svg) {
+function addRect(container) {
     let rect = createRect();
-    svg.appendChild(rect);
+    container.appendChild(rect);
     return rect;
+}
+
+/**
+ * Create, append to `container` and return `<g>`
+ * @param {SVGElement} container 
+ */
+function addG(container) {
+    let g = createG();
+    container.appendChild(g);
+    return g;
 }
 
 /**

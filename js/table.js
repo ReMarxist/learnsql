@@ -17,6 +17,8 @@ class TableCard {
         /** @type {number} */
         this.nRows = data.length / nColumns;
         /** @type {SVGGElement} */
+        this.cardG = null;
+        /** @type {SVGGElement} */
         this.tableG = null;
         /** @type {SVGGElement} */
         this.tableBackground = null;
@@ -55,8 +57,8 @@ class TableCard {
     }
 
     addCard() {
+        this.cardG = addG(this.svg);
         this.card = addRect(this.svg);
-        place(this.card, this.position);
         setAttributes(this.card, {
             "fill": "white",
             "stroke": "white",
@@ -149,12 +151,11 @@ class TableCard {
     }
 
     addTable() {
-        this.tableG = createG();
+        this.tableG = addG(this.svg);
         setAttributes(this.tableG, {
             "cursor": "pointer",
         });
         this.addTableBackground();
-        this.svg.appendChild(this.tableG);
         this.addRowsHighlight();
         this.addTexts();
     }
@@ -181,6 +182,12 @@ class TableCard {
         setAttributes(this.card, {
             "width": "" + this.width,
             "height": "" + this.height,
+        });
+    }
+
+    placeCard() {
+        place(this.card, {
+            x: (this.svg.clientWidth - this.width) / 2,
         });
     }
 
@@ -401,4 +408,5 @@ function addTableCard(svg, name, position, data, nColumns) {
     tableCard.transformLabelRect();
     tableCard.placeLabel();
     tableCard.resizeCard();
+    // tableCard.placeCard();
 }
