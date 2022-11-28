@@ -20,6 +20,7 @@ function addTableScenario() {
     ];
 
     addTableCard(svg, "Corporations", { x: 50, y: 50 }, data, 5);
+    addQueryInput();
 }
 
 function addControlButtonScenario() {
