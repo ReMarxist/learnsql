@@ -219,7 +219,7 @@ class TableCard {
     }
 
     transformColumnFraming() {
-        const yOffset = 2;
+        const yOffset = 1;
         transform(this.columnFraming, {
             x: this.columnOffsets[this.framingColumnI],
             y: yOffset,
