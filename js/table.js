@@ -51,6 +51,7 @@ class TableCard {
         this.lidHeight = 8;
         this.dataRowsTopMargin = 0;
         this.labelMargin = 8;
+        this.lidAdjust = 0.1;
     }
 
     addCard() {
@@ -66,7 +67,10 @@ class TableCard {
 
     addLid() {
         this.lid = addRect(this.svg);
-        place(this.lid, this.position);
+        place(this.lid, {
+            x: this.position.x + this.lidAdjust,
+            y: this.position.y,
+        });
         setAttributes(this.lid, {
             "fill": "#3491dc",
             "stroke": "#3491dc",
@@ -255,7 +259,7 @@ class TableCard {
 
     resizeLid() {
         setAttributes(this.lid, {
-            "width": this.width,
+            "width": this.width - this.lidAdjust * 2,
             "height": this.lidHeight * 2,
         });
     }
