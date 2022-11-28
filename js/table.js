@@ -184,20 +184,28 @@ class TableCard {
         this.tableG.addEventListener("mousemove", mouseEvent => {
             if (this.columnFraming === null) {
                 this.addColumnFraming();
-                this.calculateFramingColumnI();
+                this.calculateFramingColumnI(mouseEvent);
                 this.transformColumnFraming();
-            } else if (this.framingColumnChanged()) {
-                this.calculateFramingColumnI();
+            } else if (this.framingColumnChanged(mouseEvent)) {
+                this.calculateFramingColumnI(mouseEvent);
                 this.transformColumnFraming();
             }
         });
     }
 
-    framingColumnChanged() {
+    /**
+     * Return true iff column that should be framed changed
+     * @param {MouseEvent} mouseEvent 
+     */
+    framingColumnChanged(mouseEvent) {
         return this.framingColumnI !== this.getColumnI(mouseEvent);
     }
 
-    calculateFramingColumnI() {
+    /**
+     * Calculate and set `this.framingColumnI`
+     * @param {MouseEvent} mouseEvent 
+     */
+    calculateFramingColumnI(mouseEvent) {
         this.framingColumnI = this.getColumnI(mouseEvent);
     }
 
