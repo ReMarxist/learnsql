@@ -45,6 +45,8 @@ class TableCard {
         /** @type {SVGRectElement} */
         this.columnFraming = null;
         /** @type {number} */
+        this.framingColumnI = null;
+        /** @type {number} */
         this.labelHeight = null;
         this.lidHeight = 8;
         this.dataRowsTopMargin = 0;
@@ -182,10 +184,21 @@ class TableCard {
         this.tableG.addEventListener("mousemove", mouseEvent => {
             if (this.columnFraming === null) {
                 this.addColumnFraming();
-                let columnI = this.getColumnI(mouseEvent);
-                this.transformColumnFraming(columnI);
+                this.calculateFramingColumnI();
+                this.transformColumnFraming();
+            } else if (this.framingColumnChanged()) {
+                this.calculateFramingColumnI();
+                this.transformColumnFraming();
             }
         });
+    }
+
+    framingColumnChanged() {
+        return this.framingColumnI !== this.getColumnI(mouseEvent);
+    }
+
+    calculateFramingColumnI() {
+        this.framingColumnI = this.getColumnI(mouseEvent);
     }
 
     addColumnFraming() {
@@ -197,12 +210,12 @@ class TableCard {
         });
     }
 
-    transformColumnFraming(columnI) {
+    transformColumnFraming() {
         const yOffset = 2;
         transform(this.columnFraming, {
-            x: this.columnOffsets[columnI],
+            x: this.columnOffsets[this.framingColumnI],
             y: yOffset,
-            width: this.columnWidths[columnI],
+            width: this.columnWidths[this.framingColumnI],
             height: this.rowsHeight - yOffset,
         });
     }
