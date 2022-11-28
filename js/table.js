@@ -189,11 +189,9 @@ class TableCard {
                 });
                 let columnI = this.getColumnI(mouseEvent);
                 const yOffset = 2;
-                place(this.columnFraming, {
+                transform(this.columnFraming, {
                     x: this.columnOffsets[columnI],
                     y: yOffset,
-                });
-                resize(this.columnFraming, {
                     width: this.columnWidths[columnI],
                     height: this.rowsHeight - yOffset,
                 });

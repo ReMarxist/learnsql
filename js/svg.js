@@ -141,7 +141,7 @@ function place(element, position) {
 }
 
 /**
- * Place svg element
+ * Resize svg element
  * @param {SVGElement} element 
  * @param {{width: number, height: number}} dimensions 
  */
@@ -150,4 +150,14 @@ function resize(element, dimensions) {
         "width": "" + dimensions.width,
         "height": "" + dimensions.height,
     });
+}
+
+/**
+ * Transform svg element
+ * @param {SVGElement} element 
+ * @param {{x: number, y: number, width: number, height: number}} params 
+ */
+function transform(element, params) {
+    place(element, params);
+    resize(element, params);
 }
