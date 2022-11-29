@@ -174,16 +174,13 @@ class TableCard {
      * Resize rect of table card
      */
     resizeCard() {
-        setAttributes(this.card, {
-            "width": "" + this.width,
-            "height": "" + this.height,
-        });
+        resize(this.card, this);
     }
 
     placeCardG() {
         translate(this.cardG, {
             x: (this.svg.clientWidth - this.width) / 2,
-            y: 100,
+            y: 20,
         });
     }
 
