@@ -301,10 +301,9 @@ class TableCard {
             const columnWidth = this.columnWidths[i % this.nColumns];
             const columnOffset = this.columnOffsets[i % this.nColumns];
             const rowI = Math.floor(i / this.nColumns);
-            setAttributes(text, {
-                "x": (columnWidth - getWidth(text)) / 2
-                    + columnOffset,
-                "y": (rowI + 0.5) * this.rowHeight,
+            place(text, {
+                x: (columnWidth - getWidth(text)) / 2 + columnOffset,
+                y: (rowI + 0.5) * this.rowHeight,
             });
         });
     }
@@ -313,11 +312,9 @@ class TableCard {
      * Position table label
      */
     placeLabel() {
-        let y = this.lidHeight
-            + this.labelHeight / 2;
-        setAttributes(this.label, {
-            "x": (this.width - getWidth(this.label)) / 2,
-            "y": y,
+        place(this.label, {
+            x: (this.width - getWidth(this.label)) / 2,
+            y: this.lidHeight + this.labelHeight / 2,
         });
     }
 
