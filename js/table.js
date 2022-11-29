@@ -115,7 +115,7 @@ class TableCard {
      * Create `<text>` tags and append them to svg
      */
     addTexts() {
-        this.texts = this.data.map(createText);
+        this.texts = this.data.map(str => addText(this.tableG));
         for (let i = 0; i < this.nColumns; i++) {
             let header = this.texts[i];
             header.style.fontWeight = "bold";
@@ -129,8 +129,6 @@ class TableCard {
                 "fill": "#616f7b",
             });
         }
-        // Append texts to svg before calculating their sizes
-        this.texts.forEach(text => this.tableG.appendChild(text));
     }
 
     /**
@@ -385,6 +383,7 @@ class TableCard {
  */
 function addTableCard(svg, name, data, nColumns) {
     let tableCard = new TableCard(svg, data, nColumns);
+    // Append elements to svg before calculating their sizes
     tableCard.addCard();
     tableCard.addLid();
     tableCard.addTable();

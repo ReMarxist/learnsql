@@ -29,6 +29,17 @@ function addG(container) {
 }
 
 /**
+ * Create, append to `container` and return `<text>`
+ * @param {SVGElement} container 
+ * @param {string} content 
+ */
+function addText(container, content) {
+    let text = createText(content);
+    container.appendChild(text);
+    return text;
+}
+
+/**
  * Create svg
  */
 function createSvg() {
@@ -41,12 +52,12 @@ function createSvg() {
 }
 
 /**
- * Create `<text>` tag with `text` content and basic font
- * @param {string} text 
+ * Create `<text>` tag with `content` and basic font
+ * @param {string} content 
  */
-function createText(text) {
+function createText(content) {
     let textEl = createSvgElement("text");
-    textEl.textContent = text;
+    textEl.textContent = content;
     textEl.style.alignmentBaseline = "central";
     return textEl;
 }
