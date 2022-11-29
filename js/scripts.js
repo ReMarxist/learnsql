@@ -19,7 +19,7 @@ function addTableScenario() {
         "10", "CVS Health", "United States", "Health care", "292",
     ];
 
-    addTableCard(svg, "Corporations", { x: 50, y: 50 }, data, 5);
+    addTableCard(svg, "Corporations", data, 5);
     addQueryInput();
 }
 

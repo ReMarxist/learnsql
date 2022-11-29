@@ -1,15 +1,12 @@
 class TableCard {
     /**
      * @param {SVGSVGElement} svg Container of table card
-     * @param {{x: number, y: number}} position Top-left dot of table card
      * @param {string[]} data Headers and data
      * @param {number} nColumns Number of columns
      */
-    constructor(svg, position, data, nColumns) {
+    constructor(svg, data, nColumns) {
         /** @type {SVGSVGElement} */
         this.svg = svg;
-        /** @type {{x: number, y: number}} */
-        this.position = position;
         /** @type {string[]} */
         this.data = data;
         /** @type {number} */
@@ -70,8 +67,8 @@ class TableCard {
     addLid() {
         this.lid = addRect(this.cardG);
         place(this.lid, {
-            x: this.position.x + this.lidAdjust,
-            y: this.position.y,
+            x: this.lidAdjust,
+            y: 0,
         });
         setAttributes(this.lid, {
             "fill": "#3491dc",
@@ -82,7 +79,6 @@ class TableCard {
 
     addLabelRect() {
         this.labelRect = addRect(this.cardG);
-        place(this.labelRect, this.position);
         setAttributes(this.labelRect, {
             "fill": "#f1f6f8",
             "stroke": "#e2e8f0",
@@ -187,6 +183,7 @@ class TableCard {
     placeCard() {
         place(this.card, {
             x: (this.svg.clientWidth - this.width) / 2,
+            y: 100,
         });
     }
 
@@ -253,9 +250,7 @@ class TableCard {
      */
     getColumnI(mouseEvent) {
         for (let i = 0; i < this.nColumns; i++) {
-            let border = this.position.x
-                + this.columnOffsets[i]
-                + this.columnWidths[i];
+            let border = this.columnOffsets[i] + this.columnWidths[i];
             if (mouseEvent.offsetX <= border) {
                 return i;
             }
@@ -272,8 +267,8 @@ class TableCard {
 
     transformLabelRect() {
         setAttributes(this.labelRect, {
-            "x": this.position.x,
-            "y": this.position.y + this.lidHeight,
+            "x": 0,
+            "y": this.lidHeight,
             "width": this.width,
             "height": this.labelHeight,
         });
@@ -324,20 +319,21 @@ class TableCard {
      * Position table label
      */
     placeLabel() {
-        let y = this.position.y
-            + this.lidHeight
+        let y = this.lidHeight
             + this.labelHeight / 2;
         setAttributes(this.label, {
-            "x": this.position.x + (this.width - getWidth(this.label)) / 2,
+            "x": (this.width - getWidth(this.label)) / 2,
             "y": y,
         });
     }
 
     get textsPosition() {
-        let yOffset = this.dataRowsTopMargin
-            + this.lidHeight
-            + this.labelHeight;
-        return movedVertically(this.position, yOffset);
+        return {
+            x: 0,
+            y: this.dataRowsTopMargin
+                + this.lidHeight
+                + this.labelHeight,
+        };
     }
 
     /** Get height of all rows as a whole */
@@ -388,12 +384,11 @@ class TableCard {
  * Create svg table card
  * @param {SVGSVGElement} svg
  * @param {string} name Table name
- * @param {{x: number, y: number}} position Position of table card
  * @param {string[]} data Headers and data
  * @param {number} nColumns Number of columns
  */
-function addTableCard(svg, name, position, data, nColumns) {
-    let tableCard = new TableCard(svg, position, data, nColumns);
+function addTableCard(svg, name, data, nColumns) {
+    let tableCard = new TableCard(svg, data, nColumns);
     tableCard.addCard();
     tableCard.addLid();
     tableCard.addTable();
