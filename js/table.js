@@ -58,7 +58,7 @@ class TableCard {
 
     addCard() {
         this.cardG = addG(this.svg);
-        this.card = addRect(this.svg);
+        this.card = addRect(this.cardG);
         setAttributes(this.card, {
             "fill": "white",
             "stroke": "white",
@@ -68,7 +68,7 @@ class TableCard {
     }
 
     addLid() {
-        this.lid = addRect(this.svg);
+        this.lid = addRect(this.cardG);
         place(this.lid, {
             x: this.position.x + this.lidAdjust,
             y: this.position.y,
@@ -81,7 +81,7 @@ class TableCard {
     }
 
     addLabelRect() {
-        this.labelRect = addRect(this.svg);
+        this.labelRect = addRect(this.cardG);
         place(this.labelRect, this.position);
         setAttributes(this.labelRect, {
             "fill": "#f1f6f8",
@@ -94,13 +94,12 @@ class TableCard {
      * work on whole table
      */
     addTableBackground() {
-        this.tableBackground = createRect();
+        this.tableBackground = addRect(this.tableG);
         setAttributes(this.tableBackground, {
             "stroke": "white",
             "fill": "white",
             "rx": "5",
         });
-        this.tableG.appendChild(this.tableBackground);
     }
 
     addRowsHighlight() {
@@ -147,11 +146,11 @@ class TableCard {
         this.label.style.fontWeight = "lighter";
         this.label.style.fontSize = "17px";
         this.label.style.alignmentBaseline = "middle";
-        this.svg.appendChild(this.label);
+        this.cardG.appendChild(this.label);
     }
 
     addTable() {
-        this.tableG = addG(this.svg);
+        this.tableG = addG(this.cardG);
         setAttributes(this.tableG, {
             "cursor": "pointer",
         });
@@ -408,5 +407,5 @@ function addTableCard(svg, name, position, data, nColumns) {
     tableCard.transformLabelRect();
     tableCard.placeLabel();
     tableCard.resizeCard();
-    // tableCard.placeCard();
+    tableCard.placeCard();
 }
