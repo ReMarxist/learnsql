@@ -250,7 +250,9 @@ class TableCard {
      */
     getColumnI(mouseEvent) {
         for (let i = 0; i < this.nColumns; i++) {
-            let border = this.columnOffsets[i] + this.columnWidths[i];
+            let border = this.cardG.getBoundingClientRect().x
+                + this.columnOffsets[i]
+                + this.columnWidths[i];
             if (mouseEvent.offsetX <= border) {
                 return i;
             }
