@@ -115,7 +115,7 @@ class TableCard {
      * Create `<text>` tags and append them to svg
      */
     addTexts() {
-        this.texts = this.data.map(str => addText(this.tableG));
+        this.texts = this.data.map(content => addText(this.tableG, content));
         for (let i = 0; i < this.nColumns; i++) {
             let header = this.texts[i];
             header.style.fontWeight = "bold";
