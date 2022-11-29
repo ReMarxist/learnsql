@@ -180,8 +180,8 @@ class TableCard {
         });
     }
 
-    placeCard() {
-        place(this.card, {
+    placeCardG() {
+        translate(this.cardG, {
             x: (this.svg.clientWidth - this.width) / 2,
             y: 100,
         });
@@ -280,10 +280,7 @@ class TableCard {
             "width": this.width,
             "height": this.rowsHeight,
         });
-        setAttributes(this.tableG, {
-            "transform":
-                `translate(${this.textsPosition.x}, ${this.textsPosition.y})`,
-        });
+        translate(this.tableG, this.textsPosition);
         this.transformRowsHighlight();
         this.placeTexts();
     }
@@ -402,5 +399,5 @@ function addTableCard(svg, name, data, nColumns) {
     tableCard.transformLabelRect();
     tableCard.placeLabel();
     tableCard.resizeCard();
-    tableCard.placeCard();
+    tableCard.placeCardG();
 }

@@ -172,3 +172,14 @@ function transform(element, params) {
     place(element, params);
     resize(element, params);
 }
+
+/**
+ * Translate svg `element` via transform attribute
+ * @param {SVGElement} element 
+ * @param {{x: number, y: number}} position 
+ */
+function translate(element, position) {
+    setAttributes(element, {
+        "transform": `translate(${position.x}, ${position.y})`,
+    });
+}
