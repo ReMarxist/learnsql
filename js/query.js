@@ -1,6 +1,7 @@
 function addQueryInput() {
     let svg = addQuerySvg();
     let caret = addCaret(svg);
+    animateCaret(caret);
 }
 
 function addQuerySvg() {
@@ -31,4 +32,12 @@ function addCaret(svg) {
         "stroke": "black",
     });
     return caret;
+}
+
+/**
+ * Add blinking animation to caret
+ * @param {SVGLineElement} caret 
+ */
+function animateCaret(caret) {
+    let animate = addAnimate(caret);
 }

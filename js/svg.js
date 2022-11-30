@@ -93,6 +93,16 @@ function addLine(container) {
 }
 
 /**
+ * Create, append to `container` and return `<animate>`
+ * @param {SVGElement} container 
+ */
+function addAnimate(container) {
+    let animate = createSvgElement("animate");
+    container.appendChild(animate);
+    return animate;
+}
+
+/**
  * Animate `rect` to move it to `target`
  * @param {SVGRectElement} rect 
  * @param {Object} target Coordinates of rect final state
