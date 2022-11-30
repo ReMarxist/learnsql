@@ -83,6 +83,16 @@ function createG() {
 }
 
 /**
+ * Create, append to `container` and return `<line>`
+ * @param {SVGElement} container 
+ */
+function addLine(container) {
+    let line = createSvgElement("line");
+    container.appendChild(container);
+    return line;
+}
+
+/**
  * Animate `rect` to move it to `target`
  * @param {SVGRectElement} rect 
  * @param {Object} target Coordinates of rect final state

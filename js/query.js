@@ -1,5 +1,6 @@
 function addQueryInput() {
     let svg = addQuerySvg();
+    let caret = addLine(svg);
 }
 
 function addQuerySvg() {
