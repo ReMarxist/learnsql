@@ -88,7 +88,7 @@ function createG() {
  */
 function addLine(container) {
     let line = createSvgElement("line");
-    container.appendChild(container);
+    container.appendChild(line);
     return line;
 }
 
