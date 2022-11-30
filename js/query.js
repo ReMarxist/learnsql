@@ -42,7 +42,7 @@ function animateCaret(caret) {
     let animate = addAnimate(caret);
     setAttributes(animate, {
         "attributeName": "stroke-opacity",
-        "values":"0;1;0",
+        "values":"1;1;1;0;0;0",
         "dur":"1s",
         "repeatCount": "indefinite",
     });
