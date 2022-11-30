@@ -41,7 +41,7 @@ function addCaret(svg) {
 function animateCaret(caret) {
     let animate = addAnimate(caret);
     setAttributes(animate, {
-        "attributeName": "strokeOpacity",
+        "attributeName": "stroke-opacity",
         "values":"0;1;0",
         "dur":"1s",
         "repeatCount": "indefinite",
