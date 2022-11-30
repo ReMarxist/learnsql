@@ -133,11 +133,11 @@ function getHeight(text) {
 }
 
 /**
- * Get width of `<text>`
- * @param {SVGTextElement} text 
+ * Get width of svg element
+ * @param {SVGElement} element 
  */
-function getWidth(text) {
-    return text.getBoundingClientRect().width;
+function getWidth(element) {
+    return element.getBoundingClientRect().width;
 }
 
 /**

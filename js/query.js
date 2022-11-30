@@ -1,6 +1,6 @@
 function addQueryInput() {
     let svg = addQuerySvg();
-    let caret = addLine(svg);
+    let caret = addCaret(svg);
 }
 
 function addQuerySvg() {
@@ -14,4 +14,21 @@ function addQuerySvg() {
     svg.style.borderTop = "3px #eaeaea solid";
     document.body.appendChild(svg);
     return svg;
+}
+
+/**
+ * Add editing caret to query input
+ * @param {SVGSVGElement} svg 
+ */
+function addCaret(svg) {
+    let caret = addLine(svg);
+    let x = svg.clientWidth / 2;
+    setAttributes(caret, {
+        "x1": x,
+        "y1": 10,
+        "x2": x,
+        "y2": 40,
+        "stroke": "black",
+    });
+    return caret;
 }
