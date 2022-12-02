@@ -51,6 +51,7 @@ function animateCaret(caret) {
 
 function addShadowInput() {
     let input = document.createElement("input");
+    document.body.appendChild(input);
     input.focus();
     input.addEventListener("input", event => {
         console.log(input.value);
