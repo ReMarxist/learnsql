@@ -2,8 +2,7 @@ function addQueryInput() {
     let svg = addQuerySvg();
     let caret = addCaret(svg);
     animateCaret(caret);
-    document.body.contentEditable = "true";
-    console.log(document.body.isContentEditable);
+    addShadowInput();
 }
 
 function addQuerySvg() {
@@ -47,5 +46,13 @@ function animateCaret(caret) {
         "values":"1;1;1;0;0;0",
         "dur":"1s",
         "repeatCount": "indefinite",
+    });
+}
+
+function addShadowInput() {
+    let input = document.createElement("input");
+    input.focus();
+    input.addEventListener("input", event => {
+        console.log(input.value);
     });
 }
