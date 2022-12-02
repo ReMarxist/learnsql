@@ -2,6 +2,8 @@ function addQueryInput() {
     let svg = addQuerySvg();
     let caret = addCaret(svg);
     animateCaret(caret);
+    document.body.contentEditable = "true";
+    console.log(document.body.isContentEditable);
 }
 
 function addQuerySvg() {
