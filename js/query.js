@@ -56,4 +56,7 @@ function addShadowInput() {
     input.addEventListener("input", event => {
         console.log(input.value);
     });
+    input.addEventListener("blur", () => {
+        input.focus();
+    })
 }
