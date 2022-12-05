@@ -20,7 +20,7 @@ function addTableScenario() {
     ];
 
     addTableCard(svg, "Corporations", data, 5);
-    addQueryInput();
+    QueryInput.create();
 }
 
 function addControlButtonScenario() {

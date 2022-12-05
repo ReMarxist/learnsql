@@ -1,63 +1,77 @@
-function addQueryInput() {
-    let svg = addQuerySvg();
-    let caret = addCaret(svg);
-    animateCaret(caret);
-    addShadowInput();
-}
-
-function addQuerySvg() {
-    let svg = createSvgElement("svg");
-    svg.style.position = "fixed";
-    svg.style.left = "0";
-    svg.style.bottom = "0";
-    svg.style.width = "100%";
-    svg.style.height = "100px";
-    svg.style.backgroundColor = "white";
-    svg.style.borderTop = "3px #eaeaea solid";
-    document.body.appendChild(svg);
-    return svg;
-}
-
 /**
- * Add editing caret to query input
- * @param {SVGSVGElement} svg 
+ * @field 
  */
-function addCaret(svg) {
-    let caret = addLine(svg);
-    let x = svg.clientWidth / 2;
-    setAttributes(caret, {
-        "x1": x,
-        "y1": 10,
-        "x2": x,
-        "y2": 40,
-        "stroke": "black",
-    });
-    return caret;
-}
+class QueryInput {
+    static create() {
+        let query = new QueryInput();
+        query.addQuerySvg();
+        query.addCaret();
+        query.animateCaret();
+        query.addShadowInput();
+    }
 
-/**
- * Add blinking animation to caret
- * @param {SVGLineElement} caret 
- */
-function animateCaret(caret) {
-    let animate = addAnimate(caret);
-    setAttributes(animate, {
-        "attributeName": "stroke-opacity",
-        "values":"1;1;1;0;0;0",
-        "dur":"1s",
-        "repeatCount": "indefinite",
-    });
-}
+    constructor() {
+        /** @type {SVGSVGElement} */
+        this.svg = null;
+        /** @type {SVGLineElement} */
+        this.caret = null;
+        /** @type {HTMLInputElement} */
+        this.shadowInput = null;
+    }
 
-function addShadowInput() {
-    let input = document.createElement("input");
-    document.body.appendChild(input);
-    input.style.opacity = "0";
-    input.focus();
-    input.addEventListener("input", event => {
-        console.log(input.value);
-    });
-    input.addEventListener("blur", () => {
-        input.focus();
-    })
+    addQuerySvg() {
+        this.svg = createSvgElement("svg");
+        this.svg.style.position = "fixed";
+        this.svg.style.left = "0";
+        this.svg.style.bottom = "0";
+        this.svg.style.width = "100%";
+        this.svg.style.height = "100px";
+        this.svg.style.backgroundColor = "white";
+        this.svg.style.borderTop = "3px #eaeaea solid";
+        document.body.appendChild(this.svg);
+    }
+
+    /**
+     * Add editing caret to query input
+     */
+    addCaret() {
+        this.caret = addLine(this.svg);
+        let x = this.svg.clientWidth / 2;
+        setAttributes(this.caret, {
+            "x1": x,
+            "y1": 10,
+            "x2": x,
+            "y2": 40,
+            "stroke": "black",
+        });
+    }
+
+    /**
+     * Add blinking animation to caret
+     */
+    animateCaret() {
+        let animate = addAnimate(this.caret);
+        setAttributes(animate, {
+            "attributeName": "stroke-opacity",
+            "values":"1;1;1;0;0;0",
+            "dur":"1s",
+            "repeatCount": "indefinite",
+        });
+    }
+
+    /**
+     * Add invisible `<input>` to read user input
+     */
+    addShadowInput() {
+        this.shadowInput = document.createElement("input");
+        document.body.appendChild(this.shadowInput);
+        this.shadowInput.style.opacity = "0";
+        this.shadowInput.focus();
+        this.shadowInput.addEventListener("input", event => {
+            updateQuery(this.shadowInput.value);
+        });
+        this.shadowInput.addEventListener("blur", () => {
+            this.shadowInput.focus();
+        })
+    }
 }
