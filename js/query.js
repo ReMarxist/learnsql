@@ -68,10 +68,18 @@ class QueryInput {
         this.shadowInput.style.opacity = "0";
         this.shadowInput.focus();
         this.shadowInput.addEventListener("input", event => {
-            updateQuery(this.shadowInput.value);
+            this.updateQuery(this.shadowInput.value);
         });
         this.shadowInput.addEventListener("blur", () => {
             this.shadowInput.focus();
         })
+    }
+
+    /**
+     * Update svg query value
+     * @param {string} value New value
+     */
+    updateQuery(value) {
+        console.log(value);
     }
 }
