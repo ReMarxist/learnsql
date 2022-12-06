@@ -34,6 +34,7 @@ class QueryInput {
         this.svg.style.height = "100px";
         this.svg.style.backgroundColor = "white";
         this.svg.style.borderTop = "3px #eaeaea solid";
+        this.svg.style.font = "16px system-ui";
         document.body.appendChild(this.svg);
     }
 
