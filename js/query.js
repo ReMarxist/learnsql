@@ -121,10 +121,10 @@ class QueryInput {
      * Temporarily stop caret animation
      */
     stopCaretAnimation() {
-        let animations = this.caret.getAnimations();
-        animations.forEach(animation => {
-            animation.cancel();
-        });
+        let animations = this.caret.getElementsByTagName("animate");
+        for (let animation of animations) {
+            animation.remove();
+        }
     }
 
     /**
