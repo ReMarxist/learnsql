@@ -80,3 +80,15 @@ function increasing(n) {
     }
     return result;
 }
+
+/**
+ * Set style attributes of html `element`
+ * @param {HTMLElement} element 
+ * @param {Object.<string, string>} attributes Dictionary with 
+ * attribute names and values
+ */
+function restyle(element, attributes) {
+    for (let key of Object.keys(attributes)) {
+        element.style[key] = attributes[key];
+    }
+}
