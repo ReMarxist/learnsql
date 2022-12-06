@@ -111,9 +111,20 @@ class QueryInput {
      * Handle input event
      */
     onInput() {
+        this.stopCaretAnimation();
         this.replaceSpaces();
         this.updateQuery();
         this.updateCaret();
+    }
+
+    /**
+     * Temporarily stop caret animation
+     */
+    stopCaretAnimation() {
+        let animations = this.caret.getAnimations();
+        animations.forEach(animation => {
+            animation.cancel();
+        });
     }
 
     /**
