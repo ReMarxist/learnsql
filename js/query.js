@@ -1,6 +1,3 @@
-/**
- * @field 
- */
 class QueryInput {
     static create() {
         let query = new QueryInput();
@@ -27,14 +24,14 @@ class QueryInput {
 
     addQuerySvg() {
         this.svg = createSvgElement("svg");
-        this.svg.style.position = "fixed";
-        this.svg.style.left = "0";
-        this.svg.style.bottom = "0";
-        this.svg.style.width = "100%";
-        this.svg.style.height = "100px";
-        this.svg.style.backgroundColor = "white";
-        this.svg.style.borderTop = "3px #eaeaea solid";
         restyle(this.svg, {
+            position: "fixed",
+            left: "0",
+            bottom: "0",
+            width: "100%",
+            height: "100px",
+            backgroundColor: "white",
+            borderTop: "3px #eaeaea solid",
             font: "18px system-ui",
         });
         document.body.appendChild(this.svg);
@@ -64,16 +61,16 @@ class QueryInput {
         let animate = addAnimate(this.caret);
         setAttributes(animate, {
             "attributeName": "stroke-opacity",
-            "values":"1;1;1;0;0;0",
-            "dur":"1s",
+            "values": "1;1;1;0;0;0",
+            "dur": "1s",
             "repeatCount": "indefinite",
         });
     }
-    
+
     /**
      * Add `<text>` containing user query
      */
-     addQuery() {
+    addQuery() {
         this.query = addText(this.svg, "");
     }
 
