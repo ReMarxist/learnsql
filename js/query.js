@@ -94,6 +94,7 @@ class QueryInput {
         this.shadowInput.style.opacity = "0";
         this.shadowInput.focus();
         this.shadowInput.addEventListener("input", event => {
+            console.log(event);
             this.onInput();
         });
         this.shadowInput.addEventListener("blur", () => {
