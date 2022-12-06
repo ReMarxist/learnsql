@@ -78,9 +78,7 @@ class QueryInput {
             "values": "1;1;1;0;0;0",
             "dur": "1s",
             "repeatCount": "indefinite",
-            "begin": "indefinite",
         });
-        animate.beginElementAt(3000);
     }
 
     /**
