@@ -3,6 +3,7 @@ class QueryInput {
         let query = new QueryInput();
         query.addQuerySvg();
         query.addCaret();
+        query.addMeasurementText();
         query.animateCaret();
         query.addQuery();
         query.addShadowInput();
@@ -21,6 +22,11 @@ class QueryInput {
          * @type {SVGTextElement}
          */
         this.query = null;
+        /**
+         * `<text>` for measurement text width
+         * @type {SVGTextElement}
+         */
+        this.measurementText = null;
     }
 
     addQuerySvg() {
@@ -53,6 +59,10 @@ class QueryInput {
             "y2": middle + caretHeight / 2,
             "stroke": "black",
         });
+    }
+
+    addMeasurementText() {
+        this.measurementText = addText(this.svg, "");
     }
 
     /**
@@ -93,6 +103,7 @@ class QueryInput {
 
     onInput() {
         this.updateQuery();
+        this.updateCaret();
     }
 
     /**
@@ -101,8 +112,23 @@ class QueryInput {
     updateQuery() {
         this.query.textContent = this.shadowInput.value;
         place(this.query, {
-            x: (this.svg.clientWidth - getWidth(this.query)) / 2,
+            x: this.inputX,
             y: (this.svg.clientHeight / 2),
         });
+    }
+
+    updateCaret() {
+        let textBeforeCaret = this.shadowInput.value.substring(0, this.caretPosition);
+        this.measurementText.textContent = textBeforeCaret;
+        let widthBeforeCaret = getWidth(this.measurementText);
+        let x = this.inputX + widthBeforeCaret;
+        setAttributes(this.caret, {
+            "x1": x,
+            "x2": x,
+        });
+    }
+
+    get inputX() {
+        return (this.svg.clientWidth - getWidth(this.query)) / 2;
     }
 }
