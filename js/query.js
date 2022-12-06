@@ -128,10 +128,8 @@ class QueryInput {
     }
 
     updateCaret() {
-        this.caretPosition = this.shadowInput.selectionEnd;
         let textBeforeCaret = this.shadowInput.value.substring(0, this.caretPosition);
-        this.measurementText.textContent = textBeforeCaret;
-        let widthBeforeCaret = getWidth(this.measurementText);
+        let widthBeforeCaret = this.measureWidth(textBeforeCaret);
         let x = this.inputX + widthBeforeCaret;
         setAttributes(this.caret, {
             "x1": x,
@@ -139,7 +137,21 @@ class QueryInput {
         });
     }
 
+    /**
+     * Measure width of svg `text`
+     * @param {string} text 
+     */
+    measureWidth(text) {
+        this.measurementText.textContent = textBeforeCaret;
+        let width = getWidth(this.measurementText);
+        return width;
+    }
+
     get inputX() {
         return (this.svg.clientWidth - getWidth(this.query)) / 2;
+    }
+
+    get caretPosition() {
+        return this.shadowInput.selectionEnd;
     }
 }
