@@ -7,7 +7,7 @@ class QueryInput {
         query.addQuerySvg();
         query.addCaret();
         query.animateCaret();
-        query.addText();
+        query.addQuery();
         query.addShadowInput();
     }
 
@@ -18,8 +18,11 @@ class QueryInput {
         this.caret = null;
         /** @type {HTMLInputElement} */
         this.shadowInput = null;
-        /** @type {SVGTextElement} */
-        this.text = null;
+        /**
+         * `<text>` containing query 
+         * @type {SVGTextElement}
+         */
+        this.query = null;
     }
 
     addQuerySvg() {
@@ -67,8 +70,8 @@ class QueryInput {
     /**
      * Add `<text>` containing user query
      */
-    addText() {
-        this.text = addText(this.svg, "");
+     addQuery() {
+        this.query = addText(this.svg, "");
     }
 
     /**
@@ -92,6 +95,10 @@ class QueryInput {
      * @param {string} value New value
      */
     updateQuery(value) {
-        console.log(value);
+        place(this.query, {
+            x: (this.svg.clientWidth - getWidth(this.query)) / 2,
+            y: (this.svg.clientHeight / 2),
+        });
+        this.query.textContent = value;
     }
 }
