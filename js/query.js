@@ -63,6 +63,10 @@ class QueryInput {
 
     addMeasurementText() {
         this.measurementText = addText(this.svg, "");
+        place(this.measurementText, {
+            x: 0,
+            y: -getWidth(this.measurementText),
+        });
     }
 
     /**
