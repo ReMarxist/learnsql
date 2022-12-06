@@ -141,7 +141,7 @@ class QueryInput {
      * @param {string} text 
      */
     measureWidth(text) {
-        this.measurementText.textContent = textBeforeCaret;
+        this.measurementText.textContent = text;
         let width = getWidth(this.measurementText);
         return width;
     }
