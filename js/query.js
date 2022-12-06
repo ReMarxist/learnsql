@@ -97,21 +97,23 @@ class QueryInput {
         document.body.appendChild(this.shadowInput);
         this.shadowInput.style.opacity = "0";
         this.shadowInput.focus();
-        this.shadowInput.addEventListener("input", event => {
-            this.onInput(event);
+        this.shadowInput.addEventListener("input", () => {
+            this.onInput();
         });
         this.shadowInput.addEventListener("blur", () => {
             this.shadowInput.focus();
         })
+        document.addEventListener("selectionchange", () => {
+            this.updateCaret();
+        });
     }
 
     /**
      * Handle input event
-     * @param {InputEvent} event 
      */
-    onInput(event) {
+    onInput() {
         this.updateQuery();
-        this.updateCaret(event);
+        this.updateCaret();
     }
 
     /**
@@ -125,10 +127,7 @@ class QueryInput {
         });
     }
 
-    /**
-     * @param {InputEvent} event 
-     */
-    updateCaret(event) {
+    updateCaret() {
         this.caretPosition = this.shadowInput.selectionEnd;
         let textBeforeCaret = this.shadowInput.value.substring(0, this.caretPosition);
         this.measurementText.textContent = textBeforeCaret;
