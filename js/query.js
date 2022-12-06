@@ -94,17 +94,20 @@ class QueryInput {
         this.shadowInput.style.opacity = "0";
         this.shadowInput.focus();
         this.shadowInput.addEventListener("input", event => {
-            console.log(event);
-            this.onInput();
+            this.onInput(event);
         });
         this.shadowInput.addEventListener("blur", () => {
             this.shadowInput.focus();
         })
     }
 
-    onInput() {
+    /**
+     * Handle input event
+     * @param {InputEvent} event 
+     */
+    onInput(event) {
         this.updateQuery();
-        this.updateCaret();
+        this.updateCaret(event);
     }
 
     /**
@@ -118,7 +121,11 @@ class QueryInput {
         });
     }
 
-    updateCaret() {
+    /**
+     * @param {InputEvent} event 
+     */
+    updateCaret(event) {
+        this.caretPosition += event.data.length;
         let textBeforeCaret = this.shadowInput.value.substring(0, this.caretPosition);
         this.measurementText.textContent = textBeforeCaret;
         let widthBeforeCaret = getWidth(this.measurementText);
