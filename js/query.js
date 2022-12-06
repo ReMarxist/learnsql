@@ -7,6 +7,7 @@ class QueryInput {
         query.addQuerySvg();
         query.addCaret();
         query.animateCaret();
+        query.addText();
         query.addShadowInput();
     }
 
@@ -17,6 +18,8 @@ class QueryInput {
         this.caret = null;
         /** @type {HTMLInputElement} */
         this.shadowInput = null;
+        /** @type {SVGTextElement} */
+        this.text = null;
     }
 
     addQuerySvg() {
@@ -35,13 +38,15 @@ class QueryInput {
      * Add editing caret to query input
      */
     addCaret() {
+        const caretHeight = 30;
         this.caret = addLine(this.svg);
         let x = this.svg.clientWidth / 2;
+        let middle = this.svg.clientHeight / 2;
         setAttributes(this.caret, {
             "x1": x,
-            "y1": 10,
+            "y1": middle - caretHeight / 2,
             "x2": x,
-            "y2": 40,
+            "y2": middle + caretHeight / 2,
             "stroke": "black",
         });
     }
@@ -57,6 +62,13 @@ class QueryInput {
             "dur":"1s",
             "repeatCount": "indefinite",
         });
+    }
+    
+    /**
+     * Add `<text>` containing user query
+     */
+    addText() {
+        this.text = addText(this.svg, "");
     }
 
     /**
