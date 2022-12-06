@@ -14,7 +14,6 @@ class QueryInput {
         this.svg = null;
         /** @type {SVGLineElement} */
         this.caret = null;
-        this.caretPosition = 0;
         /** @type {HTMLInputElement} */
         this.shadowInput = null;
         /**
