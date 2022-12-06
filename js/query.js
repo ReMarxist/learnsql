@@ -111,7 +111,7 @@ class QueryInput {
      * Handle input event
      */
     onInput() {
-        this.stopCaretAnimation();
+        this.delayCaretAnimation();
         this.replaceSpaces();
         this.updateQuery();
         this.updateCaret();
@@ -120,11 +120,14 @@ class QueryInput {
     /**
      * Temporarily stop caret animation
      */
-    stopCaretAnimation() {
-        let animations = this.caret.getElementsByTagName("animate");
-        for (let animation of animations) {
-            animation.remove();
+     delayCaretAnimation() {
+        let animates = this.caret.getElementsByTagName("animate");
+        for (let animate of animates) {
+            animate.remove();
         }
+        setTimeout(() => {
+            this.animateCaret();
+        }, 1000);
     }
 
     /**
