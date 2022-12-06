@@ -129,7 +129,7 @@ class QueryInput {
      * @param {InputEvent} event 
      */
     updateCaret(event) {
-        this.caretPosition += event.data.length;
+        this.caretPosition = this.shadowInput.selectionEnd;
         let textBeforeCaret = this.shadowInput.value.substring(0, this.caretPosition);
         this.measurementText.textContent = textBeforeCaret;
         let widthBeforeCaret = getWidth(this.measurementText);
