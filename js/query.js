@@ -111,8 +111,18 @@ class QueryInput {
      * Handle input event
      */
     onInput() {
+        this.replaceSpaces();
         this.updateQuery();
         this.updateCaret();
+    }
+
+    /**
+     * Replace normal spaces with non-breaking spaces to output them correctly
+     * in svg
+     */
+    replaceSpaces() {
+        const nonBreaking = " ";
+        this.shadowInput.value = this.shadowInput.value.replace(" ", nonBreaking);
     }
 
     /**
