@@ -126,7 +126,10 @@ class QueryInput {
             animate.remove();
         }
         setTimeout(() => {
-            this.animateCaret();
+            let animates = this.caret.getElementsByTagName("animate");
+            if (animates.length === 0) {
+                this.animateCaret();
+            }
         }, 1000);
     }
 
