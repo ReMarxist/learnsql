@@ -26,6 +26,8 @@ class QueryInput {
          * @type {SVGTextElement}
          */
         this.measurementText = null;
+        /** @type {number} */
+        this.expectedAnimationId = null;
     }
 
     addQuerySvg() {
@@ -125,9 +127,11 @@ class QueryInput {
         for (let animate of animates) {
             animate.remove();
         }
+        let id = Math.random();
+        this.expectedAnimationId = id;
         setTimeout(() => {
             let animates = this.caret.getElementsByTagName("animate");
-            if (animates.length === 0) {
+            if (this.expectedAnimationId === id) {
                 this.animateCaret();
             }
         }, 1000);
