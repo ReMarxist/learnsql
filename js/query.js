@@ -13,6 +13,7 @@ class QueryInput {
         this.svg = null;
         /** @type {SVGLineElement} */
         this.caret = null;
+        this.caretPosition = 0;
         /** @type {HTMLInputElement} */
         this.shadowInput = null;
         /**
@@ -83,22 +84,25 @@ class QueryInput {
         this.shadowInput.style.opacity = "0";
         this.shadowInput.focus();
         this.shadowInput.addEventListener("input", event => {
-            this.updateQuery(this.shadowInput.value);
+            this.onInput();
         });
         this.shadowInput.addEventListener("blur", () => {
             this.shadowInput.focus();
         })
     }
 
+    onInput() {
+        this.updateQuery();
+    }
+
     /**
-     * Update svg query value
-     * @param {string} value New value
+     * Update query content
      */
-    updateQuery(value) {
+    updateQuery() {
+        this.query.textContent = this.shadowInput.value;
         place(this.query, {
             x: (this.svg.clientWidth - getWidth(this.query)) / 2,
             y: (this.svg.clientHeight / 2),
         });
-        this.query.textContent = value;
     }
 }
