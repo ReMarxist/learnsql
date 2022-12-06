@@ -79,7 +79,7 @@ class QueryInput {
             "dur": "1s",
             "repeatCount": "indefinite",
         });
-        animate.beginElementAt(3);
+        animate.beginElementAt(3000);
     }
 
     /**
