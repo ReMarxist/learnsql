@@ -65,7 +65,7 @@ class QueryInput {
         this.measurementText = addText(this.svg, "");
         place(this.measurementText, {
             x: 0,
-            y: -getHeight(this.measurementText),
+            y: -1000,
         });
     }
 
