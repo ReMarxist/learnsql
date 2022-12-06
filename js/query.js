@@ -134,7 +134,7 @@ class QueryInput {
             if (this.expectedAnimationId === id) {
                 this.animateCaret();
             }
-        }, 1000);
+        }, 500);
     }
 
     /**
