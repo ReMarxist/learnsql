@@ -1,6 +1,3 @@
-document.body.style.margin = 0;
-let mainSvg = MainSvg.add().svg;
-
 addTableScenario();
 
 class MainSvg {
@@ -33,6 +30,9 @@ class MainSvg {
 }
 
 function addTableScenario() {
+    document.body.style.margin = 0;
+    let mainSvg = MainSvg.add().svg;
+
     let data = [
         "Rank", "Company", "Country", "Industry", "Revenue",
         "1", "Walmart", "United States", "Retail", "573",
@@ -52,6 +52,9 @@ function addTableScenario() {
 }
 
 function addControlButtonScenario() {
+    document.body.style.margin = 0;
+    let mainSvg = MainSvg.add().svg;
+    
     let rect = addRect(mainSvg);
     place(rect, { x: 10, y: 50 });
     let button = addRect(mainSvg);
