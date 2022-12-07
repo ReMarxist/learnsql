@@ -1,6 +1,5 @@
 document.body.style.margin = 0;
-let div = addDiv();
-let svg = addSvg(div);
+let svg = addSvg(document.body);
 
 addTableScenario();
 
