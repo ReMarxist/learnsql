@@ -121,7 +121,7 @@ class QueryInput {
     /**
      * Temporarily stop caret animation
      */
-     delayCaretAnimation() {
+    delayCaretAnimation() {
         let animates = this.caret.getElementsByTagName("animate");
         for (let animate of animates) {
             animate.remove();
@@ -186,6 +186,7 @@ class QueryInput {
 
     listenResize() {
         window.addEventListener("resize", () => {
+            this.updateQuery();
             this.updateCaret();
         });
     }
