@@ -1,38 +1,8 @@
+document.body.style.margin = 0;
+let mainSvg = MainSvg.add().svg;
 addTableScenario();
 
-class MainSvg {
-    constructor() {
-        /** @type {SVGSVGElement} */
-        this.svg = null;
-    }
-
-    static add() {
-        let mainSvg = new MainSvg();
-        mainSvg.stylize();
-        mainSvg.resize();
-        mainSvg.listenResize();
-        return mainSvg;
-    }
-
-    stylize() {
-        this.svg.style.position = "absolute";
-    }
-
-    resize() {
-        this.svg.style.height = window.innerHeight;
-    }
-
-    listenResize() {
-        document.addEventListener("resize", () => {
-            this.resize();
-        });
-    }
-}
-
 function addTableScenario() {
-    document.body.style.margin = 0;
-    let mainSvg = MainSvg.add().svg;
-
     let data = [
         "Rank", "Company", "Country", "Industry", "Revenue",
         "1", "Walmart", "United States", "Retail", "573",
@@ -52,9 +22,6 @@ function addTableScenario() {
 }
 
 function addControlButtonScenario() {
-    document.body.style.margin = 0;
-    let mainSvg = MainSvg.add().svg;
-    
     let rect = addRect(mainSvg);
     place(rect, { x: 10, y: 50 });
     let button = addRect(mainSvg);
