@@ -6,6 +6,7 @@ addTableScenario();
 function addMainSvg() {
     let svg = addSvg(document.body);
     svg.style.position = "absolute";
+    svg.style.height = window.innerHeight;
     return svg;
 }
 
