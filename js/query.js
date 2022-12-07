@@ -149,7 +149,7 @@ class QueryInput {
      * Update query content
      */
     updateQuery() {
-        this.query.textContent = this.shadowInput.value;
+        this.query.textContent = this.getNodes(this.shadowInput.value);
         place(this.query, {
             x: this.inputX,
             y: (this.svg.clientHeight / 2),
@@ -189,5 +189,14 @@ class QueryInput {
             this.updateQuery();
             this.updateCaret();
         });
+    }
+
+    /**
+     * Split query into nodes
+     * @param {string} query 
+     */
+    getNodes(query) {
+        console.log(query);
+        return query;
     }
 }
