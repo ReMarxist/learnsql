@@ -156,9 +156,13 @@ class QueryInput {
         nodes.forEach(node => {
             let text = addText(this.queryG, node);
             place(text, {
-                x: this.inputX,
-                y: this.svg.clientHeight / 2,
+                x: getWidth(this.queryG),
+                y: 0,
             });
+        });
+        place(this.queryG, {
+            x: (this.svg.clientWidth - getWidth(this.queryG)) / 2,
+            y: this.svg.clientHeight / 2,
         });
     }
 
