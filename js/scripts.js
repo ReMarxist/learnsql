@@ -1,7 +1,13 @@
 document.body.style.margin = 0;
-let svg = addSvg(document.body);
+let mainSvg = addMainSvg();
 
 addTableScenario();
+
+function addMainSvg() {
+    let svg = addSvg(document.body);
+    svg.style.position = "absolute";
+    return svg;
+}
 
 function addTableScenario() {
     let data = [
