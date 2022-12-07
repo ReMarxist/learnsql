@@ -23,6 +23,7 @@ class TableCard {
         card.placeLabel();
         card.resizeCard();
         card.placeCardG();
+        card.listenResize();
         return card;
     }
 
@@ -395,5 +396,11 @@ class TableCard {
         const verticalMargin = 2;
         let heights = this.texts.map(getHeight);
         this.rowHeight = verticalMargin + max(heights);
+    }
+
+    listenResize() {
+        window.addEventListener("resize", () => {
+            this.placeCardG();
+        });
     }
 }
