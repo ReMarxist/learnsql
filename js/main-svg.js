@@ -21,7 +21,7 @@ class MainSvg {
     }
 
     listenResize() {
-        document.addEventListener("resize", () => {
+        window.addEventListener("resize", () => {
             this.resize();
         });
     }
