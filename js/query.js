@@ -42,7 +42,7 @@ class QueryInput {
             height: "100px",
             backgroundColor: "white",
             borderTop: "3px #eaeaea solid",
-            font: "18px system-ui",
+            font: "18px monospace",
         });
         document.body.appendChild(this.svg);
     }
