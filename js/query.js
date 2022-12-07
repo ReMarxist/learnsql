@@ -160,7 +160,7 @@ class QueryInput {
                 y: 0,
             });
         });
-        place(this.queryG, {
+        translate(this.queryG, {
             x: (this.svg.clientWidth - getWidth(this.queryG)) / 2,
             y: this.svg.clientHeight / 2,
         });
