@@ -203,7 +203,7 @@ class QueryInput {
         for (let node of iter) {
             nodes.push(node[0]);
         }
-        console.log(node);
+        console.log(nodes);
         return nodes;
     }
 }
