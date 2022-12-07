@@ -188,7 +188,7 @@ class QueryInput {
     }
 
     get inputX() {
-        return (this.svg.clientWidth) / 2;
+        return (this.svg.clientWidth - getWidth(this.queryG)) / 2;
     }
 
     get caretPosition() {
