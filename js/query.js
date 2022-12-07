@@ -154,9 +154,10 @@ class QueryInput {
             text.remove();
         });
         nodes.forEach(node => {
+            let width = getWidth(this.queryG);
             let text = addText(this.queryG, node);
             place(text, {
-                x: getWidth(this.queryG),
+                x: width,
                 y: 0,
             });
         });
