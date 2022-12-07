@@ -7,6 +7,8 @@ class QueryInput {
         query.animateCaret();
         query.addQuery();
         query.addShadowInput();
+        query.updateCaret();
+        query.listenResize();
     }
 
     constructor() {
@@ -49,15 +51,8 @@ class QueryInput {
      * Add editing caret to query input
      */
     addCaret() {
-        const caretHeight = 30;
         this.caret = addLine(this.svg);
-        let x = this.svg.clientWidth / 2;
-        let middle = this.svg.clientHeight / 2;
         setAttributes(this.caret, {
-            "x1": x,
-            "y1": middle - caretHeight / 2,
-            "x2": x,
-            "y2": middle + caretHeight / 2,
             "stroke": "black",
         });
     }
@@ -183,5 +178,11 @@ class QueryInput {
 
     get caretPosition() {
         return this.shadowInput.selectionEnd;
+    }
+
+    listenResize() {
+        window.addEventListener("resize", () => {
+            this.updateCaret();
+        });
     }
 }
