@@ -196,7 +196,14 @@ class QueryInput {
      * @param {string} query 
      */
     getNodes(query) {
-        console.log(query);
-        return query;
+        // Split by separators: , and space
+        const regex = /,| |[^, ]+/g;
+        let iter = query.matchAll(regex);
+        let nodes = [];
+        for (let node of iter) {
+            nodes.push(node[0]);
+        }
+        console.log(node);
+        return nodes;
     }
 }
