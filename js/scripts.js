@@ -24,14 +24,14 @@ function addTableScenario() {
         "10", "CVS Health", "United States", "Health care", "292",
     ];
 
-    addTableCard(svg, "Corporations", data, 5);
+    addTableCard(mainSvg, "Corporations", data, 5);
     QueryInput.create();
 }
 
 function addControlButtonScenario() {
-    let rect = addRect(svg);
+    let rect = addRect(mainSvg);
     place(rect, { x: 10, y: 50 });
-    let button = addRect(svg);
+    let button = addRect(mainSvg);
     place(button, { x: 100, y: 100 })
     button.style.cursor = "pointer";
     button.id = "controlButton";
