@@ -19,10 +19,10 @@ class QueryInput {
         /** @type {HTMLInputElement} */
         this.shadowInput = null;
         /**
-         * `<text>` containing query 
-         * @type {SVGTextElement}
+         * `<g>` containing query `<text>`s
+         * @type {SVGGElement}
          */
-        this.query = null;
+        this.queryG = null;
         /**
          * `<text>` for measurement text width
          * @type {SVGTextElement}
@@ -83,10 +83,10 @@ class QueryInput {
     }
 
     /**
-     * Add `<text>` containing user query
+     * Add `<g>` containing user query
      */
     addQuery() {
-        this.query = addText(this.svg, "");
+        this.queryG = addG(this.svg);
     }
 
     /**
@@ -149,10 +149,16 @@ class QueryInput {
      * Update query content
      */
     updateQuery() {
-        this.query.textContent = this.getNodes(this.shadowInput.value);
-        place(this.query, {
-            x: this.inputX,
-            y: (this.svg.clientHeight / 2),
+        let nodes = this.getNodes(this.shadowInput.value);
+        this.queryG.childNodes.forEach(text => {
+            text.remove();
+        });
+        nodes.forEach(node => {
+            let text = addText(this.queryG, node);
+            place(text, {
+                x: this.inputX,
+                y: this.svg.clientHeight / 2,
+            });
         });
     }
 
@@ -177,7 +183,7 @@ class QueryInput {
     }
 
     get inputX() {
-        return (this.svg.clientWidth - getWidth(this.query)) / 2;
+        return (this.svg.clientWidth) / 2;
     }
 
     get caretPosition() {
@@ -203,7 +209,6 @@ class QueryInput {
         for (let node of iter) {
             nodes.push(node[0]);
         }
-        console.log(nodes);
         return nodes;
     }
 }
