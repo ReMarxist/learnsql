@@ -51,9 +51,13 @@ class QueryInput {
      * Add editing caret to query input
      */
     addCaret() {
+        const caretHeight = 30;
         this.caret = addLine(this.svg);
+        let middle = this.svg.clientHeight / 2;
         setAttributes(this.caret, {
             "stroke": "black",
+            "y1": middle - caretHeight / 2,
+            "y2": middle + caretHeight / 2,
         });
     }
 
