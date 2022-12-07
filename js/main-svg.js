@@ -1,7 +1,7 @@
 class MainSvg {
     constructor() {
         /** @type {SVGSVGElement} */
-        this.svg = null;
+        this.svg = addSvg(document.body);
     }
 
     static add() {
