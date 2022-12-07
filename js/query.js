@@ -196,8 +196,8 @@ class QueryInput {
      * @param {string} query 
      */
     getNodes(query) {
-        // Split by separators: , and space
-        const regex = /,| |[^, ]+/g;
+        // Split by separators: , and non-breaking space
+        const regex = /,| |[^, ]+/g;
         let iter = query.matchAll(regex);
         let nodes = [];
         for (let node of iter) {
