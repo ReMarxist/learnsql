@@ -150,18 +150,16 @@ class QueryInput {
      */
     updateQuery() {
         let nodes = this.getNodes(this.shadowInput.value);
-        this.queryG.childNodes.forEach(text => {
-            text.remove();
-        });
-        let w = 0;
+        this.queryG.remove();
+        this.addQuery();
+        let currentWidth = 0;
         nodes.forEach(node => {
-            let width = getWidth(this.queryG);
             let text = addText(this.queryG, node);
             place(text, {
-                x: w,
+                x: currentWidth,
                 y: 0,
             });
-            w += getWidth(text);
+            currentWidth += getWidth(text);
         });
         translate(this.queryG, {
             x: (this.svg.clientWidth - getWidth(this.queryG)) / 2,
