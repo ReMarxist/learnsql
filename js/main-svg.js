@@ -13,7 +13,7 @@ class MainSvg {
     }
 
     stylize() {
-        this.svg.style.position = "absolute";
+        this.svg.style.position = "fixed";
     }
 
     resize() {
