@@ -137,9 +137,9 @@ class QueryInput {
 
     get value() {
         const nonBreaking = " ";
-        return this.shadowInput.value.replace(" ", nonBreaking);
+        return this.shadowInput.value.replaceAll(" ", nonBreaking);
     }
-    
+
     /**
      * Update query content
      */
