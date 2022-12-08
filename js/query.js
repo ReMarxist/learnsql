@@ -155,6 +155,7 @@ class QueryInput {
         let currentWidth = 0;
         nodes.forEach(node => {
             let text = addText(this.queryG, node);
+            this.stylizeText(text);
             place(text, {
                 x: currentWidth,
                 y: 0,
@@ -165,6 +166,17 @@ class QueryInput {
             x: (this.svg.clientWidth - getWidth(this.queryG)) / 2,
             y: this.svg.clientHeight / 2,
         });
+    }
+
+    /**
+     * Stylize individual `<text>` node
+     * @param {SVGTextElement} text 
+     */
+    stylizeText(text) {
+        let value = text.textContent.toLowerCase();
+        if (value === "select" || value === "from") {
+            text.style.fontWeight = "bolder";
+        }
     }
 
     updateCaret() {
