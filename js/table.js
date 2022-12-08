@@ -1,19 +1,20 @@
 class TableCard {
     /**
      * Create svg table card
-     * @param {SVGSVGElement} svg
-     * @param {string} name Table name
-     * @param {string[]} data Headers and data
-     * @param {number} nColumns Number of columns
+     * @param {Object} params
+     * @param {SVGSVGElement} params.svg
+     * @param {string} params.tableName Table name
+     * @param {string[]} params.data Headers and data
+     * @param {number} params.nColumns Number of columns
      */
-    static add(svg, name, data, nColumns) {
-        let card = new TableCard(svg, data, nColumns);
+    static add(params) {
+        let card = new TableCard(params.svg, params.data, params.nColumns);
         // Append elements to svg before calculating their sizes
         card.addCard();
         card.addLid();
         card.addTable();
         card.addLabelRect();
-        card.addLabel(name);
+        card.addLabel(params.tableName);
         card.calculateSizes();
         card.setOnMouseMove();
         card.setOnMouseLeave();

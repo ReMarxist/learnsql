@@ -17,7 +17,12 @@ function addTableScenario() {
         "10", "CVS Health", "United States", "Health care", "292",
     ];
 
-    TableCard.add(mainSvg, "Corporations", data, 5);
+    TableCard.add({
+        svg: mainSvg,
+        tableName: "Corporations",
+        data,
+        nColumns: 5,
+    });
     QueryInput.create();
 }
 
