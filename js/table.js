@@ -347,6 +347,11 @@ class TableCard {
         });
     }
 
+    /** Get array of column labels */
+    get columnLabels() {
+        return this.data.slice(0, this.nColumns);
+    }
+
     get textsPosition() {
         return {
             x: 0,

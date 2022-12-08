@@ -17,13 +17,13 @@ function addTableScenario() {
         "10", "CVS Health", "United States", "Health care", "292",
     ];
 
-    TableCard.add({
+    let card = TableCard.add({
         svg: mainSvg,
         tableName: "Corporations",
         data,
         nColumns: 5,
     });
-    QueryInput.create();
+    QueryInput.create(card);
 }
 
 function addControlButtonScenario() {

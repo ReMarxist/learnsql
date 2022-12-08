@@ -1,6 +1,9 @@
 class QueryInput {
-    static create() {
-        let query = new QueryInput();
+    /**
+     * @param {TableCard} tableCard Table with data
+     */
+    static create(tableCard) {
+        let query = new QueryInput(tableCard);
         query.addQuerySvg();
         query.addCaret();
         query.addMeasurementText();
@@ -11,7 +14,12 @@ class QueryInput {
         query.listenResize();
     }
 
-    constructor() {
+    /**
+     * @param {TableCard} tableCard 
+     */
+    constructor(tableCard) {
+        /** @type {TableCard} */
+        this.tableCard = tableCard;
         /** @type {SVGSVGElement} */
         this.svg = null;
         /** @type {SVGLineElement} */
@@ -174,6 +182,8 @@ class QueryInput {
             text.style.fontStyle = "italic";
             text.setAttribute("fill", "#0077a9");
         } else if (value === "*") {
+            text.style.fontWeight = "bolder";
+        } else if (this.tableCard.columnLabels.includes(text)) {
             text.style.fontWeight = "bolder";
         }
     }
