@@ -171,7 +171,7 @@ class QueryInput {
         let value = text.textContent.toLowerCase();
         if (value === "select" || value === "from") {
             text.style.fontWeight = "bolder";
-            text.setAttribute("stroke", "#9561e2");
+            text.setAttribute("fill", "#9561e3");
         } else if (value === "*") {
             text.style.fontWeight = "bolder";
         }
