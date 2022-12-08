@@ -113,7 +113,6 @@ class QueryInput {
      */
     onInput() {
         this.delayCaretAnimation();
-        this.replaceSpaces();
         this.updateQuery();
         this.updateCaret();
     }
@@ -136,20 +135,16 @@ class QueryInput {
         }, 500);
     }
 
-    /**
-     * Replace normal spaces with non-breaking spaces to output them correctly
-     * in svg
-     */
-    replaceSpaces() {
+    get value() {
         const nonBreaking = " ";
-        this.shadowInput.value = this.shadowInput.value.replace(" ", nonBreaking);
+        return this.shadowInput.value.replace(" ", nonBreaking);
     }
-
+    
     /**
      * Update query content
      */
     updateQuery() {
-        let nodes = this.getNodes(this.shadowInput.value);
+        let nodes = this.getNodes(this.value);
         this.queryG.remove();
         this.addQuery();
         let currentWidth = 0;
@@ -180,7 +175,7 @@ class QueryInput {
     }
 
     updateCaret() {
-        let textBeforeCaret = this.shadowInput.value.substring(0, this.caretPosition);
+        let textBeforeCaret = this.value.substring(0, this.caretPosition);
         let widthBeforeCaret = this.measureWidth(textBeforeCaret);
         let x = this.inputX + widthBeforeCaret;
         setAttributes(this.caret, {
