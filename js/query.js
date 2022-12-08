@@ -183,9 +183,18 @@ class QueryInput {
             text.setAttribute("fill", "#0077a9");
         } else if (value === "*") {
             text.style.fontWeight = "bolder";
-        } else if (this.tableCard.columnLabels.includes(text)) {
+        } else if (this.isColumnLabel(value)) {
             text.style.fontWeight = "bolder";
         }
+    }
+
+    /**
+     * Is value corresponds to column label
+     * @param {string} value 
+     */
+    isColumnLabel(value) {
+        return this.tableCard.columnLabels
+            .some(label => label.toLowerCase() === value.toLowerCase());
     }
 
     updateCaret() {
