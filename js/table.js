@@ -168,7 +168,7 @@ class TableCard {
         this.label = createText(name);
         this.label.style.fontWeight = "lighter";
         this.label.style.fontSize = "17px";
-        this.label.style.alignmentBaseline = "middle";
+        this.label.style.dominantBaseline = "middle";
         this.cardG.appendChild(this.label);
     }
 
@@ -285,10 +285,10 @@ class TableCard {
     }
 
     resizeLid() {
-        setAttributes(this.lid, {
-            "width": this.width - this.lidAdjust * 2,
-            "height": this.lidHeight * 2,
-        });
+      resize(this.lid, {
+          width: this.width - this.lidAdjust * 2,
+          height: this.lidHeight * 2,
+      });
     }
 
     transformLabelRect() {

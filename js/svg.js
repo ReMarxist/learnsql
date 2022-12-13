@@ -1,6 +1,6 @@
 /**
  * Create, append to `container` and return svg
- * @param {HTMLElement}
+ * @param {HTMLElement} container
  */
 function addSvg(container) {
     let svg = createSvg();
@@ -58,7 +58,7 @@ function createSvg() {
 function createText(content) {
     let textEl = createSvgElement("text");
     textEl.textContent = content;
-    textEl.style.alignmentBaseline = "central";
+    textEl.style.dominantBaseline = "central";
     return textEl;
 }
 
@@ -116,8 +116,8 @@ function animate(rect, target) {
     let parentX = rect.parentElement.getBoundingClientRect().x;
     let currentX = rect.getBoundingClientRect().x - parentX;
     setAttributes(animate, {
-        "from": currentX,
-        "to": target.x,
+        "from": "" + currentX,
+        "to": "" + target.x,
         "dur": "1s",
         "repeatCount": "1",
         "fill": "freeze",

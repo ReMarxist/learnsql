@@ -17,7 +17,7 @@ class MainSvg {
     }
 
     resize() {
-        this.svg.style.height = window.innerHeight;
+        this.svg.style.height = window.innerHeight + "px";
     }
 
     listenResize() {
