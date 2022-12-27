@@ -12,6 +12,7 @@ class QueryInput {
         query.addShadowInput();
         query.updateCaret();
         query.listenResize();
+        return query;
     }
 
     /**
@@ -109,11 +110,17 @@ class QueryInput {
             this.onInput();
         });
         this.shadowInput.addEventListener("blur", () => {
-            this.shadowInput.focus();
+            this.focusShadowInput();
         })
         document.addEventListener("selectionchange", () => {
             this.updateCaret();
         });
+    }
+
+    focusShadowInput() {
+        setTimeout(() => {
+          this.shadowInput.focus();
+        }, 1);
     }
 
     /**

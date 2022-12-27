@@ -23,7 +23,11 @@ function addTableScenario() {
         data,
         nColumns: 5,
     });
-    QueryInput.create(card);
+    let query = QueryInput.create(card);
+
+    window.document.addEventListener("click", () => {
+      query.focusShadowInput();
+    });
 }
 
 function addControlButtonScenario() {
