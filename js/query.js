@@ -209,8 +209,8 @@ class QueryInput {
     let widthBeforeCaret = this.measureWidth(textBeforeCaret);
     let x = this.inputX + widthBeforeCaret;
     setAttributes(this.caret, {
-      "x1": x,
-      "x2": x,
+      "x1": "" + x,
+      "x2": "" + x,
     });
   }
 
