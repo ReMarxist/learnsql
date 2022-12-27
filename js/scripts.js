@@ -1,4 +1,4 @@
-document.body.style.margin = 0;
+document.body.style.margin = "0";
 let mainSvg = MainSvg.add().svg;
 addTableScenario();
 
