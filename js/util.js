@@ -82,8 +82,8 @@ function increasing (n) {
 }
 
 /**
- * Set style attributes of html `element`
- * @param {HTMLElement} element 
+ * Set style attributes of `element`
+ * @param {HTMLElement | SVGElement} element 
  * @param {Object.<string, string>} attributes Dictionary with 
  * attribute names and values
  */

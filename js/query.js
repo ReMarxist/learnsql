@@ -4,7 +4,6 @@ class QueryInput {
    */
   static create (tableCard) {
     let query = new QueryInput(tableCard);
-    query.addQuerySvg();
     query.addCaret();
     query.addMeasurementText();
     query.animateCaret();
@@ -22,7 +21,7 @@ class QueryInput {
     /** @type {TableCard} */
     this.tableCard = tableCard;
     /** @type {SVGSVGElement} */
-    this.svg = null;
+    this.svg = this.addQuerySvg();
     /** @type {SVGLineElement} */
     this.caret = null;
     /** @type {HTMLInputElement} */
@@ -42,8 +41,8 @@ class QueryInput {
   }
 
   addQuerySvg () {
-    this.svg = createSvgElement("svg");
-    restyle(this.svg, {
+    let svg = createSvgElement("svg");
+    restyle(svg, {
       position: "fixed",
       left: "0",
       bottom: "0",
@@ -53,7 +52,8 @@ class QueryInput {
       borderTop: "3px #eaeaea solid",
       font: "18px monospace",
     });
-    document.body.appendChild(this.svg);
+    document.body.appendChild(svg);
+    return svg;
   }
 
   /**
