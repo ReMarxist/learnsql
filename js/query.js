@@ -4,11 +4,7 @@ class QueryInput {
    */
   static create (tableCard) {
     let query = new QueryInput(tableCard);
-    query.addCaret();
-    query.addMeasurementText();
     query.animateCaret();
-    query.addQuery();
-    query.addShadowInput();
     query.updateCaret();
     query.listenResize();
     return query;
@@ -23,21 +19,21 @@ class QueryInput {
     /** @type {SVGSVGElement} */
     this.svg = this.addQuerySvg();
     /** @type {SVGLineElement} */
-    this.caret = null;
-    /** @type {HTMLInputElement} */
-    this.shadowInput = null;
-    /**
-     * `<g>` containing query `<text>`s
-     * @type {SVGGElement}
-     */
-    this.queryG = null;
+    this.caret = this.addCaret();
     /**
      * `<text>` for measurement text width
      * @type {SVGTextElement}
      */
-    this.measurementText = null;
+    this.measurementText = this.addMeasurementText();
+    /**
+     * `<g>` containing query `<text>`s
+     * @type {SVGGElement}
+     */
+    this.queryG = this.addQueryG();
+    /** @type {HTMLInputElement} */
+    this.shadowInput = this.addShadowInput();
     /** @type {number} */
-    this.expectedAnimationId = null;
+    this.expectedAnimationId = 0;
   }
 
   addQuerySvg () {
@@ -61,21 +57,23 @@ class QueryInput {
    */
   addCaret () {
     const caretHeight = 30;
-    this.caret = addLine(this.svg);
+    let caret = addLine(this.svg);
     let middle = this.svg.clientHeight / 2;
-    setAttributes(this.caret, {
+    setAttributes(caret, {
       "stroke": "black",
       "y1": middle - caretHeight / 2,
       "y2": middle + caretHeight / 2,
     });
+    return caret;
   }
 
   addMeasurementText () {
-    this.measurementText = addText(this.svg, "");
-    place(this.measurementText, {
+    let measurementText = addText(this.svg, "");
+    place(measurementText, {
       x: 0,
       y: -1000,
     });
+    return measurementText;
   }
 
   /**
@@ -94,27 +92,29 @@ class QueryInput {
   /**
    * Add `<g>` containing user query
    */
-  addQuery () {
-    this.queryG = addG(this.svg);
+  addQueryG () {
+    let queryG = addG(this.svg);
+    return queryG;
   }
 
   /**
    * Add invisible `<input>` to read user input
    */
   addShadowInput () {
-    this.shadowInput = document.createElement("input");
-    document.body.appendChild(this.shadowInput);
-    this.shadowInput.style.opacity = "0";
-    this.shadowInput.focus();
-    this.shadowInput.addEventListener("input", () => {
+    let shadowInput = document.createElement("input");
+    document.body.appendChild(shadowInput);
+    shadowInput.style.opacity = "0";
+    shadowInput.focus();
+    shadowInput.addEventListener("input", () => {
       this.onInput();
     });
-    this.shadowInput.addEventListener("blur", () => {
+    shadowInput.addEventListener("blur", () => {
       this.focusShadowInput();
     })
     document.addEventListener("selectionchange", () => {
       this.updateCaret();
     });
+    return shadowInput;
   }
 
   focusShadowInput () {
@@ -161,7 +161,7 @@ class QueryInput {
   updateQuery () {
     let nodes = this.getNodes(this.value);
     this.queryG.remove();
-    this.addQuery();
+    this.queryG = this.addQueryG();
     let currentWidth = 0;
     nodes.forEach(node => {
       let text = addText(this.queryG, node);
