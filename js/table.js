@@ -292,19 +292,19 @@ class TableCard {
   }
 
   transformLabelRect () {
-    setAttributes(this.labelRect, {
-      "x": 0,
-      "y": this.lidHeight,
-      "width": this.width,
-      "height": this.labelHeight,
+    transform(this.labelRect, {
+      x: 0,
+      y: this.lidHeight,
+      width: this.width,
+      height: this.labelHeight,
     });
   }
 
   transformTable () {
     place(this.tableBackground, { x: 0, y: 0 });
-    setAttributes(this.tableBackground, {
-      "width": this.width,
-      "height": this.rowsHeight,
+    resize(this.tableBackground, {
+      width: this.width,
+      height: this.rowsHeight,
     });
     translate(this.tableG, this.textsPosition);
     this.transformRowsHighlight();
@@ -313,11 +313,11 @@ class TableCard {
 
   transformRowsHighlight () {
     this.rowsHighlight.forEach((highlight, i) => {
-      setAttributes(highlight, {
-        "x": 0,
-        "y": (i * 2 + 1) * this.rowHeight,
-        "width": this.width,
-        "height": this.rowHeight,
+      transform(highlight, {
+        x: 0,
+        y: (i * 2 + 1) * this.rowHeight,
+        width: this.width,
+        height: this.rowHeight,
       });
     });
   }
