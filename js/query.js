@@ -61,8 +61,8 @@ class QueryInput {
     let middle = this.svg.clientHeight / 2;
     setAttributes(caret, {
       "stroke": "black",
-      "y1": middle - caretHeight / 2,
-      "y2": middle + caretHeight / 2,
+      "y1": "" + (middle - caretHeight / 2),
+      "y2": "" + (middle + caretHeight / 2),
     });
     return caret;
   }
