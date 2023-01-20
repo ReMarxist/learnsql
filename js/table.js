@@ -225,6 +225,17 @@ class TableCard {
   }
 
   /**
+   * @param {QueryInput} query 
+   */
+  setOnMouseClick (query) {
+    this.tableG.addEventListener("mousedown", mouseEvent => {
+      this.calculateFramingColumnI(mouseEvent);
+      let label = this.columnLabels[this.framingColumnI];
+      query.updateValue(query.value + label);
+    });
+  }
+
+  /**
    * Return true iff column that should be framed changed
    * @param {MouseEvent} mouseEvent 
    */

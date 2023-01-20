@@ -24,6 +24,7 @@ function addTableScenario () {
     nColumns: 5,
   });
   let query = QueryInput.create(card);
+  card.setOnMouseClick(query);
 
   window.document.addEventListener("click", () => {
     query.focusShadowInput();

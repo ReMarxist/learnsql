@@ -156,6 +156,15 @@ class QueryInput {
   }
 
   /**
+   * Update value of shadow input and update display
+   * @param {string} newValue 
+   */
+  updateValue (newValue) {
+    this.shadowInput.value = newValue;
+    this.onInput();
+  }
+
+  /**
    * Update query content
    */
   updateQuery () {
