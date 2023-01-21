@@ -228,8 +228,12 @@ class QueryInput {
    * @param {string} text 
    */
   measureWidth (text) {
-    this.measurementText.textContent = text;
-    let width = getWidth(this.measurementText);
+    let nodes = this.getNodes(text);
+    let width = sum(nodes.map(node => {
+      this.measurementText.textContent = node;
+      this.stylizeText(this.measurementText);
+      return getWidth(this.measurementText);
+    }));
     return width;
   }
 
