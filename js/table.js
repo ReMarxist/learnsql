@@ -229,10 +229,26 @@ class TableCard {
    */
   setOnMouseClick (query) {
     this.tableG.addEventListener("mousedown", mouseEvent => {
-      this.calculateFramingColumnI(mouseEvent);
-      let label = this.columnLabels[this.framingColumnI];
-      query.updateValue(query.value + label);
+      let label = this.getFramingColumnLabel(mouseEvent);
+      let lastNode = query.getLastNode();
+      if (lastNode !== null && query.isColumnLabel(lastNode)) {
+        query.updateValue(query.value + ', ' + label);
+      } else if (lastNode !== null && query.isKeyWord(lastNode)) {
+        query.updateValue(query.value + ' ' + label);
+      } else {
+        query.updateValue(query.value + label);
+      }
     });
+  }
+
+  /**
+   * Return label of column that frames mouse cursor
+   * @param {MouseEvent} mouseEvent 
+   */
+  getFramingColumnLabel (mouseEvent) {
+    this.calculateFramingColumnI(mouseEvent);
+    let label = this.columnLabels[this.framingColumnI];
+    return label;
   }
 
   /**

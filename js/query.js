@@ -193,7 +193,7 @@ class QueryInput {
    */
   stylizeText (text) {
     let value = text.textContent.toLowerCase();
-    if (value === "select" || value === "from") {
+    if (this.isKeyWord(value)) {
       text.style.fontWeight = "bolder";
       text.style.fontStyle = "italic";
       text.setAttribute("fill", "#0077a9");
@@ -202,6 +202,13 @@ class QueryInput {
     } else if (this.isColumnLabel(value)) {
       text.style.fontWeight = "bolder";
     }
+  }
+
+  /**
+   * @param {string} value 
+   */
+  isKeyWord (value) {
+    return value === "select" || value === "from";
   }
 
   /**
@@ -265,5 +272,18 @@ class QueryInput {
       nodes.push(node[0]);
     }
     return nodes;
+  }
+
+  /**
+   * Return last node in current input or null,
+   * if input is empty
+   */
+  getLastNode () {
+    if (this.value === "") {
+      return null;
+    } else {
+      let nodes = this.getNodes(this.value);
+      return nodes[nodes.length - 1];
+    }
   }
 }
