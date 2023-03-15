@@ -4,7 +4,7 @@
 class Clause {
   /**
    * @param {QueryInput} queryInput
-   * @param {("SELECT" | "FROM")} type 
+   * @param {("SELECT" | "FROM")} type
    * @param {number} clauseI index of clause
    */
   constructor (queryInput, type, clauseI) {
@@ -60,8 +60,12 @@ class Clause {
     this.queryInput.delayCaretAnimation();
     this.updateDisplay();
     this.updateCaret();
+    this.queryInput.translate();
   }
 
+  /**
+   * Completely redraw all nodes of SQL clause
+   */
   updateDisplay() {
     this.clauseG.remove();
     this.clauseG = addG(this.queryInput.queryG);
@@ -285,12 +289,9 @@ class QueryInput {
   }
 
   /**
-   * Update query content
+   * Calculate and set position of query `<g>`
    */
-  updateQuery () {
-    this.queryG.remove();
-    this.queryG = this.addQueryG();
-    this.clauses.forEach(clause => clause.updateDisplay());
+  translate() {
     translate(this.queryG, {
       x: (this.svg.clientWidth - getWidth(this.queryG)) / 2,
       y: this.svg.clientHeight / 2,
@@ -307,7 +308,7 @@ class QueryInput {
 
   listenResize () {
     window.addEventListener("resize", () => {
-      this.updateQuery();
+      this.translate();
       this.updateCaret();
     });
   }
