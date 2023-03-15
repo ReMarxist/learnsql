@@ -230,13 +230,13 @@ class TableCard {
   setOnMouseClick (query) {
     this.tableG.addEventListener("mousedown", mouseEvent => {
       let label = this.getFramingColumnLabel(mouseEvent);
-      let lastNode = query.getLastNode();
-      if (lastNode !== null && query.isColumnLabel(lastNode)) {
-        query.updateValue(query.value + ', ' + label);
+      let lastNode = query.activeClause.getLastNode();
+      if (lastNode !== null && this.isColumnLabel(lastNode)) {
+        query.activeClause.updateValue(query.activeClause.value + ', ' + label);
       } else if (lastNode !== null && query.isKeyWord(lastNode)) {
-        query.updateValue(query.value + ' ' + label);
+        query.activeClause.updateValue(query.activeClause.value + ' ' + label);
       } else {
-        query.updateValue(query.value + label);
+        query.activeClause.updateValue(query.activeClause.value + label);
       }
     });
   }
@@ -435,5 +435,14 @@ class TableCard {
     window.addEventListener("resize", () => {
       this.placeCardG();
     });
+  }
+
+  /**
+   * Is value corresponds to column label
+   * @param {string} value 
+   */
+  isColumnLabel (value) {
+    return this.columnLabels.some(
+      label => label.toLowerCase() === value.toLowerCase());
   }
 }

@@ -1,3 +1,165 @@
+/**
+ * Clause block of SQL query
+ */
+class Clause {
+  /**
+   * @param {QueryInput} queryInput
+   * @param {("SELECT" | "FROM")} type 
+   * @param {number} clauseI index of clause
+   */
+  constructor (queryInput, type, clauseI) {
+    /** @type {QueryInput} */
+    this.queryInput = queryInput;
+    /** @type {HTMLInputElement} */
+    this.shadowInput = this.addShadowInput();/**
+    * `<g>` containing clause `<text>`s
+    * @type {SVGGElement}
+    */
+   this.clauseG = addG(queryInput.queryG);
+   /** @type {number} */
+   this.clauseI = clauseI;
+  }
+
+  /**
+   * Add invisible `<input>` to read user input
+   */
+  addShadowInput () {
+    let shadowInput = document.createElement("input");
+    document.body.appendChild(shadowInput);
+    shadowInput.style.opacity = "0";
+    shadowInput.focus();
+    shadowInput.addEventListener("input", () => {
+      this.onInput();
+    });
+    shadowInput.addEventListener("blur", () => {
+      this.focusShadowInput();
+    })
+    document.addEventListener("selectionchange", () => {
+      this.updateCaret();
+    });
+    return shadowInput;
+  }
+
+  focusShadowInput () {
+    this.shadowInput.focus();
+  }
+
+  /**
+   * Update value of shadow input and update display
+   * @param {string} newValue 
+   */
+  updateValue (newValue) {
+    this.shadowInput.value = newValue;
+    this.onInput();
+  }
+
+  /**
+   * Handle input event
+   */
+  onInput () {
+    this.queryInput.delayCaretAnimation();
+    this.updateDisplay();
+    this.updateCaret();
+  }
+
+  updateDisplay() {
+    this.clauseG.remove();
+    this.clauseG = addG(this.queryInput.queryG);
+    let nodes = this.getNodes(this.value);
+    let currentWidth = 0;
+    nodes.forEach(node => {
+      let text = addText(this.clauseG, node);
+      this.stylizeText(text);
+      place(text, {
+        x: currentWidth,
+        y: 0,
+      });
+      currentWidth += getWidth(text);
+    });
+  }
+
+  /**
+   * Split query into nodes
+   * @param {string} query 
+   */
+  getNodes (query) {
+    // Split by separators: , and non-breaking space
+    const regex = /,| |[^, ]+/g;
+    let iter = query.matchAll(regex);
+    let nodes = [];
+    for (let node of iter) {
+      nodes.push(node[0]);
+    }
+    return nodes;
+  }
+
+  get value () {
+    const nonBreaking = " ";
+    return this.shadowInput.value.replaceAll(" ", nonBreaking);
+  }
+
+  /**
+   * Stylize individual `<text>` node
+   * @param {SVGTextElement} text 
+   */
+  stylizeText (text) {
+    let value = text.textContent.toLowerCase();
+    if (this.queryInput.isKeyWord(value)) {
+      text.style.fontWeight = "bolder";
+      text.style.fontStyle = "italic";
+      text.setAttribute("fill", "#0077a9");
+    } else if (value === "*") {
+      text.style.fontWeight = "bolder";
+    } else if (this.queryInput.tableCard.isColumnLabel(value)) {
+      text.style.fontWeight = "bolder";
+    }
+  }
+
+  updateCaret () {
+    let textBeforeCaret = this.value.substring(0, this.caretPosition);
+    let widthBeforeCaret = this.measureWidth(textBeforeCaret);
+    let x = this.inputX + widthBeforeCaret;
+    setAttributes(this.queryInput.caret, {
+      "x1": "" + x,
+      "x2": "" + x,
+    });
+  }
+
+  get inputX () {
+    return this.queryInput.svg.clientWidth / 2;
+  }
+
+  get caretPosition () {
+    return this.shadowInput.selectionEnd;
+  }
+
+  /**
+   * Measure width of svg `text`
+   * @param {string} text 
+   */
+  measureWidth (text) {
+    let nodes = this.getNodes(text);
+    let width = sum(nodes.map(node => {
+      this.queryInput.measurementText.textContent = node;
+      this.stylizeText(this.queryInput.measurementText);
+      return getWidth(this.queryInput.measurementText);
+    }));
+    return width;
+  }
+
+  /**
+   * Return last node in current input or null, if input is empty
+   */
+  getLastNode () {
+    if (this.value === "") {
+      return null;
+    } else {
+      let nodes = this.getNodes(this.value);
+      return nodes[nodes.length - 1];
+    }
+  }
+}
+
 class QueryInput {
   /**
    * @param {TableCard} tableCard Table with data
@@ -30,8 +192,9 @@ class QueryInput {
      * @type {SVGGElement}
      */
     this.queryG = this.addQueryG();
-    /** @type {HTMLInputElement} */
-    this.shadowInput = this.addShadowInput();
+    this.clauses = [new Clause(this, "SELECT", 0)]; 
+    this.activeClauseI = 0;
+    //[new Clause("SELECT"), new Clause("FROM")];
     /** @type {number} */
     this.expectedAnimationId = 0;
   }
@@ -97,39 +260,10 @@ class QueryInput {
     return queryG;
   }
 
-  /**
-   * Add invisible `<input>` to read user input
-   */
-  addShadowInput () {
-    let shadowInput = document.createElement("input");
-    document.body.appendChild(shadowInput);
-    shadowInput.style.opacity = "0";
-    shadowInput.focus();
-    shadowInput.addEventListener("input", () => {
-      this.onInput();
-    });
-    shadowInput.addEventListener("blur", () => {
-      this.focusShadowInput();
-    })
-    document.addEventListener("selectionchange", () => {
-      this.updateCaret();
-    });
-    return shadowInput;
-  }
-
-  focusShadowInput () {
+  focusAllShadowInputs () {
     setTimeout(() => {
-      this.shadowInput.focus();
+      this.clauses.forEach(clause => clause.focusShadowInput());
     }, 1);
-  }
-
-  /**
-   * Handle input event
-   */
-  onInput () {
-    this.delayCaretAnimation();
-    this.updateQuery();
-    this.updateCaret();
   }
 
   /**
@@ -150,106 +284,25 @@ class QueryInput {
     }, 500);
   }
 
-  get value () {
-    const nonBreaking = " ";
-    return this.shadowInput.value.replaceAll(" ", nonBreaking);
-  }
-
-  /**
-   * Update value of shadow input and update display
-   * @param {string} newValue 
-   */
-  updateValue (newValue) {
-    this.shadowInput.value = newValue;
-    this.onInput();
-  }
-
   /**
    * Update query content
    */
   updateQuery () {
-    let nodes = this.getNodes(this.value);
     this.queryG.remove();
     this.queryG = this.addQueryG();
-    let currentWidth = 0;
-    nodes.forEach(node => {
-      let text = addText(this.queryG, node);
-      this.stylizeText(text);
-      place(text, {
-        x: currentWidth,
-        y: 0,
-      });
-      currentWidth += getWidth(text);
-    });
+    this.clauses.forEach(clause => clause.updateDisplay());
     translate(this.queryG, {
       x: (this.svg.clientWidth - getWidth(this.queryG)) / 2,
       y: this.svg.clientHeight / 2,
     });
   }
 
-  /**
-   * Stylize individual `<text>` node
-   * @param {SVGTextElement} text 
-   */
-  stylizeText (text) {
-    let value = text.textContent.toLowerCase();
-    if (this.isKeyWord(value)) {
-      text.style.fontWeight = "bolder";
-      text.style.fontStyle = "italic";
-      text.setAttribute("fill", "#0077a9");
-    } else if (value === "*") {
-      text.style.fontWeight = "bolder";
-    } else if (this.isColumnLabel(value)) {
-      text.style.fontWeight = "bolder";
-    }
-  }
-
-  /**
-   * @param {string} value 
-   */
-  isKeyWord (value) {
-    return value === "select" || value === "from";
-  }
-
-  /**
-   * Is value corresponds to column label
-   * @param {string} value 
-   */
-  isColumnLabel (value) {
-    return this.tableCard.columnLabels
-      .some(label => label.toLowerCase() === value.toLowerCase());
+  get activeClause() {
+    return this.clauses[this.activeClauseI];
   }
 
   updateCaret () {
-    let textBeforeCaret = this.value.substring(0, this.caretPosition);
-    let widthBeforeCaret = this.measureWidth(textBeforeCaret);
-    let x = this.inputX + widthBeforeCaret;
-    setAttributes(this.caret, {
-      "x1": "" + x,
-      "x2": "" + x,
-    });
-  }
-
-  /**
-   * Measure width of svg `text`
-   * @param {string} text 
-   */
-  measureWidth (text) {
-    let nodes = this.getNodes(text);
-    let width = sum(nodes.map(node => {
-      this.measurementText.textContent = node;
-      this.stylizeText(this.measurementText);
-      return getWidth(this.measurementText);
-    }));
-    return width;
-  }
-
-  get inputX () {
-    return (this.svg.clientWidth - getWidth(this.queryG)) / 2;
-  }
-
-  get caretPosition () {
-    return this.shadowInput.selectionEnd;
+    this.activeClause.updateCaret();
   }
 
   listenResize () {
@@ -260,30 +313,9 @@ class QueryInput {
   }
 
   /**
-   * Split query into nodes
-   * @param {string} query 
+   * @param {string} value 
    */
-  getNodes (query) {
-    // Split by separators: , and non-breaking space
-    const regex = /,| |[^, ]+/g;
-    let iter = query.matchAll(regex);
-    let nodes = [];
-    for (let node of iter) {
-      nodes.push(node[0]);
-    }
-    return nodes;
-  }
-
-  /**
-   * Return last node in current input or null,
-   * if input is empty
-   */
-  getLastNode () {
-    if (this.value === "") {
-      return null;
-    } else {
-      let nodes = this.getNodes(this.value);
-      return nodes[nodes.length - 1];
-    }
+  isKeyWord (value) {
+    return value === "select" || value === "from";
   }
 }

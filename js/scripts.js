@@ -28,7 +28,7 @@ function addTableScenario () {
 
   // Move keyboard focus to shadow input on every click
   window.document.addEventListener("click", () => {
-    query.focusShadowInput();
+    query.focusAllShadowInputs();
   });
 }
 
