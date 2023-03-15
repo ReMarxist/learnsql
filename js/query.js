@@ -83,11 +83,16 @@ class Clause {
       this.stylizeText(text);
       place(text, {
         x: currentWidth,
-        y: 0,
+        y: this.height / 2,
       });
       currentWidth += getWidth(text);
     });
     this.resizeInputFrame();
+    this.placeInputFrame();
+  }
+
+  get height() {
+    return 30;
   }
 
   addInputFrame () {
@@ -110,6 +115,13 @@ class Clause {
       width: Math.max(minWidth, textWidth + 2 * margin),
       height: Math.max(minHeight, textHeight) + 2 * margin,
     });
+  }
+
+  placeInputFrame () {
+    place(this.inputFrame, {
+      x: 0,
+      y: 0,
+    })
   }
 
   /**
@@ -269,7 +281,7 @@ class QueryInput {
    * Add editing caret to query input
    */
   addCaret () {
-    const caretHeight = 30;
+    const caretHeight = 24;
     let caret = addLine(this.svg);
     let middle = this.svg.clientHeight / 2;
     setAttributes(caret, {
@@ -340,8 +352,16 @@ class QueryInput {
   translate () {
     translate(this.queryG, {
       x: (this.svg.clientWidth - getWidth(this.queryG)) / 2,
-      y: this.svg.clientHeight / 2,
+      y: (this.svg.clientHeight - this.height) / 2,
     });
+  }
+
+  get height() {
+    let clausesSumHeight = sum(this.clauses.map(clause => clause.height));
+    let clauseMargin = 10;
+    let nClauses = this.clauses.length;
+    let nMargins = nClauses - 1;
+    return clausesSumHeight + nMargins * clauseMargin;
   }
 
   get activeClause () {
