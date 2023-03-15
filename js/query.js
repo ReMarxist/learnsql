@@ -59,17 +59,18 @@ class Clause {
    */
   onInput () {
     this.queryInput.delayCaretAnimation();
-    this.updateDisplay();
+    this.redraw();
     this.updateCaret();
     this.queryInput.translate();
   }
 
   /**
-   * Completely redraw all nodes of SQL clause
+   * Completely redraw all elements of SQL clause
    */
-  updateDisplay() {
+  redraw() {
     this.clauseG.remove();
     this.clauseG = addG(this.queryInput.queryG);
+    this.addInputFrame();
     let nodes = this.getNodes(this.value);
     let currentWidth = 0;
     nodes.forEach(node => {
@@ -80,6 +81,16 @@ class Clause {
         y: 0,
       });
       currentWidth += getWidth(text);
+    });
+  }
+
+  addInputFrame() {
+    this.inputFrame = addRect(this.clauseG);
+    restyle(this.inputFrame, {
+      "fill": "white",
+      "stroke": "#c0c0c0",
+      "rx": "3px",
+      "filter": "drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.1))",
     });
   }
 
@@ -172,8 +183,10 @@ class QueryInput {
   static create (tableCard) {
     let query = new QueryInput(tableCard);
     query.animateCaret();
+    query.clauses.forEach(clause => clause.redraw());
     query.updateCaret();
     query.listenResize();
+    query.translate();
     return query;
   }
 
@@ -185,8 +198,6 @@ class QueryInput {
     this.tableCard = tableCard;
     /** @type {SVGSVGElement} */
     this.svg = this.addQuerySvg();
-    /** @type {SVGLineElement} */
-    this.caret = this.addCaret();
     /**
      * `<text>` for measurement text width
      * @type {SVGTextElement}
@@ -197,11 +208,13 @@ class QueryInput {
      * @type {SVGGElement}
      */
     this.queryG = this.addQueryG();
-    this.clauses = [new Clause(this, "SELECT", 0)]; 
+    this.clauses = [new Clause(this, "SELECT", 0)];
     this.activeClauseI = 0;
     //[new Clause("SELECT"), new Clause("FROM")];
     /** @type {number} */
     this.expectedAnimationId = 0;
+    /** @type {SVGLineElement} */
+    this.caret = this.addCaret();
   }
 
   addQuerySvg () {
