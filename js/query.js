@@ -270,7 +270,7 @@ class QueryInput {
       width: "100%",
       height: "100px",
       backgroundColor: "white",
-      borderTop: "3px #eaeaea solid",
+      filter: "drop-shadow(rgba(0, 0, 0, 0.1) -5px 0px 5px)",
       font: "18px monospace",
     });
     document.body.appendChild(svg);
