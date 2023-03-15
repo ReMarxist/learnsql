@@ -11,10 +11,11 @@ class Clause {
     /** @type {QueryInput} */
     this.queryInput = queryInput;
     /** @type {HTMLInputElement} */
-    this.shadowInput = this.addShadowInput();/**
-    * `<g>` containing clause `<text>`s
-    * @type {SVGGElement}
-    */
+    this.shadowInput = this.addShadowInput();
+    /**
+     * `<g>` containing clause `<text>`s
+     * @type {SVGGElement}
+     */
    this.clauseG = addG(queryInput.queryG);
    /** @type {number} */
    this.clauseI = clauseI;
