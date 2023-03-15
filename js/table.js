@@ -428,7 +428,7 @@ class TableCard {
   calculateRowHeight () {
     const verticalMargin = 2;
     let heights = this.texts.map(getHeight);
-    this.rowHeight = verticalMargin + max(heights);
+    this.rowHeight = verticalMargin + max(heights, 0);
   }
 
   listenResize () {

@@ -87,6 +87,7 @@ class Clause {
       });
       currentWidth += getWidth(text);
     });
+    this.resizeInputFrame();
   }
 
   addInputFrame () {
@@ -96,6 +97,16 @@ class Clause {
       "stroke": "#c0c0c0",
       "rx": "3px",
       "filter": "drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.1))",
+    });
+  }
+
+  resizeInputFrame () {
+    let margin = 4;
+    let textWidth = this.measureWidth(this.value);
+    let textHeight = this.measureHeight(this.value);
+    resize(this.inputFrame, {
+      width: textWidth + 2 * margin,
+      height: textHeight + 2 * margin,
     });
   }
 
@@ -166,6 +177,20 @@ class Clause {
       return getWidth(this.queryInput.measurementText);
     }));
     return width;
+  }
+
+  /**
+   * Measure height of svg `text`
+   * @param {string} text 
+   */
+  measureHeight (text) {
+    let nodes = this.getNodes(text);
+    let height = max(nodes.map(node => {
+      this.queryInput.measurementText.textContent = node;
+      this.stylizeText(this.queryInput.measurementText);
+      return getHeight(this.queryInput.measurementText);
+    }), 0);
+    return height;
   }
 
   /**

@@ -32,10 +32,15 @@ function sum (arr) {
 /**
  * Get maximum of `arr` elements
  * @param {number[]} arr 
+ * @param {number} defaultValue value that is returned for empty array
  */
-function max (arr) {
-  // For some reason, arr.reduce(Math.max) doesn't work
-  return arr.reduce((a, b) => Math.max(a, b));
+function max (arr, defaultValue) {
+  if (arr.length === 0) {
+    return defaultValue;
+  } else {
+    // For some reason, arr.reduce(Math.max) doesn't work
+    return arr.reduce((a, b) => Math.max(a, b));
+  }
 }
 
 /**
