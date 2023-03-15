@@ -13,10 +13,14 @@ class Clause {
     /** @type {HTMLInputElement} */
     this.shadowInput = this.addShadowInput();
     /**
-     * `<g>` containing clause `<text>`s
-     * @type {SVGGElement}
+     * `<g>` containing clause elements
      */
    this.clauseG = addG(queryInput.queryG);
+   /**
+    * `<g>` containing clause `<text>`s
+    * @type {SVGGElement}
+    */
+   this.textInputG = addG(this.clauseG);
    /** @type {number} */
    this.clauseI = clauseI;
   }
@@ -71,10 +75,11 @@ class Clause {
     this.clauseG.remove();
     this.clauseG = addG(this.queryInput.queryG);
     this.addInputFrame();
+    this.textInputG = addG(this.clauseG);
     let nodes = this.getNodes(this.value);
     let currentWidth = 0;
     nodes.forEach(node => {
-      let text = addText(this.clauseG, node);
+      let text = addText(this.textInputG, node);
       this.stylizeText(text);
       place(text, {
         x: currentWidth,
