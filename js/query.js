@@ -131,7 +131,7 @@ class Clause {
   }
 
   get inputX () {
-    return this.queryInput.svg.clientWidth / 2;
+    return (this.queryInput.svg.clientWidth - getWidth(this.clauseG)) / 2;
   }
 
   get caretPosition () {
