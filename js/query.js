@@ -101,12 +101,14 @@ class Clause {
   }
 
   resizeInputFrame () {
+    let minWidth = 150;
+    let minHeight = this.measureHeight("text");
     let margin = 4;
     let textWidth = this.measureWidth(this.value);
     let textHeight = this.measureHeight(this.value);
     resize(this.inputFrame, {
-      width: textWidth + 2 * margin,
-      height: textHeight + 2 * margin,
+      width: Math.max(minWidth, textWidth + 2 * margin),
+      height: Math.max(minHeight, textHeight) + 2 * margin,
     });
   }
 
