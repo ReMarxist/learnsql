@@ -15,14 +15,14 @@ class Clause {
     /**
      * `<g>` containing clause elements
      */
-   this.clauseG = addG(queryInput.queryG);
-   /**
-    * `<g>` containing clause `<text>`s
-    * @type {SVGGElement}
-    */
-   this.textInputG = addG(this.clauseG);
-   /** @type {number} */
-   this.clauseI = clauseI;
+    this.clauseG = addG(queryInput.queryG);
+    /**
+     * `<g>` containing clause `<text>`s
+     * @type {SVGGElement}
+     */
+    this.textInputG = addG(this.clauseG);
+    /** @type {number} */
+    this.clauseI = clauseI;
   }
 
   /**
@@ -71,7 +71,7 @@ class Clause {
   /**
    * Completely redraw all elements of SQL clause
    */
-  redraw() {
+  redraw () {
     this.clauseG.remove();
     this.clauseG = addG(this.queryInput.queryG);
     this.addInputFrame();
@@ -89,7 +89,7 @@ class Clause {
     });
   }
 
-  addInputFrame() {
+  addInputFrame () {
     this.inputFrame = addRect(this.clauseG);
     restyle(this.inputFrame, {
       "fill": "white",
@@ -310,14 +310,14 @@ class QueryInput {
   /**
    * Calculate and set position of query `<g>`
    */
-  translate() {
+  translate () {
     translate(this.queryG, {
       x: (this.svg.clientWidth - getWidth(this.queryG)) / 2,
       y: this.svg.clientHeight / 2,
     });
   }
 
-  get activeClause() {
+  get activeClause () {
     return this.clauses[this.activeClauseI];
   }
 
