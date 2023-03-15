@@ -26,6 +26,7 @@ function addTableScenario () {
   let query = QueryInput.create(card);
   card.setOnMouseClick(query);
 
+  // Move keyboard focus to shadow input on every click
   window.document.addEventListener("click", () => {
     query.focusShadowInput();
   });
