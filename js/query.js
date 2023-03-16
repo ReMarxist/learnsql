@@ -79,7 +79,7 @@ class Clause {
     this.clauseG = addG(this.queryInput.queryG);
     this.addInputFrame();
     this.textInputG = addG(this.clauseG);
-    let nodes = this.getNodes(this.value);
+    let nodes = this.splitIntoNodes(this.value);
     let currentWidth = 0;
     nodes.forEach(node => {
       let text = addText(this.textInputG, node);
@@ -131,7 +131,7 @@ class Clause {
    * Split query into nodes
    * @param {string} query 
    */
-  getNodes (query) {
+  splitIntoNodes (query) {
     // Split by separators: , and non-breaking space
     const regex = /,| |[^, ]+/g;
     let iter = query.matchAll(regex);
@@ -187,7 +187,7 @@ class Clause {
    * @param {string} text 
    */
   measureWidth (text) {
-    let nodes = this.getNodes(text);
+    let nodes = this.splitIntoNodes(text);
     let width = sum(nodes.map(node => {
       this.queryInput.measurementText.textContent = node;
       this.stylizeText(this.queryInput.measurementText);
@@ -201,7 +201,7 @@ class Clause {
    * @param {string} text 
    */
   measureHeight (text) {
-    let nodes = this.getNodes(text);
+    let nodes = this.splitIntoNodes(text);
     let height = max(nodes.map(node => {
       this.queryInput.measurementText.textContent = node;
       this.stylizeText(this.queryInput.measurementText);
@@ -217,7 +217,7 @@ class Clause {
     if (this.value === "") {
       return null;
     } else {
-      let nodes = this.getNodes(this.value);
+      let nodes = this.splitIntoNodes(this.value);
       return nodes[nodes.length - 1];
     }
   }
