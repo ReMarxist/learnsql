@@ -194,12 +194,17 @@ class Clause {
   }
 
   updateCaret () {
+    this.queryInput.caret.remove();
+    this.clauseG.appendChild(this.queryInput.caret);
     let textBeforeCaret = this.value.substring(0, this.caretPosition);
     let widthBeforeCaret = this.measureWidth(textBeforeCaret);
-    let x = this.inputX + widthBeforeCaret;
+    const caretHeight = 24;
+    const middle = this.height / 2;
     setAttributes(this.queryInput.caret, {
-      "x1": "" + x,
-      "x2": "" + x,
+      "x1": "" + (this.textInputGX + widthBeforeCaret),
+      "x2": "" + (this.textInputGX + widthBeforeCaret),
+      "y1": "" + (middle - caretHeight / 2),
+      "y2": "" + (middle + caretHeight / 2),
     });
   }
 
@@ -322,13 +327,9 @@ class QueryInput {
    * Add editing caret to query input
    */
   addCaret () {
-    const caretHeight = 24;
     let caret = addLine(this.svg);
-    let middle = this.svg.clientHeight / 2;
     setAttributes(caret, {
       "stroke": "black",
-      "y1": "" + (middle - caretHeight / 2),
-      "y2": "" + (middle + caretHeight / 2),
     });
     return caret;
   }
