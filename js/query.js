@@ -94,10 +94,6 @@ class Clause {
     this.placeInputFrame();
   }
 
-  get height() {
-    return 30;
-  }
-
   addInputFrame () {
     this.inputFrame = addRect(this.clauseG);
     restyle(this.inputFrame, {
@@ -142,11 +138,6 @@ class Clause {
     return nodes;
   }
 
-  get value () {
-    const nonBreaking = " ";
-    return this.shadowInput.value.replaceAll(" ", nonBreaking);
-  }
-
   /**
    * Stylize individual `<text>` node
    * @param {SVGTextElement} text 
@@ -174,12 +165,12 @@ class Clause {
     });
   }
 
-  get inputX () {
-    return (this.queryInput.svg.clientWidth - getWidth(this.clauseG)) / 2;
-  }
-
   get caretPosition () {
     return this.shadowInput.selectionEnd;
+  }
+
+  get inputX () {
+    return (this.queryInput.svg.clientWidth - getWidth(this.clauseG)) / 2;
   }
 
   /**
@@ -220,6 +211,15 @@ class Clause {
       let nodes = this.splitIntoNodes(this.value);
       return nodes[nodes.length - 1];
     }
+  }
+
+  get height() {
+    return 30;
+  }
+
+  get value () {
+    const nonBreaking = " ";
+    return this.shadowInput.value.replaceAll(" ", nonBreaking);
   }
 }
 
