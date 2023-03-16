@@ -30,7 +30,7 @@ class Clause {
      * `<text>` containing SVG clause label
      * @type {SVGTextElement}
      */
-    this.clauseLabel = addText(this.clauseG, this.type);
+    this.clauseLabel = this.addClauseLabel();
     /**
      * Frame surrounding nodes of clause input
      * @type {SVGRectElement}
@@ -87,7 +87,6 @@ class Clause {
   updateDisplay () {
     this.textInputG.remove();
     this.textInputG = addG(this.clauseG);
-    this.clauseLabel = addText(this.clauseG, this.type);
     let nodes = this.splitIntoNodes(this.value);
     let currentWidth = 0;
     nodes.forEach(node => {
@@ -101,6 +100,15 @@ class Clause {
     });
     this.resizeInputFrame();
     this.placeInputFrame();
+  }
+
+  addClauseLabel () {
+    let clauseLabel = addText(this.clauseG, this.type);
+    restyle(clauseLabel, {
+      "fontWeight": "bolder",
+    });
+    clauseLabel.setAttribute("fill", "#0077a9");
+    return clauseLabel;
   }
 
   addInputFrame () {
@@ -223,7 +231,7 @@ class Clause {
     }
   }
 
-  get height() {
+  get height () {
     return 30;
   }
 
@@ -369,7 +377,7 @@ class QueryInput {
     });
   }
 
-  get height() {
+  get height () {
     let clausesSumHeight = sum(this.clauses.map(clause => clause.height));
     let clauseMargin = 10;
     let nClauses = this.clauses.length;
