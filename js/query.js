@@ -124,7 +124,11 @@ class Clause {
     restyle(clauseLabel, {
       "fontWeight": "bolder",
     });
-    clauseLabel.setAttribute("fill", "#0077a9");
+    place(clauseLabel, {
+      x: 0,
+      y: this.height / 2,
+    });
+    clauseLabel.setAttribute("fill", "#3491dc");
     return clauseLabel;
   }
 
