@@ -40,7 +40,7 @@ class Clause {
       this.onInput();
     });
     shadowInput.addEventListener("blur", () => {
-      this.focusShadowInput();
+      this.queryInput.focusActiveShadowInput();
     })
     document.addEventListener("selectionchange", () => {
       this.updateCaret();
@@ -325,9 +325,9 @@ class QueryInput {
     return queryG;
   }
 
-  focusAllShadowInputs () {
+  focusActiveShadowInput () {
     setTimeout(() => {
-      this.clauses.forEach(clause => clause.focusShadowInput());
+      this.activeClause.focusShadowInput();
     }, 1);
   }
 
