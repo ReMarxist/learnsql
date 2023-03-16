@@ -22,15 +22,15 @@ class Clause {
      */
     this.clauseG = addG(queryInput.queryG);
     /**
-     * `<g>` containing clause `<text>`s
-     * @type {SVGGElement}
-     */
-    this.textInputG = addG(this.clauseG);
-    /**
      * `<text>` containing SVG clause label
      * @type {SVGTextElement}
      */
     this.clauseLabel = this.addClauseLabel();
+    /**
+     * `<g>` containing clause `<text>`s
+     * @type {SVGGElement}
+     */
+    this.textInputG = this.addTextInputG();
     /**
      * Frame surrounding nodes of clause input
      * @type {SVGRectElement}
@@ -86,7 +86,7 @@ class Clause {
    */
   updateDisplay () {
     this.textInputG.remove();
-    this.textInputG = addG(this.clauseG);
+    this.textInputG = this.addTextInputG();
     let nodes = this.splitIntoNodes(this.value);
     let currentWidth = 0;
     nodes.forEach(node => {
@@ -100,6 +100,23 @@ class Clause {
     });
     this.resizeInputFrame();
     this.placeInputFrame();
+  }
+
+  addTextInputG () {
+    let g = addG(this.clauseG);
+    translate(g, {
+      x: this.textInputGX,
+      y: 0,
+    });
+    return g;
+  }
+
+  /**
+   * Get x coordinate of text input `<g>` relative to `this.clauseG`
+   */
+  get textInputGX() {
+    let labelMargin = 10;
+    return getWidth(this.clauseLabel) + labelMargin;
   }
 
   addClauseLabel () {
@@ -122,21 +139,24 @@ class Clause {
     return inputFrame;
   }
 
+  get inputFrameMargin() {
+    return 4;
+  }
+
   resizeInputFrame () {
     let minWidth = 150;
     let minHeight = this.measureHeight("text");
-    let margin = 4;
     let textWidth = this.measureWidth(this.value);
     let textHeight = this.measureHeight(this.value);
     resize(this.inputFrame, {
-      width: Math.max(minWidth, textWidth + 2 * margin),
-      height: Math.max(minHeight, textHeight) + 2 * margin,
+      width: Math.max(minWidth, textWidth + 2 * this.inputFrameMargin),
+      height: Math.max(minHeight, textHeight) + 2 * this.inputFrameMargin,
     });
   }
 
   placeInputFrame () {
     place(this.inputFrame, {
-      x: 0,
+      x: this.textInputGX - this.inputFrameMargin,
       y: 0,
     })
   }
