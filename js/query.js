@@ -26,6 +26,16 @@ class Clause {
      * @type {SVGGElement}
      */
     this.textInputG = addG(this.clauseG);
+    /**
+     * `<text>` containing SVG clause label
+     * @type {SVGTextElement}
+     */
+    this.clauseLabel = addText(this.clauseG, this.type);
+    /**
+     * Frame surrounding nodes of clause input
+     * @type {SVGRectElement}
+     */
+    this.inputFrame = this.addInputFrame();
   }
 
   /**
@@ -66,19 +76,18 @@ class Clause {
    */
   onInput () {
     this.queryInput.delayCaretAnimation();
-    this.redraw();
+    this.updateDisplay();
     this.updateCaret();
     this.queryInput.translate();
   }
 
   /**
-   * Completely redraw all elements of SQL clause
+   * Update display of svg elements
    */
-  redraw () {
-    this.clauseG.remove();
-    this.clauseG = addG(this.queryInput.queryG);
-    this.addInputFrame();
+  updateDisplay () {
+    this.textInputG.remove();
     this.textInputG = addG(this.clauseG);
+    this.clauseLabel = addText(this.clauseG, this.type);
     let nodes = this.splitIntoNodes(this.value);
     let currentWidth = 0;
     nodes.forEach(node => {
@@ -95,13 +104,14 @@ class Clause {
   }
 
   addInputFrame () {
-    this.inputFrame = addRect(this.clauseG);
-    restyle(this.inputFrame, {
+    let inputFrame = addRect(this.clauseG);
+    restyle(inputFrame, {
       "fill": "white",
       "stroke": "#c0c0c0",
       "rx": "3px",
       "filter": "drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.1))",
     });
+    return inputFrame;
   }
 
   resizeInputFrame () {
@@ -230,7 +240,7 @@ class QueryInput {
   static create (tableCard) {
     let query = new QueryInput(tableCard);
     query.animateCaret();
-    query.clauses.forEach(clause => clause.redraw());
+    query.clauses.forEach(clause => clause.updateDisplay());
     query.updateCaret();
     query.listenResize();
     query.translate();
