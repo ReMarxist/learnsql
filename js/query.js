@@ -10,6 +10,10 @@ class Clause {
   constructor (queryInput, type, clauseI) {
     /** @type {QueryInput} */
     this.queryInput = queryInput;
+    /** @type {("SELECT" | "FROM")} */
+    this.type = type;
+    /** @type {number} */
+    this.clauseI = clauseI;
     /** @type {HTMLInputElement} */
     this.shadowInput = this.addShadowInput();
     /**
@@ -21,8 +25,6 @@ class Clause {
      * @type {SVGGElement}
      */
     this.textInputG = addG(this.clauseG);
-    /** @type {number} */
-    this.clauseI = clauseI;
   }
 
   /**
