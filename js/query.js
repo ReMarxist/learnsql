@@ -3,7 +3,7 @@
  */
 class Clause {
   /**
-   * @param {QueryInput} queryInput
+   * @param {QueryInput} queryInput link to parent QueryInput
    * @param {("SELECT" | "FROM")} type
    * @param {number} clauseI index of clause
    */
@@ -18,6 +18,7 @@ class Clause {
     this.shadowInput = this.addShadowInput();
     /**
      * `<g>` containing clause elements
+     * @type {SVGGElement}
      */
     this.clauseG = addG(queryInput.queryG);
     /**
