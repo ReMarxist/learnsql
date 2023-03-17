@@ -63,7 +63,8 @@ class Clause {
     shadowInput.addEventListener("blur", () => {
       this.queryInput.focusActiveShadowInput();
     })
-    document.addEventListener("selectionchange", () => {
+    shadowInput.addEventListener("selectionchange", () => {
+      this.queryInput.delayCaretAnimation();
       this.updateCaret();
     });
     return shadowInput;
