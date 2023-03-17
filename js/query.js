@@ -20,7 +20,7 @@ class Clause {
      * `<g>` containing clause elements
      * @type {SVGGElement}
      */
-    this.clauseG = this.addClauseG();
+    this.clauseG = addG(this.queryInput.queryG);
     /**
      * `<text>` containing SVG clause label
      * @type {SVGTextElement}
@@ -38,20 +38,15 @@ class Clause {
     this.inputFrame = this.addInputFrame();
   }
 
-  addClauseG () {
-    let g = addG(this.queryInput.queryG);
-    translate(g, {
-      x: 0,
-      y: this.y,
-    });
-    return g;
-  }
-
   /**
-   * Get y relative to query `<g>`
+   * Make translations that apply after clauses creation
+   * @param {number} maxLabelWidth maximum label width of all labels in query
    */
-  get y() {
-    return this.height * this.clauseI;
+  initialTranslate (maxLabelWidth) {
+    translate(this.clauseG, {
+      x: maxLabelWidth - getWidth(this.clauseLabel),
+      y: this.height * this.clauseI,
+    });
   }
 
   /**
@@ -293,11 +288,18 @@ class QueryInput {
   static create (tableCard) {
     let query = new QueryInput(tableCard);
     query.animateCaret();
+    let maxLabelWidth = query.getMaxLabelWidth();
+    query.clauses.forEach(clause => clause.initialTranslate(maxLabelWidth));
     query.clauses.forEach(clause => clause.updateDisplay());
     query.updateCaret();
     query.listenResize();
     query.translate();
     return query;
+  }
+
+  getMaxLabelWidth () {
+    let widths = this.clauses.map(clause => getWidth(clause.clauseLabel));
+    return max(widths, 0);
   }
 
   /**
