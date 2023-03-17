@@ -20,7 +20,7 @@ class Clause {
      * `<g>` containing clause elements
      * @type {SVGGElement}
      */
-    this.clauseG = addG(queryInput.queryG);
+    this.clauseG = this.addClauseG();
     /**
      * `<text>` containing SVG clause label
      * @type {SVGTextElement}
@@ -36,6 +36,22 @@ class Clause {
      * @type {SVGRectElement}
      */
     this.inputFrame = this.addInputFrame();
+  }
+
+  addClauseG () {
+    let g = addG(this.queryInput.queryG);
+    translate(g, {
+      x: 0,
+      y: this.y,
+    });
+    return g;
+  }
+
+  /**
+   * Get y relative to query `<g>`
+   */
+  get y() {
+    return this.height * this.clauseI;
   }
 
   /**
@@ -261,7 +277,7 @@ class Clause {
   }
 
   get height () {
-    return 30;
+    return 34;
   }
 
   get value () {
@@ -302,7 +318,7 @@ class QueryInput {
      * @type {SVGGElement}
      */
     this.queryG = this.addQueryG();
-    this.clauses = [new Clause(this, "SELECT", 0)];
+    this.clauses = [new Clause(this, "SELECT", 0), new Clause(this, "FROM", 1)];
     this.activeClauseI = 0;
     //[new Clause("SELECT"), new Clause("FROM")];
     /** @type {number} */
