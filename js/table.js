@@ -245,7 +245,6 @@ class TableCard {
     this.labelRect.addEventListener("mousemove", () => {
       if (this.tableFraming === null) {
         this.addTableFraming();
-        console.log('frame');
       }
     });
     this.label.addEventListener("mousemove", () => {
@@ -332,7 +331,29 @@ class TableCard {
     });
   }
 
+  setOnMouseLeaveTableFrame() {
+    this.lid.addEventListener("mouseleave", () => {
+      if (this.tableFraming !== null) {
+        this.tableFraming.remove();
+        this.tableFraming = null;
+      }
+    });
+    this.labelRect.addEventListener("mouseleave", () => {
+      if (this.tableFraming !== null) {
+        this.tableFraming.remove();
+        this.tableFraming = null;
+      }
+    });
+    this.label.addEventListener("mouseleave", () => {
+      if (this.tableFraming !== null) {
+        this.tableFraming.remove();
+        this.tableFraming = null;
+      }
+    });
+  }
+
   setOnMouseLeave () {
+    this.setOnMouseLeaveTableFrame();
     this.tableG.addEventListener("mouseleave", mouseEvent => {
       if (this.columnFraming !== null) {
         this.columnFraming.remove();
