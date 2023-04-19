@@ -72,6 +72,8 @@ class TableCard {
     this.rowsHighlight = null;
     /** @type {SVGRectElement} */
     this.columnFraming = null;
+    /** @type {SVGRectElement} */
+    this.tableFraming = null;
     /** @type {number} */
     this.framingColumnI = null;
     /** @type {number} */
@@ -91,6 +93,9 @@ class TableCard {
       "rx": "5",
     });
     this.card.style.filter = "drop-shadow(3px 3px 2px rgba(200, 200, 200, .7))";
+    restyle(this.cardG, {
+      "cursor": "pointer",
+    });
   }
 
   addLid () {
@@ -211,8 +216,49 @@ class TableCard {
     });
   }
 
+  addTableFraming () {
+    this.tableFraming = addRect(this.cardG);
+    setAttributes(this.tableFraming, {
+      "stroke": "#3491dc",
+      "fill": "none",
+      "rx": "5",
+    });
+    const yOffset = 1;
+    transform(this.tableFraming, {
+      x: 0,
+      y: 0,
+      width: this.width,
+      height: this.height,
+    });
+  }
+
+  /**
+   * Add event listeners that add table framing while
+   * hovering on table label
+   */
+  setOnMouseMoveLabelRect () {
+    this.lid.addEventListener("mousemove", () => {
+      if (this.tableFraming === null) {
+        this.addTableFraming();
+      }
+    });
+    this.labelRect.addEventListener("mousemove", () => {
+      if (this.tableFraming === null) {
+        this.addTableFraming();
+        console.log('frame');
+      }
+    });
+    this.label.addEventListener("mousemove", () => {
+      if (this.tableFraming === null) {
+        this.addTableFraming();
+      }
+    });
+  }
+
   setOnMouseMove () {
+    this.setOnMouseMoveLabelRect();
     this.tableG.addEventListener("mousemove", mouseEvent => {
+      console.log(this.columnFraming);
       if (this.columnFraming === null) {
         this.addColumnFraming();
         this.calculateFramingColumnI(mouseEvent);
