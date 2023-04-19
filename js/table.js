@@ -257,7 +257,6 @@ class TableCard {
   setOnMouseMove () {
     this.setOnMouseMoveLabelRect();
     this.tableG.addEventListener("mousemove", mouseEvent => {
-      console.log(this.columnFraming);
       if (this.columnFraming === null) {
         this.addColumnFraming();
         this.calculateFramingColumnI(mouseEvent);
