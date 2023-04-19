@@ -8,7 +8,7 @@ class TableCard {
    * @param {number} params.nColumns Number of columns
    */
   static add (params) {
-    let card = new TableCard(params.svg, params.data, params.nColumns);
+    let card = new TableCard(params.svg, params.data, params.nColumns, params.tableName);
     // Append elements to svg before calculating their sizes
     card.addCard();
     card.addLid();
@@ -32,8 +32,9 @@ class TableCard {
    * @param {SVGSVGElement} svg Container of table card
    * @param {string[]} data Headers and data
    * @param {number} nColumns Number of columns
+   * @param {string} tableName
    */
-  constructor (svg, data, nColumns) {
+  constructor (svg, data, nColumns, tableName) {
     /** @type {SVGSVGElement} */
     this.svg = svg;
     /** @type {string[]} */
@@ -82,6 +83,7 @@ class TableCard {
     this.dataRowsTopMargin = 0;
     this.labelMargin = 8;
     this.lidAdjust = 0.1;
+    this.tableName = tableName;
   }
 
   addCard () {
@@ -271,7 +273,20 @@ class TableCard {
   /**
    * @param {QueryInput} query 
    */
+  setOnMouseClickTableLabel (query) {
+    let callback = () => {
+      query.activeClause.updateValue(query.activeClause.value + this.tableName);
+    };
+    this.lid.addEventListener("mousedown", callback);
+    this.labelRect.addEventListener("mousedown", callback);
+    this.label.addEventListener("mousedown", callback);
+  }
+
+  /**
+   * @param {QueryInput} query 
+   */
   setOnMouseClick (query) {
+    this.setOnMouseClickTableLabel(query);
     this.tableG.addEventListener("mousedown", mouseEvent => {
       let label = this.getFramingColumnLabel(mouseEvent);
       let lastNode = query.activeClause.getLastNode();
@@ -330,7 +345,7 @@ class TableCard {
     });
   }
 
-  setOnMouseLeaveTableFrame() {
+  setOnMouseLeaveTableFrame () {
     this.lid.addEventListener("mouseleave", () => {
       if (this.tableFraming !== null) {
         this.tableFraming.remove();
