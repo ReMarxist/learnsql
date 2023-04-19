@@ -43,9 +43,10 @@ class Clause {
    * @param {number} maxLabelWidth maximum label width of all labels in query
    */
   initialTranslate (maxLabelWidth) {
+    let nGaps = (this.clauseI - 1);
     translate(this.clauseG, {
       x: maxLabelWidth - getWidth(this.clauseLabel),
-      y: this.height * this.clauseI,
+      y: this.height * this.clauseI + this.queryInput.gapBetweenQueries * nGaps,
     });
   }
 
@@ -166,7 +167,7 @@ class Clause {
     let textHeight = this.measureHeight(this.value);
     resize(this.inputFrame, {
       width: Math.max(minWidth, textWidth + 2 * this.inputFrameMargin),
-      height: Math.max(minHeight, textHeight) + 2 * this.inputFrameMargin,
+      height: this.height,
     });
   }
 
@@ -421,12 +422,16 @@ class QueryInput {
     });
   }
 
+  /** Get gap in pixels that separates queries */
+  get gapBetweenQueries() {
+    return 5;
+  }
+
   get height () {
     let clausesSumHeight = sum(this.clauses.map(clause => clause.height));
-    let clauseMargin = 10;
     let nClauses = this.clauses.length;
-    let nMargins = nClauses - 1;
-    return clausesSumHeight + nMargins * clauseMargin;
+    let nGaps = nClauses - 1;
+    return clausesSumHeight + nGaps * this.gapBetweenQueries;
   }
 
   get activeClause () {
