@@ -68,6 +68,11 @@ class Clause {
       this.queryInput.delayCaretAnimation();
       this.updateCaret();
     });
+    shadowInput.addEventListener("keydown", keyboardEvent => {
+      if (keyboardEvent.key === "ArrowDown" || keyboardEvent.key === "ArrowUp") {
+        this.queryInput.moveCaretVertically(keyboardEvent.key);
+      }
+    });
     return shadowInput;
   }
 
@@ -127,7 +132,7 @@ class Clause {
   /**
    * Get x coordinate of text input `<g>` relative to `this.clauseG`
    */
-  get textInputGX() {
+  get textInputGX () {
     let labelMargin = 10;
     return getWidth(this.clauseLabel) + labelMargin;
   }
@@ -156,7 +161,7 @@ class Clause {
     return inputFrame;
   }
 
-  get inputFrameMargin() {
+  get inputFrameMargin () {
     return 4;
   }
 
@@ -387,10 +392,33 @@ class QueryInput {
     return queryG;
   }
 
-  focusActiveShadowInput () {
-    setTimeout(() => {
-      this.activeClause.focusShadowInput();
-    }, 1);
+  async focusActiveShadowInput () {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        this.activeClause.focusShadowInput();
+        resolve();
+      }, 1);
+    });
+  }
+
+  /**
+   * Move caret between query clauses
+   * @param {"ArrowDown" | "ArrowUp"} direction 
+   */
+  async moveCaretVertically (direction) {
+    if (direction === "ArrowDown") {
+      if (this.activeClauseI + 1 < this.clauses.length) {
+        this.activeClauseI++;
+        await this.focusActiveShadowInput();
+        this.updateCaret();
+      }
+    } else if (direction === "ArrowUp") {
+      if (this.activeClauseI > 0) {
+        this.activeClauseI--;
+        await this.focusActiveShadowInput();
+        this.updateCaret();
+      }
+    }
   }
 
   /**
@@ -422,7 +450,7 @@ class QueryInput {
   }
 
   /** Get gap in pixels that separates queries */
-  get gapBetweenQueries() {
+  get gapBetweenQueries () {
     return 5;
   }
 
