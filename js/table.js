@@ -239,21 +239,14 @@ class TableCard {
    * hovering on table label
    */
   setOnMouseMoveLabelRect () {
-    this.lid.addEventListener("mousemove", () => {
+    let callback = () => {
       if (this.tableFraming === null) {
         this.addTableFraming();
       }
-    });
-    this.labelRect.addEventListener("mousemove", () => {
-      if (this.tableFraming === null) {
-        this.addTableFraming();
-      }
-    });
-    this.label.addEventListener("mousemove", () => {
-      if (this.tableFraming === null) {
-        this.addTableFraming();
-      }
-    });
+    };
+    this.lid.addEventListener("mousemove", callback);
+    this.labelRect.addEventListener("mousemove", callback);
+    this.label.addEventListener("mousemove", callback);
   }
 
   setOnMouseMove () {
@@ -346,24 +339,15 @@ class TableCard {
   }
 
   setOnMouseLeaveTableFrame () {
-    this.lid.addEventListener("mouseleave", () => {
+    let callback = () => {
       if (this.tableFraming !== null) {
         this.tableFraming.remove();
         this.tableFraming = null;
       }
-    });
-    this.labelRect.addEventListener("mouseleave", () => {
-      if (this.tableFraming !== null) {
-        this.tableFraming.remove();
-        this.tableFraming = null;
-      }
-    });
-    this.label.addEventListener("mouseleave", () => {
-      if (this.tableFraming !== null) {
-        this.tableFraming.remove();
-        this.tableFraming = null;
-      }
-    });
+    };
+    this.lid.addEventListener("mouseleave", callback);
+    this.labelRect.addEventListener("mouseleave", callback);
+    this.label.addEventListener("mouseleave", callback);
   }
 
   setOnMouseLeave () {

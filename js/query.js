@@ -324,7 +324,6 @@ class QueryInput {
     this.queryG = this.addQueryG();
     this.clauses = [new Clause(this, "SELECT", 0), new Clause(this, "FROM", 1)];
     this.activeClauseI = 0;
-    //[new Clause("SELECT"), new Clause("FROM")];
     /** @type {number} */
     this.expectedAnimationId = 0;
     /** @type {SVGLineElement} */
