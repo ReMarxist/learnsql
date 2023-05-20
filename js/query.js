@@ -241,7 +241,17 @@ class Clause {
     while (i < maxPosition && this.widthBeforePosition(i) < position) {
       i++;
     }
-    this.caretPosition = i;
+    if (i > 0) {
+      const deltaI = Math.abs(position - this.widthBeforePosition(i));
+      const deltaPrevious = Math.abs(position - this.widthBeforePosition(i - 1));
+      if (deltaI <= deltaPrevious) {
+        this.caretPosition = i;
+      } else {
+        this.caretPosition = i - 1;
+      }
+    } else {
+      this.caretPosition = 0;
+    }
   }
 
   updateCaret () {
