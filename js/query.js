@@ -414,7 +414,9 @@ class QueryInput {
       "values": "1;1;1;0;0;0",
       "dur": "1s",
       "repeatCount": "indefinite",
+      "begin": "indefinite",
     });
+    animate.beginElement();
   }
 
   /**
@@ -473,11 +475,10 @@ class QueryInput {
     let id = Math.random();
     this.expectedAnimationId = id;
     setTimeout(() => {
-      let animates = this.caret.getElementsByTagName("animate");
       if (this.expectedAnimationId === id) {
         this.animateCaret();
       }
-    }, 500);
+    }, 300);
   }
 
   /**
