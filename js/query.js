@@ -71,7 +71,8 @@ class Clause {
     shadowInput.addEventListener("keydown", keyboardEvent => {
       if (keyboardEvent.key === "ArrowDown" || keyboardEvent.key === "ArrowUp") {
         keyboardEvent.preventDefault();
-        this.queryInput.moveCaretVertically(keyboardEvent.key);
+      this.queryInput.delayCaretAnimation();
+      this.queryInput.moveCaretVertically(keyboardEvent.key);
       }
     });
     return shadowInput;
