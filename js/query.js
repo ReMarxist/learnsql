@@ -215,16 +215,28 @@ class Clause {
     }
   }
 
+  /**
+   * @param {number} position 
+   * @returns 
+   */
+  widthBeforePosition(position) {
+    let text = this.value.substring(0, position);
+    return this.measureWidth(text);
+  }
+
+  get widthBeforeCaret () {
+    return this.widthBeforePosition(this.caretPosition);
+  }
+
   updateCaret () {
     this.queryInput.caret.remove();
     this.clauseG.appendChild(this.queryInput.caret);
-    let textBeforeCaret = this.value.substring(0, this.caretPosition);
-    let widthBeforeCaret = this.measureWidth(textBeforeCaret);
+    const x = this.textInputGX + this.widthBeforeCaret;
     const caretHeight = 24;
     const middle = this.height / 2;
     setAttributes(this.queryInput.caret, {
-      "x1": "" + (this.textInputGX + widthBeforeCaret),
-      "x2": "" + (this.textInputGX + widthBeforeCaret),
+      "x1": "" + x,
+      "x2": "" + x,
       "y1": "" + (middle - caretHeight / 2),
       "y2": "" + (middle + caretHeight / 2),
     });
@@ -232,6 +244,11 @@ class Clause {
 
   get caretPosition () {
     return this.shadowInput.selectionEnd;
+  }
+
+  set caretPosition (newValue) {
+    this.shadowInput.selectionStart = newValue;
+    this.shadowInput.selectionEnd = newValue;
   }
 
   get inputX () {
@@ -392,6 +409,10 @@ class QueryInput {
     return queryG;
   }
 
+  /**
+   * Puts caret focus to active shadow input
+   * @returns {Promise}
+   */
   async focusActiveShadowInput () {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -408,17 +429,35 @@ class QueryInput {
   async moveCaretVertically (direction) {
     if (direction === "ArrowDown") {
       if (this.activeClauseI + 1 < this.clauses.length) {
+        let currentPosition = this.activeClause.widthBeforeCaret;
         this.activeClauseI++;
         await this.focusActiveShadowInput();
+        this.moveCaretToApproximatePosition(currentPosition);
         this.updateCaret();
       }
     } else if (direction === "ArrowUp") {
       if (this.activeClauseI > 0) {
+        let currentPosition = this.activeClause.widthBeforeCaret;
         this.activeClauseI--;
         await this.focusActiveShadowInput();
+        this.moveCaretToApproximatePosition(currentPosition);
         this.updateCaret();
       }
     }
+  }
+
+  /**
+   * Moves caret in shadow input so that its position in real input
+   * made approximate to `position`
+   * @param {number} position 
+   */
+  moveCaretToApproximatePosition (position) {
+    const maxPosition = this.activeClause.value.length;
+    let i = 0;
+    while (i < maxPosition && this.activeClause.widthBeforePosition(i) < position) {
+      i++;
+    }
+    this.activeClause.caretPosition = i;
   }
 
   /**
