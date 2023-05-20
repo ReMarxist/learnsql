@@ -228,6 +228,20 @@ class Clause {
     return this.widthBeforePosition(this.caretPosition);
   }
 
+  /**
+   * Moves caret in shadow input so that its position in real input
+   * made approximate to `position`
+   * @param {number} position 
+   */
+  moveCaretToApproximatePosition (position) {
+    const maxPosition = this.value.length;
+    let i = 0;
+    while (i < maxPosition && this.widthBeforePosition(i) < position) {
+      i++;
+    }
+    this.caretPosition = i;
+  }
+
   updateCaret () {
     this.queryInput.caret.remove();
     this.clauseG.appendChild(this.queryInput.caret);
@@ -432,7 +446,7 @@ class QueryInput {
         let currentPosition = this.activeClause.widthBeforeCaret;
         this.activeClauseI++;
         await this.focusActiveShadowInput();
-        this.moveCaretToApproximatePosition(currentPosition);
+        this.activeClause.moveCaretToApproximatePosition(currentPosition);
         this.updateCaret();
       }
     } else if (direction === "ArrowUp") {
@@ -440,24 +454,10 @@ class QueryInput {
         let currentPosition = this.activeClause.widthBeforeCaret;
         this.activeClauseI--;
         await this.focusActiveShadowInput();
-        this.moveCaretToApproximatePosition(currentPosition);
+        this.activeClause.moveCaretToApproximatePosition(currentPosition);
         this.updateCaret();
       }
     }
-  }
-
-  /**
-   * Moves caret in shadow input so that its position in real input
-   * made approximate to `position`
-   * @param {number} position 
-   */
-  moveCaretToApproximatePosition (position) {
-    const maxPosition = this.activeClause.value.length;
-    let i = 0;
-    while (i < maxPosition && this.activeClause.widthBeforePosition(i) < position) {
-      i++;
-    }
-    this.activeClause.caretPosition = i;
   }
 
   /**
