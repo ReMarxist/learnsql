@@ -38,23 +38,31 @@ class Clause {
     this.inputFrame = this.addInputFrame();
   }
 
-  listenMouseMove () {
-    let onMouseMove = mouseEvent => {
-      this.updateHoverCaret(mouseEvent);
-    }
-    this.inputFrame.addEventListener("mousemove", onMouseMove);
+  /**
+   * @param {MouseEvent} mouseEvent 
+   */
+  onMouseMove (mouseEvent) {
+    this.updateHoverCaret(mouseEvent);
+  }
+
+  addListeners () {
+    this.inputFrame.addEventListener("mousemove", mouseEvent => {
+      this.onMouseMove(mouseEvent);
+    });
+    this.inputFrame.addEventListener("mouseleave", () => {
+      this.queryInput.hoverCaret.remove();
+    });
   }
 
   get x () {
     const maxLabelWidth = this.queryInput.getMaxLabelWidth();
-    console.log("Calculated: " + (maxLabelWidth - getWidth(this.clauseLabel)));
     return maxLabelWidth - getWidth(this.clauseLabel);
   }
 
   /**
    * Return absolute x position of query clause
    */
-  get absoluteX() {
+  get absoluteX () {
     return this.queryInput.queryGX + this.x;
   }
 
@@ -148,6 +156,12 @@ class Clause {
       y: 0,
     });
     g.classList.add("text-input-g");
+    g.addEventListener("mousemove", (mouseEvent) => {
+      this.onMouseMove(mouseEvent)
+    });
+    g.addEventListener("mousele", () => {
+      this.queryInput.hoverCaret.remove();
+    });
     return g;
   }
 
@@ -251,11 +265,10 @@ class Clause {
   }
 
   /**
-   * Moves caret in shadow input so that its position in real input
-   * made approximate to `position`
-   * @param {number} position 
+   * Get index of character, position before of which corresponds to position
+   * @param {number} position position in pixels
    */
-  moveCaretToApproximatePosition (position) {
+  getCharI (position) {
     const maxPosition = this.value.length;
     let i = 0;
     while (i < maxPosition && this.widthBeforePosition(i) < position) {
@@ -265,13 +278,22 @@ class Clause {
       const deltaI = Math.abs(position - this.widthBeforePosition(i));
       const deltaPrevious = Math.abs(position - this.widthBeforePosition(i - 1));
       if (deltaI <= deltaPrevious) {
-        this.caretPosition = i;
+        return i;
       } else {
-        this.caretPosition = i - 1;
+        return i - 1;
       }
     } else {
-      this.caretPosition = 0;
+      return 0;
     }
+  }
+
+  /**
+   * Moves caret in shadow input so that its position in real input
+   * made approximate to `position`
+   * @param {number} position 
+   */
+  moveCaretToApproximatePosition (position) {
+    this.caretPosition = this.getCharI(position);
   }
 
   updateCaret () {
@@ -294,16 +316,34 @@ class Clause {
   updateHoverCaret (mouseEvent) {
     this.queryInput.hoverCaret.remove();
     this.clauseG.appendChild(this.queryInput.hoverCaret);
-    const x = 4;
+    const charI = this.getHoverCharI(mouseEvent);
+    const x = this.textInputGX + this.widthBeforePosition(charI);
     const caretHeight = 24;
     const middle = this.height / 2;
-    console.log(this.x)
     setAttributes(this.queryInput.hoverCaret, {
-      "x1": "" + (mouseEvent.pageX - this.absoluteX),
+      "x1": "" + x,
       "x2": "" + x,
       "y1": "" + (middle - caretHeight / 2),
       "y2": "" + (middle + caretHeight / 2),
     });
+    let animate = addAnimate(this.queryInput.hoverCaret);
+    setAttributes(animate, {
+      "attributeName": "stroke-opacity",
+      "values": "1;0",
+      "dur": "1s",
+      "repeatCount": "1",
+      "begin": "indefinite",
+    });
+    animate.beginElement();
+  }
+
+  /**
+   * Return index of the character, after which hover caret should be displayed
+   * @param {MouseEvent} mouseEvent 
+   */
+  getHoverCharI (mouseEvent) {
+    const mouseOffset = mouseEvent.pageX - this.absoluteX - this.textInputGX;
+    return this.getCharI(mouseOffset);
   }
 
   get caretPosition () {

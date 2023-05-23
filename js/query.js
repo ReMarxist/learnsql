@@ -7,7 +7,7 @@ class QueryInput {
     query.animateCaret();
     query.clauses.forEach(clause => clause.initialTranslate());
     query.clauses.forEach(clause => clause.updateDisplay());
-    query.clauses.forEach(clause => clause.listenMouseMove());
+    query.clauses.forEach(clause => clause.addListeners());
     query.updateCaret();
     query.listenResize();
     query.translate();
@@ -80,7 +80,8 @@ class QueryInput {
   createHoverCaret () {
     let hoverCaret = createSvgElement("line");
     setAttributes(hoverCaret, {
-      "stroke": "blue",
+      "stroke": "#c2c2c2",
+      "stroke-opacity": "0",
     });
     return hoverCaret;
   }
