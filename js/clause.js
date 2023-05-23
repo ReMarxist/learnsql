@@ -39,6 +39,14 @@ class Clause {
   }
 
   /**
+   * Shows hover caret on mouse move in input frame
+   * @param {MouseEvent} mouseEvent 
+   */
+  onMouseMove(mouseEvent) {
+    console.log('ok')
+  }
+
+  /**
    * Make translations that apply after clauses creation
    * @param {number} maxLabelWidth maximum label width of all labels in query
    */
@@ -128,6 +136,8 @@ class Clause {
       x: this.textInputGX,
       y: 0,
     });
+    g.classList.add("text-input-g");
+    g.addEventListener("mousemove", this.onMouseMove);
     return g;
   }
 
@@ -160,6 +170,7 @@ class Clause {
       "rx": "3px",
       "filter": "drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.1))",
     });
+    inputFrame.addEventListener("mousemove", this.onMouseMove);
     return inputFrame;
   }
 
