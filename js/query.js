@@ -5,9 +5,9 @@ class QueryInput {
   static create (tableCard) {
     let query = new QueryInput(tableCard);
     query.animateCaret();
-    let maxLabelWidth = query.getMaxLabelWidth();
-    query.clauses.forEach(clause => clause.initialTranslate(maxLabelWidth));
+    query.clauses.forEach(clause => clause.initialTranslate());
     query.clauses.forEach(clause => clause.updateDisplay());
+    query.clauses.forEach(clause => clause.listenMouseMove());
     query.updateCaret();
     query.listenResize();
     query.translate();
@@ -43,6 +43,11 @@ class QueryInput {
     this.expectedAnimationId = 0;
     /** @type {SVGLineElement} */
     this.caret = this.addCaret();
+    /**
+     * Caret that is shown when user mouse-moves in query clause input
+     * @type {SVGLineElement} 
+     */
+    this.hoverCaret = this.createHoverCaret();
   }
 
   addQuerySvg () {
@@ -70,6 +75,14 @@ class QueryInput {
       "stroke": "black",
     });
     return caret;
+  }
+
+  createHoverCaret () {
+    let hoverCaret = createSvgElement("line");
+    setAttributes(hoverCaret, {
+      "stroke": "blue",
+    });
+    return hoverCaret;
   }
 
   addMeasurementText () {
@@ -158,12 +171,16 @@ class QueryInput {
     }, 300);
   }
 
+  get queryGX () {
+    return (this.svg.clientWidth - getWidth(this.queryG)) / 2;
+  }
+
   /**
    * Calculate and set position of query `<g>`
    */
   translate () {
     translate(this.queryG, {
-      x: (this.svg.clientWidth - getWidth(this.queryG)) / 2,
+      x: this.queryGX,
       y: (this.svg.clientHeight - this.height) / 2,
     });
   }

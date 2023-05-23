@@ -38,22 +38,33 @@ class Clause {
     this.inputFrame = this.addInputFrame();
   }
 
+  listenMouseMove () {
+    let onMouseMove = mouseEvent => {
+      this.updateHoverCaret(mouseEvent);
+    }
+    this.inputFrame.addEventListener("mousemove", onMouseMove);
+  }
+
+  get x () {
+    const maxLabelWidth = this.queryInput.getMaxLabelWidth();
+    console.log("Calculated: " + (maxLabelWidth - getWidth(this.clauseLabel)));
+    return maxLabelWidth - getWidth(this.clauseLabel);
+  }
+
   /**
-   * Shows hover caret on mouse move in input frame
-   * @param {MouseEvent} mouseEvent 
+   * Return absolute x position of query clause
    */
-  onMouseMove(mouseEvent) {
-    console.log('ok')
+  get absoluteX() {
+    return this.queryInput.queryGX + this.x;
   }
 
   /**
    * Make translations that apply after clauses creation
-   * @param {number} maxLabelWidth maximum label width of all labels in query
    */
-  initialTranslate (maxLabelWidth) {
-    let nGaps = (this.clauseI - 1);
+  initialTranslate () {
+    const nGaps = this.clauseI - 1;
     translate(this.clauseG, {
-      x: maxLabelWidth - getWidth(this.clauseLabel),
+      x: this.x,
       y: this.height * this.clauseI + this.queryInput.gapBetweenQueries * nGaps,
     });
   }
@@ -79,8 +90,8 @@ class Clause {
     shadowInput.addEventListener("keydown", keyboardEvent => {
       if (keyboardEvent.key === "ArrowDown" || keyboardEvent.key === "ArrowUp") {
         keyboardEvent.preventDefault();
-      this.queryInput.delayCaretAnimation();
-      this.queryInput.moveCaretVertically(keyboardEvent.key);
+        this.queryInput.delayCaretAnimation();
+        this.queryInput.moveCaretVertically(keyboardEvent.key);
       }
     });
     return shadowInput;
@@ -137,7 +148,6 @@ class Clause {
       y: 0,
     });
     g.classList.add("text-input-g");
-    g.addEventListener("mousemove", this.onMouseMove);
     return g;
   }
 
@@ -170,7 +180,6 @@ class Clause {
       "rx": "3px",
       "filter": "drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.1))",
     });
-    inputFrame.addEventListener("mousemove", this.onMouseMove);
     return inputFrame;
   }
 
@@ -232,7 +241,7 @@ class Clause {
    * @param {number} position 
    * @returns 
    */
-  widthBeforePosition(position) {
+  widthBeforePosition (position) {
     let text = this.value.substring(0, position);
     return this.measureWidth(text);
   }
@@ -279,6 +288,24 @@ class Clause {
     });
   }
 
+  /**
+   * @param {MouseEvent} mouseEvent 
+   */
+  updateHoverCaret (mouseEvent) {
+    this.queryInput.hoverCaret.remove();
+    this.clauseG.appendChild(this.queryInput.hoverCaret);
+    const x = 4;
+    const caretHeight = 24;
+    const middle = this.height / 2;
+    console.log(this.x)
+    setAttributes(this.queryInput.hoverCaret, {
+      "x1": "" + (mouseEvent.pageX - this.absoluteX),
+      "x2": "" + x,
+      "y1": "" + (middle - caretHeight / 2),
+      "y2": "" + (middle + caretHeight / 2),
+    });
+  }
+
   get caretPosition () {
     return this.shadowInput.selectionEnd;
   }
@@ -286,10 +313,6 @@ class Clause {
   set caretPosition (newValue) {
     this.shadowInput.selectionStart = newValue;
     this.shadowInput.selectionEnd = newValue;
-  }
-
-  get inputX () {
-    return (this.queryInput.svg.clientWidth - getWidth(this.clauseG)) / 2;
   }
 
   /**
